@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HasGeek</string>
+    <string name="cheesy_footer">A HasGeek &amp; Path Seventeen Production.</string>
+    <string name="made_with_love">Path Seventeen\nMade in India</string>
+
+    <string name="cd_logo_hasgeek">HasGeek logo</string>
+    <string name="cd_logo_xvii">Path Seventeen logo</string>
+
+    <string name="tv_making_magic">Making magic…</string>
+    <string name="tv_no_data">Nothing found! :-(</string>
+
+</resources>
