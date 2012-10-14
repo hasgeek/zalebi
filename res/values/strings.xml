@@ -3,7 +3,8 @@
 
     <string name="app_name">HasGeek</string>
     <string name="cheesy_footer">A HasGeek &amp; Path Seventeen Production.</string>
-    <string name="made_with_love">Path Seventeen\nMade in India</string>
+    <string name="made_with_love">Made with love by\nPath Seventeen</string>
+    <string name="made_with_lovec">MADE WITH LOVE BY\nPATH SEVENTEEN</string>
 
     <string name="cd_logo_hasgeek">HasGeek logo</string>
     <string name="cd_logo_xvii">Path Seventeen logo</string>

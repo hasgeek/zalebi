@@ -32,7 +32,7 @@ import java.util.zip.GZIPInputStream;
 
 public class APIService extends IntentService {
 
-    private static final String API_BASE = "http://192.168.131.24:6400/api";
+    private static final String API_BASE = "http://101.62.125.61:6400/api";
     private static final String VERSION = "/v1";
     private static final String API = API_BASE + VERSION;
 

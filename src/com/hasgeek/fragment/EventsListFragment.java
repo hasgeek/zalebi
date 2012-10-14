@@ -10,22 +10,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import com.hasgeek.EventsListLoader;
 import com.hasgeek.R;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 
 public class EventsListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    private static String TAG = "hsgk";
     private SimpleCursorAdapter mAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mAdapter = new SimpleCursorAdapter(
+        mAdapter = new EventsListCursorAdapter(
                 getActivity(),
                 R.layout.item_eventslist,
                 null,
@@ -40,8 +44,8 @@ public class EventsListFragment extends ListFragment implements LoaderManager.Lo
     @Override
     public void onResume() {
         super.onResume();
-        View doh = View.inflate(getActivity(),R.layout.part_lv_xvii, null);
-        LinearLayout xvii = (LinearLayout) doh.findViewById(R.id.ll_xvii);
+        View doh = View.inflate(getActivity(), R.layout.part_lv_xvii, null);
+        TextView xvii = (TextView) doh.findViewById(R.id.tv_xvii);
         getListView().addFooterView(xvii, null, false);
 
         setListAdapter(mAdapter);
@@ -49,15 +53,15 @@ public class EventsListFragment extends ListFragment implements LoaderManager.Lo
 
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_eventslist, container, false);
+    }
+
+
+    @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-    }
-    
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_eventslist, container, false);
     }
 
 
@@ -75,6 +79,30 @@ public class EventsListFragment extends ListFragment implements LoaderManager.Lo
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
             super.bindView(view, context, cursor);
+
+            TextView daterange = (TextView) view.findViewById(R.id.tv_date);
+            String from = cursor.getString(cursor.getColumnIndex("startDatetime"));
+            String to = cursor.getString(cursor.getColumnIndex("endDatetime"));
+
+            SimpleDateFormat theirFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            SimpleDateFormat ourFormat = new SimpleDateFormat("d MMMM yyyy");
+            SimpleDateFormat sameMonthCheck = new SimpleDateFormat("MMMM yyyy");
+
+            try {
+                if (ourFormat.format(theirFormat.parse(from)).equals(ourFormat.format(theirFormat.parse(to)))) {
+                    // single day event
+                    daterange.setText(ourFormat.format(theirFormat.parse(from)));
+
+                } else if (sameMonthCheck.format(theirFormat.parse(from)).equals(sameMonthCheck.format(theirFormat.parse(to)))) {
+                    // month and year are same
+                    String dateonly = new SimpleDateFormat("d").format(theirFormat.parse(from));
+                    daterange.setText(dateonly + " & " + ourFormat.format(theirFormat.parse(to)));
+                }
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
         }
 
     }
