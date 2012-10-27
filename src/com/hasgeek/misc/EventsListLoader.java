@@ -1,4 +1,4 @@
-package com.hasgeek;
+package com.hasgeek.misc;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;

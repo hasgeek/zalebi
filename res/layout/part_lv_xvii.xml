@@ -7,6 +7,6 @@
           android:paddingBottom="16dp"
           android:drawableTop="@drawable/logo_xvii"
           android:text="@string/made_with_love"
-          android:textSize="11sp"
+          android:textSize="10sp"
           android:gravity="center"
         />

@@ -3,18 +3,19 @@ package com.hasgeek.fragment;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import com.hasgeek.EventsListLoader;
 import com.hasgeek.R;
+import com.hasgeek.activity.EventDetailActivity;
+import com.hasgeek.misc.EventsListLoader;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,8 +23,11 @@ import java.text.SimpleDateFormat;
 
 public class EventsListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static String TAG = "hsgk";
     private SimpleCursorAdapter mAdapter;
+
+    private static String TAG = "hsgk";
+    private String mDateString;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,17 +46,6 @@ public class EventsListFragment extends ListFragment implements LoaderManager.Lo
 
 
     @Override
-    public void onResume() {
-        super.onResume();
-        View doh = View.inflate(getActivity(), R.layout.part_lv_xvii, null);
-        TextView xvii = (TextView) doh.findViewById(R.id.tv_xvii);
-        getListView().addFooterView(xvii, null, false);
-
-        setListAdapter(mAdapter);
-    }
-
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_eventslist, container, false);
     }
@@ -62,6 +55,13 @@ public class EventsListFragment extends ListFragment implements LoaderManager.Lo
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
+        Cursor c = mAdapter.getCursor();
+        c.moveToPosition(position);
+
+        Intent ed = new Intent(getActivity(), EventDetailActivity.class);
+        ed.putExtra("name", c.getString(c.getColumnIndex("name")));
+        ed.putExtra("dateString", mDateString);
+        startActivity(ed);
     }
 
 
@@ -91,12 +91,14 @@ public class EventsListFragment extends ListFragment implements LoaderManager.Lo
             try {
                 if (ourFormat.format(theirFormat.parse(from)).equals(ourFormat.format(theirFormat.parse(to)))) {
                     // single day event
-                    daterange.setText(ourFormat.format(theirFormat.parse(from)));
+                    mDateString = ourFormat.format(theirFormat.parse(from));
+                    daterange.setText(mDateString);
 
                 } else if (sameMonthCheck.format(theirFormat.parse(from)).equals(sameMonthCheck.format(theirFormat.parse(to)))) {
                     // month and year are same
                     String dateonly = new SimpleDateFormat("d").format(theirFormat.parse(from));
-                    daterange.setText(dateonly + " & " + ourFormat.format(theirFormat.parse(to)));
+                    mDateString = dateonly + " & " + ourFormat.format(theirFormat.parse(to));
+                    daterange.setText(mDateString);
                 }
 
             } catch (ParseException e) {
@@ -112,15 +114,17 @@ public class EventsListFragment extends ListFragment implements LoaderManager.Lo
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        Log.w("hsgk", "onCreateLoader");
         return new EventsListLoader(getActivity());
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        for (String s : cursor.getColumnNames()) {
-            Log.w("hsgk", s);
-        }
+        View doh = View.inflate(getActivity(), R.layout.part_lv_xvii, null);
+        TextView xvii = (TextView) doh.findViewById(R.id.tv_xvii);
+        getListView().addFooterView(xvii, null, false);
+
+        setListAdapter(mAdapter);
+
         mAdapter.swapCursor(cursor);
     }
 

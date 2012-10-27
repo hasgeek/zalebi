@@ -6,10 +6,11 @@
 
     <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="64dp"
             android:layout_margin="8dp"
             android:background="#eaeaea"
             android:src="@drawable/logo_hasgeek"
+            android:scaleType="centerInside"
             android:layout_gravity="center"
             android:contentDescription="@string/cd_logo_hasgeek"
             />

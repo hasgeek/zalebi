@@ -1,4 +1,4 @@
-package com.hasgeek;
+package com.hasgeek.service;
 
 import android.app.IntentService;
 import android.content.ContentValues;
@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import com.hasgeek.misc.DBManager;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;

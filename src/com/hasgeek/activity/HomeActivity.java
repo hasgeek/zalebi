@@ -1,4 +1,4 @@
-package com.hasgeek;
+package com.hasgeek.activity;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import com.hasgeek.R;
 import com.hasgeek.fragment.EventsListFragment;
+import com.hasgeek.service.APIService;
 
 
 public class HomeActivity extends Activity {
