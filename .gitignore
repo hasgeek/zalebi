@@ -16,4 +16,5 @@ default.properties
 
 # IntelliJ IDEA
 .idea/workspace.xml
+.idea/tasks.xml
 out/
