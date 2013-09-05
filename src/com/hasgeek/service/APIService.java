@@ -85,7 +85,7 @@ public class APIService extends IntentService {
                         cv.put("startDatetime",  ev.getString("start_datetime"));
                         cv.put("endDatetime",  ev.getString("end_datetime"));
 
-                        db.insertOrThrow(DBManager.EVENTS_TABLE, null, cv);
+                        db.insertOrThrow(DBManager.WORKSPACES_TABLE, null, cv);
                     }
                 }
 
@@ -249,9 +249,9 @@ public class APIService extends IntentService {
     private static String convertStreamToString(InputStream is) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
-        String line = null;
 
         try {
+            String line;
             while ((line = reader.readLine()) != null) {
                 sb.append(line).append("\n");
             }

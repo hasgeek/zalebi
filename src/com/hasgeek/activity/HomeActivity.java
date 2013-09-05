@@ -49,6 +49,12 @@ public class HomeActivity extends Activity {
             i.putExtra(APIService.MODE, APIService.SYNC_EVERYTHING);
             startService(i);
         }
+
+        Intent ed = new Intent(this, EventDetailActivity.class);
+        ed.putExtra("name", "Droidcon 2012");
+        ed.putExtra("dateString", "19 January 2013");
+        startActivity(ed);
+
     }
 
 

@@ -13,22 +13,25 @@ public class DBManager extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String TAG = "HasGeek";
 
-    public static final String EVENTS_TABLE = "events";
-    public static final String SESSIONS_TABLE = "sessions";
+    public static final String WORKSPACES_TABLE = "workspaces";
+    public static final String PROFILES_TABLE = "profiles";
 
-    private static final String CREATE_TABLE_EVENTS = "CREATE TABLE " + EVENTS_TABLE + " (" +
+    private static final String CREATE_TABLE_EVENTS = "CREATE TABLE " + WORKSPACES_TABLE + " (" +
             BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            "hasgeekId INTEGER NOT NULL UNIQUE, " +
+            "buid TEXT NOT NULL UNIQUE, " +
             "name TEXT NOT NULL, " +
-            "location TEXT NOT NULL, " +
-            "rootUrl TEXT NOT NULL, " +
-            "lat FLOAT NOT NULL, " +
-            "long FLOAT NOT NULL, " +
-            "startDatetime TEXT NOT NULL, " +
-            "endDatetime TEXT NOT NULL" +
+            "title TEXT NOT NULL, " +
+            "profile_id TEXT NOT NULL, " +
+            "date_location TEXT NOT NULL, " +
+            "start_date TEXT NOT NULL, " +
+            "end_date TEXT NOT NULL, " +
+            "data_api_url TEXT NOT NULL, " +
+            "start_ts TEXT, " +
+            "end_ts TEXT, " +
+            "" +
             ");";
 
-    private static final String CREATE_TABLE_SESSIONS = "CREATE TABLE " + SESSIONS_TABLE + " (" +
+    private static final String CREATE_TABLE_SESSIONS = "CREATE TABLE " + PROFILES_TABLE + " (" +
             BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "foodId INTEGER NOT NULL, " +
             "foodImage TEXT NOT NULL" +
