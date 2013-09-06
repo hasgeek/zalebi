@@ -3,11 +3,13 @@ package com.hasgeek.service;
 import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-import android.preference.PreferenceManager;
 import android.util.Log;
+
+import com.hasgeek.bus.BusProvider;
+import com.hasgeek.bus.JSFooAPICalledEvent;
 import com.hasgeek.misc.DBManager;
+
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -33,19 +35,13 @@ import java.util.zip.GZIPInputStream;
 
 public class APIService extends IntentService {
 
-    private static final String API_BASE = "http://101.62.125.61:6400/api";
-    private static final String VERSION = "/v1";
-    private static final String API = API_BASE + VERSION;
-
-    private static final String EVENTS = API + "/events";
-    private static final String TAG = "HasGeek";
-
     public static final String MODE = "APIService.MODE";
-    public static final String SYNC_EVERYTHING = "APIService.SYNC_EVERYTHING";
-    public static final String SYNC_EVERYTHING_DONE = "APIService.SYNC_EVERYTHING_DONE";
+    public static final String SYNC_JSFOO = "APIService.SYNC_JSFOO";
     public static final String RESPONSE_CODE = "APIService.RESPONSE_CODE";
     public static final String RESPONSE_DATA = "APIService.RESPONSE_DATA";
 
+    private static final String API_BASE = "https://funnel.hasgeek.com";
+    private static final String TAG = "HasGeek";
 
     public APIService() {
         super("APIService");
@@ -55,7 +51,7 @@ public class APIService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         String mode = intent.getStringExtra(MODE);
 
-        if (mode.equals(SYNC_EVERYTHING)) {
+        if (mode.equals(SYNC_JSFOO)) {
             DBManager dbm = new DBManager(this);
             SQLiteDatabase db = dbm.getWritableDatabase();
 
@@ -63,52 +59,39 @@ public class APIService extends IntentService {
 
             try {
                 db.beginTransaction();
-                // Pull in events...
-                response = runHTTPGetRequest(EVENTS);
+                response = runHTTPGetRequest(API_BASE + "/jsfoo2013/json");
 
                 if (response.get(RESPONSE_CODE).equals("200")) {
-
                     JSONObject j = new JSONObject(response.get(RESPONSE_DATA));
-                    JSONArray events = j.getJSONArray("events");
+                    JSONArray proposals = j.getJSONArray("proposals");
 
-                    for (int i = 0; i < events.length(); i++) {
-                        JSONObject ev = events.getJSONObject(i);
-                        JSONObject geo = ev.getJSONObject("geo_location");
+                    for (int i = 0; i < proposals.length(); i++) {
+                        JSONObject pro = proposals.getJSONObject(i);
 
                         ContentValues cv = new ContentValues();
-                        cv.put("hasgeekId", ev.getInt("id"));
-                        cv.put("name", ev.getString("name"));
-                        cv.put("location", ev.getString("location"));
-                        cv.put("rootUrl", ev.getString("root_url"));
-                        cv.put("lat", Float.parseFloat(geo.getString("lat")));
-                        cv.put("long", Float.parseFloat(geo.getString("long")));
-                        cv.put("startDatetime",  ev.getString("start_datetime"));
-                        cv.put("endDatetime",  ev.getString("end_datetime"));
+                        cv.put("id", pro.getInt("id"));
+                        cv.put("title", pro.getString("title"));
+                        cv.put("speaker", pro.getString("speaker"));
+                        cv.put("section", pro.getString("section"));
+                        cv.put("level", pro.getString("level"));
+                        cv.put("description",  pro.getString("description"));
 
                         db.insertOrThrow(DBManager.PROPOSALS_TABLE, null, cv);
                     }
                 }
-
-                // Now let's pull in sessions
-
-
-                // All done
                 db.setTransactionSuccessful();
 
             } catch (JSONException e) {
                 e.printStackTrace();
+                throw new RuntimeException("Failed to parse JSFoo JSON");
 
             } finally {
                 db.endTransaction();
                 db.close();
-
-                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-                sp.edit().putLong("last_sync_time", System.currentTimeMillis()).commit();
-
-                sendBroadcast(new Intent(SYNC_EVERYTHING_DONE));
-                Log.w(TAG, "sent bcast");
+                BusProvider.getInstance().post(new JSFooAPICalledEvent());
             }
         }
+
 
     }
 

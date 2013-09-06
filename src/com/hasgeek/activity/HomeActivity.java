@@ -3,48 +3,55 @@ package com.hasgeek.activity;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.BroadcastReceiver;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.hasgeek.R;
+import com.hasgeek.bus.BusProvider;
+import com.hasgeek.bus.JSFooAPICalledEvent;
 import com.hasgeek.fragment.EventsListFragment;
 import com.hasgeek.service.APIService;
+import com.squareup.otto.Subscribe;
 
 
 public class HomeActivity extends Activity {
 
     public static final String TAG = "HasGeek";
 
-    private APIReceiver mReceiver;
-
+    private ProgressDialog mBusy;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sp.contains("first_launch")) {
+            if (sp.getBoolean("first_launch", true)) {
+                mBusy = ProgressDialog.show(this, "wat", "lol");
+            }
+        }
+
         FrameLayout fl = (FrameLayout) findViewById(R.id.fl_events);
         RelativeLayout loading = (RelativeLayout) findViewById(R.id.rl_loading);
-
         fl.setVisibility(View.VISIBLE);
         loading.setVisibility(View.GONE);
 
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-
         EventsListFragment e = new EventsListFragment();
         ft.add(R.id.fl_events, e);
         ft.commit();
 
         Intent i = new Intent(this, APIService.class);
-        i.putExtra(APIService.MODE, APIService.SYNC_EVERYTHING);
+        i.putExtra(APIService.MODE, APIService.SYNC_JSFOO);
         startService(i);
     }
 
@@ -52,38 +59,22 @@ public class HomeActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        IntentFilter inf = new IntentFilter();
-        inf.addAction(APIService.SYNC_EVERYTHING_DONE);
-        mReceiver = new APIReceiver();
-        registerReceiver(mReceiver, inf);
+        BusProvider.getInstance().register(this);
     }
 
 
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(mReceiver);
+        BusProvider.getInstance().unregister(this);
     }
 
 
-    private class APIReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(APIService.SYNC_EVERYTHING_DONE)) {
-                Log.w(TAG, "things are done, lets show frag");
-                FrameLayout fl = (FrameLayout) findViewById(R.id.fl_events);
-                fl.setVisibility(View.VISIBLE);
-                RelativeLayout loading = (RelativeLayout) findViewById(R.id.rl_loading);
-                loading.setVisibility(View.GONE);
-
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-
-                EventsListFragment e = new EventsListFragment();
-                ft.add(R.id.fl_events, e);
-                ft.commit();
-            }
+    @Subscribe
+    public void jsfooAPICallDone(JSFooAPICalledEvent meh) {
+        Log.w(TAG, "Dondondoneonedonoee");
+        if (mBusy != null) {
+            mBusy.dismiss();
         }
     }
-
 }
