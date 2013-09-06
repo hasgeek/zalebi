@@ -11,9 +11,10 @@ public class DBManager extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "hsgk";
     public static final int DATABASE_VERSION = 1;
-    public static final String TAG = "HasGeek";
 
     public static final String PROPOSALS_TABLE = "proposals";
+
+    private static DBManager mInstance = null;
 
     private static final String CREATE_TABLE_PROPOSALS = "CREATE TABLE " + PROPOSALS_TABLE + " (" +
             BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -30,18 +31,26 @@ public class DBManager extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+
+    public static DBManager getInstance(Context c) {
+        if (mInstance == null) {
+            mInstance = new DBManager(c.getApplicationContext());
+        }
+
+        return mInstance;
+    }
+
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_PROPOSALS);
-        Log.w(TAG, "Created proposals table.");
+        Log.w("Hasgeek", "Created proposals table.");
     }
 
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w(TAG, "Database needs an update from version " + String.valueOf(oldVersion) + " to " + String.valueOf(newVersion));
+        Log.w("Hasgeek", "Database needs an update from version " + String.valueOf(oldVersion) + " to " + String.valueOf(newVersion));
     }
-
-
 }
 

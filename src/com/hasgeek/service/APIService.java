@@ -3,12 +3,14 @@ package com.hasgeek.service;
 import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.SharedPreferences;
+import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.hasgeek.bus.BusProvider;
 import com.hasgeek.bus.JSFooAPICalledEvent;
-import com.hasgeek.misc.DBManager;
+import com.hasgeek.misc.DataProvider;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -52,14 +54,9 @@ public class APIService extends IntentService {
         String mode = intent.getStringExtra(MODE);
 
         if (mode.equals(SYNC_JSFOO)) {
-            DBManager dbm = new DBManager(this);
-            SQLiteDatabase db = dbm.getWritableDatabase();
-
-            HashMap<String, String> response;
 
             try {
-                db.beginTransaction();
-                response = runHTTPGetRequest(API_BASE + "/jsfoo2013/json");
+                HashMap<String, String> response = runHTTPGetRequest(API_BASE + "/jsfoo2013/json");
 
                 if (response.get(RESPONSE_CODE).equals("200")) {
                     JSONObject j = new JSONObject(response.get(RESPONSE_DATA));
@@ -69,6 +66,7 @@ public class APIService extends IntentService {
                         JSONObject pro = proposals.getJSONObject(i);
 
                         ContentValues cv = new ContentValues();
+                        cv.put(DataProvider.SQLITE_INSERT_OR_REPLACE_MODE, true);
                         cv.put("id", pro.getInt("id"));
                         cv.put("title", pro.getString("title"));
                         cv.put("speaker", pro.getString("speaker"));
@@ -76,19 +74,19 @@ public class APIService extends IntentService {
                         cv.put("level", pro.getString("level"));
                         cv.put("description",  pro.getString("description"));
 
-                        db.insertOrThrow(DBManager.PROPOSALS_TABLE, null, cv);
+                        Uri u = getContentResolver().insert(DataProvider.PROPOSAL_URI, cv);
+                        getContentResolver().notifyChange(u, null);
                     }
                 }
-                db.setTransactionSuccessful();
 
             } catch (JSONException e) {
                 e.printStackTrace();
                 throw new RuntimeException("Failed to parse JSFoo JSON");
 
             } finally {
-                db.endTransaction();
-                db.close();
                 BusProvider.getInstance().post(new JSFooAPICalledEvent());
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+                sp.edit().putBoolean("first_run", false).commit();
             }
         }
 

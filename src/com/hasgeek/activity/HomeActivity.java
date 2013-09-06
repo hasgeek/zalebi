@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -27,16 +26,15 @@ public class HomeActivity extends Activity {
 
     private ProgressDialog mBusy;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sp.contains("first_launch")) {
-            if (sp.getBoolean("first_launch", true)) {
-                mBusy = ProgressDialog.show(this, "wat", "lol");
-            }
+        if (sp.getBoolean("first_run", true)) {
+            mBusy = ProgressDialog.show(this, "Loading.", "Busy...");
         }
 
         FrameLayout fl = (FrameLayout) findViewById(R.id.fl_events);
@@ -72,7 +70,6 @@ public class HomeActivity extends Activity {
 
     @Subscribe
     public void jsfooAPICallDone(JSFooAPICalledEvent meh) {
-        Log.w(TAG, "Dondondoneonedonoee");
         if (mBusy != null) {
             mBusy.dismiss();
         }

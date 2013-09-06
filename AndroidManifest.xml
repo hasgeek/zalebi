@@ -30,6 +30,11 @@
 
         <service android:name=".service.APIService" />
 
+        <provider
+            android:name=".misc.DataProvider"
+            android:authorities="com.hasgeek.data"
+            android:exported="false" />
+
     </application>
 
 </manifest>
