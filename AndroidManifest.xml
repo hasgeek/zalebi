@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.hasgeek"
-          android:versionCode="1"
-          android:versionName="1.0">
+    package="com.hasgeek"
+    android:versionCode="1"
+    android:versionName="1.0">
 
-    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="17" />
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="18" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
-    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher">
+    <application
+        android:label="@string/app_name"
+        android:icon="@drawable/ic_launcher">
 
-        <activity android:name=".activity.HomeActivity" android:label="@string/app_name"
-                  android:theme="@android:style/Theme.Holo.Light.NoActionBar">
+        <activity
+            android:name=".activity.HomeActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.EventDetailActivity" android:label="@string/activity_event_detail"/>
+        <activity
+            android:name=".activity.EventDetailActivity"
+            android:theme="@android:style/Theme.Holo.Light" />
 
-        <service android:name=".service.APIService"/>
+        <service android:name=".service.APIService" />
 
     </application>
 

@@ -3,13 +3,16 @@ package com.hasgeek.activity;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.*;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+
 import com.hasgeek.R;
 import com.hasgeek.fragment.EventsListFragment;
 import com.hasgeek.service.APIService;
@@ -19,7 +22,6 @@ public class HomeActivity extends Activity {
 
     public static final String TAG = "HasGeek";
 
-    private SharedPreferences mSharedPrefs;
     private APIReceiver mReceiver;
 
 
@@ -28,33 +30,22 @@ public class HomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-
         FrameLayout fl = (FrameLayout) findViewById(R.id.fl_events);
         RelativeLayout loading = (RelativeLayout) findViewById(R.id.rl_loading);
 
-        if (mSharedPrefs.contains("last_sync_time")) {
-            fl.setVisibility(View.VISIBLE);
-            loading.setVisibility(View.GONE);
+        fl.setVisibility(View.VISIBLE);
+        loading.setVisibility(View.GONE);
 
-            FragmentManager fm = getFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
 
-            EventsListFragment e = new EventsListFragment();
-            ft.add(R.id.fl_events, e);
-            ft.commit();
+        EventsListFragment e = new EventsListFragment();
+        ft.add(R.id.fl_events, e);
+        ft.commit();
 
-        } else {
-            Intent i = new Intent(this, APIService.class);
-            i.putExtra(APIService.MODE, APIService.SYNC_EVERYTHING);
-            startService(i);
-        }
-
-        Intent ed = new Intent(this, EventDetailActivity.class);
-        ed.putExtra("name", "Droidcon 2012");
-        ed.putExtra("dateString", "19 January 2013");
-        startActivity(ed);
-
+        Intent i = new Intent(this, APIService.class);
+        i.putExtra(APIService.MODE, APIService.SYNC_EVERYTHING);
+        startService(i);
     }
 
 

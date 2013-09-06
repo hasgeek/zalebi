@@ -85,7 +85,7 @@ public class APIService extends IntentService {
                         cv.put("startDatetime",  ev.getString("start_datetime"));
                         cv.put("endDatetime",  ev.getString("end_datetime"));
 
-                        db.insertOrThrow(DBManager.WORKSPACES_TABLE, null, cv);
+                        db.insertOrThrow(DBManager.PROPOSALS_TABLE, null, cv);
                     }
                 }
 

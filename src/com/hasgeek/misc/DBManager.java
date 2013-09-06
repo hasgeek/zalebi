@@ -13,28 +13,16 @@ public class DBManager extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String TAG = "HasGeek";
 
-    public static final String WORKSPACES_TABLE = "workspaces";
-    public static final String PROFILES_TABLE = "profiles";
+    public static final String PROPOSALS_TABLE = "proposals";
 
-    private static final String CREATE_TABLE_EVENTS = "CREATE TABLE " + WORKSPACES_TABLE + " (" +
+    private static final String CREATE_TABLE_PROPOSALS = "CREATE TABLE " + PROPOSALS_TABLE + " (" +
             BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            "buid TEXT NOT NULL UNIQUE, " +
-            "name TEXT NOT NULL, " +
+            "id TEXT NOT NULL UNIQUE, " +
             "title TEXT NOT NULL, " +
-            "profile_id TEXT NOT NULL, " +
-            "date_location TEXT NOT NULL, " +
-            "start_date TEXT NOT NULL, " +
-            "end_date TEXT NOT NULL, " +
-            "data_api_url TEXT NOT NULL, " +
-            "start_ts TEXT, " +
-            "end_ts TEXT, " +
-            "" +
-            ");";
-
-    private static final String CREATE_TABLE_SESSIONS = "CREATE TABLE " + PROFILES_TABLE + " (" +
-            BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            "foodId INTEGER NOT NULL, " +
-            "foodImage TEXT NOT NULL" +
+            "speaker TEXT NOT NULL, " +
+            "section TEXT NOT NULL, " +
+            "level TEXT NOT NULL, " +
+            "description TEXT NOT NULL" +
             ");";
 
 
@@ -44,11 +32,8 @@ public class DBManager extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TABLE_EVENTS);
-        Log.w(TAG, "Created events table.");
-
-        db.execSQL(CREATE_TABLE_SESSIONS);
-        Log.w(TAG, "Created sessions table.");
+        db.execSQL(CREATE_TABLE_PROPOSALS);
+        Log.w(TAG, "Created proposals table.");
     }
 
 

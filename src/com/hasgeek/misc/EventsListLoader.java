@@ -22,7 +22,7 @@ public class EventsListLoader extends AsyncTaskLoader<Cursor> {
     @Override
     public Cursor loadInBackground() {
         return mDatabase.query(
-                DBManager.WORKSPACES_TABLE,
+                DBManager.PROPOSALS_TABLE,
                 new String[] { "_id", "hasgeekId", "name", "rootUrl", "startDatetime", "endDatetime" },
                 null,
                 null,
