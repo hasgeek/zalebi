@@ -1,6 +1,9 @@
 package com.hasgeek.misc;
 
-public class EventSession {
+import java.io.Serializable;
+
+
+public class EventSession implements Serializable {
 
     String id;
     String title;

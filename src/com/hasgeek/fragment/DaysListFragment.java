@@ -2,15 +2,18 @@ package com.hasgeek.fragment;
 
 import android.app.ListFragment;
 import android.app.LoaderManager;
+import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.hasgeek.R;
+import com.hasgeek.activity.SessionDetailActivity;
 import com.hasgeek.misc.EventSession;
 import com.hasgeek.misc.SessionsListLoader;
 
@@ -83,5 +86,13 @@ public class DaysListFragment extends ListFragment
 
             return convertView;
         }
+    }
+
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Intent i = new Intent(getActivity(), SessionDetailActivity.class);
+        i.putExtra("session", mAdapter.get(position));
+        startActivity(i);
     }
 }

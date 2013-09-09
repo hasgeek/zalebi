@@ -13,5 +13,7 @@
     <string name="tv_no_data">Nothing found! :-(</string>
     <string name="jsfoo_date">20th and 21st September 2013</string>
     <string name="jsfoo_title">JSFoo 2013</string>
+    <string name="menu_submit_feedback">Submit feedback</string>
+    <string name="menu_bookmark">Bookmark</string>
 
 </resources>
