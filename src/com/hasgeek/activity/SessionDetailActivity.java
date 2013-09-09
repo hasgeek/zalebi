@@ -3,6 +3,7 @@ package com.hasgeek.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -39,6 +40,7 @@ public class SessionDetailActivity extends Activity {
         level.setText(mSession.getLevel());
         TextView description = (TextView) findViewById(R.id.tv_sd_description);
         description.setText(Html.fromHtml(mSession.getDescription()));
+        description.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
 
