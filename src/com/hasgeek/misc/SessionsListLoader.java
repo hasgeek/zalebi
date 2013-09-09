@@ -3,38 +3,53 @@ package com.hasgeek.misc;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.provider.BaseColumns;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class EventsListLoader extends AsyncTaskLoader<Cursor> {
+public class SessionsListLoader extends AsyncTaskLoader<List<EventSession>> {
 
-    DBManager mDBM;
-    SQLiteDatabase mDatabase;
-    Cursor mData;
+    private List<EventSession> mData;
 
-    public EventsListLoader(Context context) {
+
+    public SessionsListLoader(Context context) {
         super(context);
-        mDBM = new DBManager(context);
-        mDatabase = mDBM.getWritableDatabase();
     }
 
 
     @Override
-    public Cursor loadInBackground() {
-        return mDatabase.query(
-                DBManager.PROPOSALS_TABLE,
-                new String[] { "_id", "hasgeekId", "name", "rootUrl", "startDatetime", "endDatetime" },
-                null,
-                null,
+    public List<EventSession> loadInBackground() {
+        List<EventSession> esList = new ArrayList<EventSession>();
+        Cursor sessions = getContext().getContentResolver().query(
+                DataProvider.PROPOSAL_URI,
+                new String[] { BaseColumns._ID, "id", "title", "speaker", "section", "level", "description" },
                 null,
                 null,
                 null
         );
+        if (sessions.moveToFirst()) {
+            do {
+                EventSession es = new EventSession(
+                        sessions.getString(sessions.getColumnIndex("id")),
+                        sessions.getString(sessions.getColumnIndex("title")),
+                        sessions.getString(sessions.getColumnIndex("speaker")),
+                        sessions.getString(sessions.getColumnIndex("section")),
+                        sessions.getString(sessions.getColumnIndex("level")),
+                        sessions.getString(sessions.getColumnIndex("description"))
+                );
+                esList.add(es);
+
+            } while (sessions.moveToNext());
+        }
+        sessions.close();
+        return esList;
     }
 
 
     @Override
-    public void deliverResult(Cursor data) {
+    public void deliverResult(List<EventSession> data) {
         if (isReset()) {
             releaseResources(data);
             return;
@@ -43,7 +58,7 @@ public class EventsListLoader extends AsyncTaskLoader<Cursor> {
         // Hold a reference to the old data so it doesn't get garbage collected.
         // The old data may still be in use (i.e. bound to an adapter, etc.), so
         // we must protect it until the new data has been delivered.
-        Cursor oldData = mData;
+        List<EventSession> oldData = mData;
         mData = data;
 
         if (isStarted()) {
@@ -95,16 +110,16 @@ public class EventsListLoader extends AsyncTaskLoader<Cursor> {
 
 
     @Override
-    public void onCanceled(Cursor data) {
+    public void onCanceled(List<EventSession> data) {
         super.onCanceled(data);
         releaseResources(data);
     }
 
 
-    protected void releaseResources(Cursor data) {
-        data.close();
-        mDatabase.close();
+    private void releaseResources(List<EventSession> data) {
+        // For a simple List, there is nothing to do. For something like a Cursor, we
+        // would close it in this method. All resources associated with the Loader
+        // should be released here.
     }
 
 }
-

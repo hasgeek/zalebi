@@ -1,18 +1,18 @@
 package com.hasgeek.activity;
 
 import android.app.ActionBar;
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 
 import com.hasgeek.R;
 import com.hasgeek.fragment.DaysListFragment;
 
 
-public class EventDetailActivity extends FragmentActivity {
+public class EventDetailActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,7 @@ public class EventDetailActivity extends FragmentActivity {
 
         setContentView(R.layout.activity_eventdetail);
 
-        FragmentManager fm = getSupportFragmentManager();
+        FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         DaysListFragment dlf = new DaysListFragment();
         ft.add(R.id.fl_fragment, dlf);
