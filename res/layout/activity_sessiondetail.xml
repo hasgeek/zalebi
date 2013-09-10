@@ -6,7 +6,10 @@
 
     <TextView
         android:id="@+id/tv_sd_title"
-        android:padding="8dp"
+        android:paddingTop="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="8dp"
         android:textAppearance="@android:style/TextAppearance.Medium"
         android:textStyle="bold"
         android:layout_width="match_parent"
@@ -14,7 +17,9 @@
 
     <TextView
         android:id="@+id/tv_sd_speaker"
-        android:padding="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp"
         android:textColor="#555"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -28,7 +33,7 @@
 
         <TextView
             android:id="@+id/tv_sd_section"
-            android:padding="8dp"
+            android:padding="16dp"
             android:gravity="center"
             android:textAllCaps="true"
             android:layout_weight="1"
@@ -39,7 +44,7 @@
 
         <TextView
             android:id="@+id/tv_sd_level"
-            android:padding="8dp"
+            android:padding="16dp"
             android:gravity="center"
             android:textAllCaps="true"
             android:layout_weight="1"
@@ -57,7 +62,7 @@
 
         <TextView
             android:id="@+id/tv_sd_description"
-            android:padding="8dp"
+            android:padding="16dp"
             android:textSize="16sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

@@ -3,7 +3,6 @@ package com.hasgeek.misc;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.database.Cursor;
-import android.provider.BaseColumns;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,20 +23,27 @@ public class SessionsListLoader extends AsyncTaskLoader<List<EventSession>> {
         List<EventSession> esList = new ArrayList<EventSession>();
         Cursor sessions = getContext().getContentResolver().query(
                 DataProvider.PROPOSAL_URI,
-                new String[] { BaseColumns._ID, "id", "title", "speaker", "section", "level", "description" },
+                new String[] { "id", "title", "speaker", "section", "level", "description", "bookmarked" },
                 null,
                 null,
-                null
+                "id ASC"
         );
         if (sessions.moveToFirst()) {
             do {
+                boolean bookmarkState;
+                if (sessions.isNull(sessions.getColumnIndex("bookmarked"))) {
+                    bookmarkState = false;
+                } else {
+                    bookmarkState = sessions.getString(sessions.getColumnIndex("bookmarked")).equals("true");
+                }
                 EventSession es = new EventSession(
                         sessions.getString(sessions.getColumnIndex("id")),
                         sessions.getString(sessions.getColumnIndex("title")),
                         sessions.getString(sessions.getColumnIndex("speaker")),
                         sessions.getString(sessions.getColumnIndex("section")),
                         sessions.getString(sessions.getColumnIndex("level")),
-                        sessions.getString(sessions.getColumnIndex("description"))
+                        sessions.getString(sessions.getColumnIndex("description")),
+                        bookmarkState
                 );
                 esList.add(es);
 

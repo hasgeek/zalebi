@@ -5,6 +5,7 @@ import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +24,20 @@ import java.util.List;
 public class DaysListFragment extends ListFragment
         implements LoaderManager.LoaderCallbacks<List<EventSession>> {
 
+    private static final int REQUEST_SESSION_DETAIL = 4201;
     private List<EventSession> mAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         getLoaderManager().initLoader(0, null, this);
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getLoaderManager().restartLoader(0, null, this);
     }
 
 
@@ -91,8 +99,18 @@ public class DaysListFragment extends ListFragment
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
+        Log.w("ASD", "isBookmarked " + mAdapter.get(position).isBookmarked());
         Intent i = new Intent(getActivity(), SessionDetailActivity.class);
         i.putExtra("session", mAdapter.get(position));
-        startActivity(i);
+        startActivityForResult(i, REQUEST_SESSION_DETAIL);
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_SESSION_DETAIL:
+                getLoaderManager().restartLoader(0, null, this);
+        }
     }
 }

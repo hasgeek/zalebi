@@ -11,15 +11,17 @@ public class EventSession implements Serializable {
     String section;
     String level;
     String description;
+    boolean bookmarked;
 
 
-    public EventSession(String _id, String _title, String _speaker, String _section, String _level, String _desc) {
+    public EventSession(String _id, String _title, String _speaker, String _section, String _level, String _desc, boolean _bookmarked) {
         setId(_id);
         setTitle(_title);
         setSpeaker(_speaker);
         setSection(_section);
         setLevel(_level);
         setDescription(_desc);
+        setBookmarked(_bookmarked);
     }
 
 
@@ -86,5 +88,15 @@ public class EventSession implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+
+    public boolean isBookmarked() {
+        return bookmarked;
+    }
+
+
+    public void setBookmarked(boolean bookmarked) {
+        this.bookmarked = bookmarked;
     }
 }

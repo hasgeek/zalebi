@@ -134,6 +134,7 @@ public class DataProvider extends ContentProvider {
                 }
             } catch (SQLiteConstraintException e) {
                 e.printStackTrace();
+                throw new RuntimeException("Insertion failed.");
             }
 
         } else {
