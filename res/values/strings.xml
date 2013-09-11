@@ -18,5 +18,7 @@
     <string name="menu_save_bookmark">Save to bookmarks</string>
     <string name="bookmark_removed">Session removed from bookmarks.</string>
     <string name="bookmark_saved">Session saved to bookmarks.</string>
+    <string name="show_only_bookmarked">Show only bookmarked sessions</string>
+    <string name="show_all_sessions">Show all sessions</string>
 
 </resources>

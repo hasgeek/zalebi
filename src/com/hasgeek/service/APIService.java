@@ -1,9 +1,11 @@
 package com.hasgeek.service;
 
 import android.app.IntentService;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -35,6 +37,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.zip.GZIPInputStream;
 
+
 public class APIService extends IntentService {
 
     public static final String MODE = "APIService.MODE";
@@ -45,16 +48,18 @@ public class APIService extends IntentService {
     private static final String API_BASE = "https://funnel.hasgeek.com";
     private static final String TAG = "HasGeek";
 
+
     public APIService() {
         super("APIService");
     }
 
+
     @Override
     protected void onHandleIntent(Intent intent) {
         String mode = intent.getStringExtra(MODE);
+        ContentResolver cr = getContentResolver();
 
         if (mode.equals(SYNC_JSFOO)) {
-
             try {
                 HashMap<String, String> response = runHTTPGetRequest(API_BASE + "/jsfoo2013/json");
 
@@ -66,16 +71,28 @@ public class APIService extends IntentService {
                         JSONObject pro = proposals.getJSONObject(i);
 
                         ContentValues cv = new ContentValues();
-                        cv.put(DataProvider.SQLITE_INSERT_OR_REPLACE_MODE, true);
                         cv.put("id", pro.getInt("id"));
                         cv.put("title", pro.getString("title"));
                         cv.put("speaker", pro.getString("speaker"));
                         cv.put("section", pro.getString("section"));
                         cv.put("level", pro.getString("level"));
-                        cv.put("description",  pro.getString("description"));
+                        cv.put("description", pro.getString("description"));
 
-                        Uri u = getContentResolver().insert(DataProvider.PROPOSAL_URI, cv);
-                        getContentResolver().notifyChange(u, null);
+                        // Check if proposal with this id already exists or not
+                        Cursor idCheck = cr.query(
+                                DataProvider.PROPOSAL_URI,
+                                new String[] { "id" },
+                                "id is ?",
+                                new String[] { String.valueOf(pro.getInt("id")) },
+                                null
+                        );
+                        if (idCheck.moveToFirst() && (idCheck.getCount() == 1)) {
+                            cr.update(DataProvider.PROPOSAL_URI, cv, "id is ?", new String[]{ String.valueOf(pro.getInt("id")) });
+                        } else {
+                            Uri u = cr.insert(DataProvider.PROPOSAL_URI, cv);
+                            cr.notifyChange(u, null);
+                        }
+                        idCheck.close();
                     }
                 }
 

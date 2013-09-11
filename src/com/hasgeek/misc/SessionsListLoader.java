@@ -4,6 +4,8 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.hasgeek.fragment.DaysListFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,23 +13,37 @@ import java.util.List;
 public class SessionsListLoader extends AsyncTaskLoader<List<EventSession>> {
 
     private List<EventSession> mData;
+    private int mMode;
 
 
-    public SessionsListLoader(Context context) {
+    public SessionsListLoader(Context context, int mode) {
         super(context);
+        mMode = mode;
     }
 
 
     @Override
     public List<EventSession> loadInBackground() {
         List<EventSession> esList = new ArrayList<EventSession>();
-        Cursor sessions = getContext().getContentResolver().query(
-                DataProvider.PROPOSAL_URI,
-                new String[] { "id", "title", "speaker", "section", "level", "description", "bookmarked" },
-                null,
-                null,
-                "id ASC"
-        );
+        Cursor sessions;
+        if (mMode == DaysListFragment.All_SESSIONS) {
+            sessions = getContext().getContentResolver().query(
+                    DataProvider.PROPOSAL_URI,
+                    new String[] { "id", "title", "speaker", "section", "level", "description", "bookmarked" },
+                    null,
+                    null,
+                    "id ASC"
+            );
+        } else {
+            sessions = getContext().getContentResolver().query(
+                    DataProvider.PROPOSAL_URI,
+                    new String[] { "id", "title", "speaker", "section", "level", "description", "bookmarked" },
+                    "bookmarked = ?",
+                    new String[] { "true" },
+                    "id ASC"
+            );
+        }
+
         if (sessions.moveToFirst()) {
             do {
                 boolean bookmarkState;

@@ -5,11 +5,11 @@ import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,32 +24,47 @@ import java.util.List;
 public class DaysListFragment extends ListFragment
         implements LoaderManager.LoaderCallbacks<List<EventSession>> {
 
+    public static final int BOOKMARKED_SESSIONS = 198263;
+    public static final int All_SESSIONS = 198264;
+
+    private Button mToggleBookmarksButton;
     private static final int REQUEST_SESSION_DETAIL = 4201;
     private List<EventSession> mAdapter;
+    private int mListMode;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mListMode = All_SESSIONS;
         getLoaderManager().initLoader(0, null, this);
     }
 
 
     @Override
-    public void onResume() {
-        super.onResume();
-        getLoaderManager().restartLoader(0, null, this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_sessionslist, container, false);
+        mToggleBookmarksButton = (Button) v.findViewById(R.id.btn_toggle_bookmarked);
+        mToggleBookmarksButton.setText(R.string.show_only_bookmarked);
+        mToggleBookmarksButton.setOnClickListener(toggleBookmarksButtonClickListener);
+        return v;
     }
 
 
     @Override
     public Loader<List<EventSession>> onCreateLoader(int i, Bundle bundle) {
-        return new SessionsListLoader(getActivity());
+        if (mListMode == All_SESSIONS) {
+            return new SessionsListLoader(getActivity(), All_SESSIONS);
+        } else if (mListMode == BOOKMARKED_SESSIONS) {
+            return new SessionsListLoader(getActivity(), BOOKMARKED_SESSIONS);
+        } else {
+            throw new RuntimeException("List mode missing");
+        }
     }
 
 
     @Override
     public void onLoadFinished(Loader<List<EventSession>> listLoader, List<EventSession> eventSessions) {
-        setListShown(true);
         mAdapter = eventSessions;
         setListAdapter(new SessionsListAdapter());
     }
@@ -99,7 +114,6 @@ public class DaysListFragment extends ListFragment
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        Log.w("ASD", "isBookmarked " + mAdapter.get(position).isBookmarked());
         Intent i = new Intent(getActivity(), SessionDetailActivity.class);
         i.putExtra("session", mAdapter.get(position));
         startActivityForResult(i, REQUEST_SESSION_DETAIL);
@@ -113,4 +127,19 @@ public class DaysListFragment extends ListFragment
                 getLoaderManager().restartLoader(0, null, this);
         }
     }
+
+
+    private View.OnClickListener toggleBookmarksButtonClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if (mListMode == All_SESSIONS) {
+                mListMode = BOOKMARKED_SESSIONS;
+                mToggleBookmarksButton.setText(R.string.show_all_sessions);
+            } else {
+                mListMode = All_SESSIONS;
+                mToggleBookmarksButton.setText(R.string.show_only_bookmarked);
+            }
+            getLoaderManager().restartLoader(0, null, DaysListFragment.this);
+        }
+    };
 }
