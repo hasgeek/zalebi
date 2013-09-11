@@ -27,9 +27,10 @@ public class DaysListFragment extends ListFragment
     public static final int BOOKMARKED_SESSIONS = 198263;
     public static final int All_SESSIONS = 198264;
 
+    private SessionsListAdapter mAdapter;
     private Button mToggleBookmarksButton;
     private static final int REQUEST_SESSION_DETAIL = 4201;
-    private List<EventSession> mAdapter;
+    private List<EventSession> mSessionsList;
     private int mListMode;
 
 
@@ -37,6 +38,7 @@ public class DaysListFragment extends ListFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mListMode = All_SESSIONS;
+        mAdapter = new SessionsListAdapter();
         getLoaderManager().initLoader(0, null, this);
     }
 
@@ -65,8 +67,12 @@ public class DaysListFragment extends ListFragment
 
     @Override
     public void onLoadFinished(Loader<List<EventSession>> listLoader, List<EventSession> eventSessions) {
-        mAdapter = eventSessions;
-        setListAdapter(new SessionsListAdapter());
+        mSessionsList = eventSessions;
+        if (getListView().getAdapter() == null) {
+            setListAdapter(mAdapter);
+        } else {
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
 
@@ -79,13 +85,13 @@ public class DaysListFragment extends ListFragment
 
         @Override
         public int getCount() {
-            return mAdapter.size();
+            return mSessionsList.size();
         }
 
 
         @Override
         public EventSession getItem(int i) {
-            return mAdapter.get(i);
+            return mSessionsList.get(i);
         }
 
 
@@ -102,10 +108,10 @@ public class DaysListFragment extends ListFragment
             }
 
             TextView title = (TextView) convertView.findViewById(R.id.tv_session_title);
-            title.setText(mAdapter.get(position).getTitle());
+            title.setText(mSessionsList.get(position).getTitle());
 
             TextView speaker = (TextView) convertView.findViewById(R.id.tv_session_speaker);
-            speaker.setText(mAdapter.get(position).getSpeaker());
+            speaker.setText(mSessionsList.get(position).getSpeaker());
 
             return convertView;
         }
@@ -115,7 +121,7 @@ public class DaysListFragment extends ListFragment
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         Intent i = new Intent(getActivity(), SessionDetailActivity.class);
-        i.putExtra("session", mAdapter.get(position));
+        i.putExtra("session", mSessionsList.get(position));
         startActivityForResult(i, REQUEST_SESSION_DETAIL);
     }
 

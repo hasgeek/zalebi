@@ -10,7 +10,7 @@
     <string name="cd_iv_header">Event header image</string>
 
     <string name="tv_making_magic">Making magic…</string>
-    <string name="tv_no_data">Nothing found! :-(</string>
+    <string name="tv_empty">Uhmmmm</string>
     <string name="jsfoo_date">20th and 21st September 2013</string>
     <string name="jsfoo_title">JSFoo 2013</string>
     <string name="menu_submit_feedback">Submit feedback</string>
