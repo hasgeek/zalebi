@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hasgeek.R;
+import com.hasgeek.fragment.SubmitFeedbackFragment;
 import com.hasgeek.misc.DataProvider;
 import com.hasgeek.misc.EventSession;
 
@@ -73,6 +74,11 @@ public class SessionDetailActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case MENU_SUBMIT_FEEDBACK:
+                SubmitFeedbackFragment sff = new SubmitFeedbackFragment();
+                Bundle b = new Bundle();
+                b.putString("url", mSession.getUrl());
+                sff.setArguments(b);
+                sff.show(getFragmentManager(), sff.getClass().getName());
                 return true;
 
             case MENU_BOOKMARK:

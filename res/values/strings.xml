@@ -20,5 +20,13 @@
     <string name="bookmark_saved">Session saved to bookmarks.</string>
     <string name="show_only_bookmarked">Show only bookmarked sessions</string>
     <string name="show_all_sessions">Show all sessions</string>
+    <string name="dialog_submitfeedback">Submit feedback</string>
+    <string name="content">Talk content</string>
+    <string name="presentation">Speaker presentation and delivery</string>
+    <string name="submit">Submit</string>
+    <string name="feedback_ok">:-|</string>
+    <string name="feedback_good">:-)</string>
+    <string name="feedback_awesome">:-D</string>
+    <string name="select_google_account">Pick a Google account</string>
 
 </resources>

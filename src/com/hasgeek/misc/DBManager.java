@@ -24,6 +24,7 @@ public class DBManager extends SQLiteOpenHelper {
             "section TEXT NOT NULL, " +
             "level TEXT NOT NULL, " +
             "description TEXT NOT NULL, " +
+            "url TEXT NOT NULL, " +
             "bookmarked BOOLEAN" +
             ");";
 

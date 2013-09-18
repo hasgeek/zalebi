@@ -77,6 +77,7 @@ public class APIService extends IntentService {
                         cv.put("section", pro.getString("section"));
                         cv.put("level", pro.getString("level"));
                         cv.put("description", pro.getString("description"));
+                        cv.put("url", pro.getString("url"));
 
                         // Check if proposal with this id already exists or not
                         Cursor idCheck = cr.query(
