@@ -102,11 +102,11 @@ public class SessionDetailActivity extends Activity {
 
         if (mSession.isBookmarked()) {
             menu.add(0, MENU_BOOKMARK, 0, R.string.menu_remove_bookmark)
-                    .setIcon(R.drawable.ic_rating_not_important)
+                    .setIcon(R.drawable.ic_rating_important)
                     .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
         } else {
             menu.add(0, MENU_BOOKMARK, 0, R.string.menu_save_bookmark)
-                    .setIcon(R.drawable.ic_rating_important)
+                    .setIcon(R.drawable.ic_rating_not_important)
                     .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
 
