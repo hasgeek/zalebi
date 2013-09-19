@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
@@ -12,16 +14,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hasgeek.R;
+import com.hasgeek.bus.BusProvider;
+import com.hasgeek.bus.SessionFeedbackAlreadySubmittedEvent;
+import com.hasgeek.bus.SessionFeedbackSubmittedEvent;
 import com.hasgeek.fragment.SubmitFeedbackFragment;
 import com.hasgeek.misc.DataProvider;
 import com.hasgeek.misc.EventSession;
+import com.squareup.otto.Subscribe;
 
 
 public class SessionDetailActivity extends Activity {
 
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
+
+    private EventSession mSession;
     private static final int MENU_SUBMIT_FEEDBACK = 4201;
     private static final int MENU_BOOKMARK = 4202;
-    private EventSession mSession;
 
 
     @Override
@@ -47,6 +55,42 @@ public class SessionDetailActivity extends Activity {
         TextView description = (TextView) findViewById(R.id.tv_sd_description);
         description.setText(Html.fromHtml(mSession.getDescription()));
         description.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BusProvider.getInstance().register(this);
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        BusProvider.getInstance().unregister(this);
+    }
+
+
+    @Subscribe
+    public void feedbackSubmittedEvent(SessionFeedbackSubmittedEvent event) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(SessionDetailActivity.this, "Feedback received, thank you!", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
+    @Subscribe
+    public void feedbackAlreadySubmittedEvent(SessionFeedbackAlreadySubmittedEvent event) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(SessionDetailActivity.this, "You have already submitted feedback for this session.", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
 

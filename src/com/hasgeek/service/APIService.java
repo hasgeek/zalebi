@@ -12,6 +12,8 @@ import android.util.Log;
 
 import com.hasgeek.bus.BusProvider;
 import com.hasgeek.bus.JSFooAPICalledEvent;
+import com.hasgeek.bus.SessionFeedbackAlreadySubmittedEvent;
+import com.hasgeek.bus.SessionFeedbackSubmittedEvent;
 import com.hasgeek.misc.DataProvider;
 
 import org.apache.http.Header;
@@ -41,9 +43,10 @@ import java.util.zip.GZIPInputStream;
 public class APIService extends IntentService {
 
     public static final String MODE = "APIService.MODE";
-    public static final String SYNC_JSFOO = "APIService.SYNC_JSFOO";
     public static final String RESPONSE_CODE = "APIService.RESPONSE_CODE";
     public static final String RESPONSE_DATA = "APIService.RESPONSE_DATA";
+    public static final String SYNC_JSFOO = "APIService.SYNC_JSFOO";
+    public static final String POST_FEEDBACK = "APIService.POST_FEEDBACK";
 
     private static final String API_BASE = "https://funnel.hasgeek.com";
     private static final String TAG = "HasGeek";
@@ -88,7 +91,7 @@ public class APIService extends IntentService {
                                 null
                         );
                         if (idCheck.moveToFirst() && (idCheck.getCount() == 1)) {
-                            cr.update(DataProvider.PROPOSAL_URI, cv, "id is ?", new String[]{ String.valueOf(pro.getInt("id")) });
+                            cr.update(DataProvider.PROPOSAL_URI, cv, "id is ?", new String[] { String.valueOf(pro.getInt("id")) });
                         } else {
                             Uri u = cr.insert(DataProvider.PROPOSAL_URI, cv);
                             cr.notifyChange(u, null);
@@ -106,9 +109,25 @@ public class APIService extends IntentService {
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
                 sp.edit().putBoolean("first_run", false).commit();
             }
+
+        } else if (mode.equals(APIService.POST_FEEDBACK)) {
+            BasicNameValuePair[] pairs = {
+                    new BasicNameValuePair("id_type", "email"), //todo hard-coded for now, change later?
+                    new BasicNameValuePair("userid", intent.getStringExtra("userid")),
+                    new BasicNameValuePair("content", intent.getStringExtra("content")),
+                    new BasicNameValuePair("presentation", intent.getStringExtra("presentation")),
+            };
+
+            HashMap<String, String> response = runHTTPPostRequest(intent.getStringExtra("url"), pairs);
+            if (response.get(RESPONSE_CODE).equals("201")) {
+                BusProvider.getInstance().post(new SessionFeedbackSubmittedEvent());
+            } else if (response.get(RESPONSE_CODE).equals("403")) {
+                BusProvider.getInstance().post(new SessionFeedbackAlreadySubmittedEvent());
+            }
+
+        } else {
+            throw new RuntimeException("The service isn't sure what to do with this");
         }
-
-
     }
 
 

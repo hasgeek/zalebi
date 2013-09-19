@@ -5,6 +5,7 @@ import android.accounts.AccountManager;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -17,6 +18,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.hasgeek.R;
+import com.hasgeek.service.APIService;
 
 
 public class SubmitFeedbackFragment extends DialogFragment {
@@ -113,7 +115,16 @@ public class SubmitFeedbackFragment extends DialogFragment {
                         throw new RuntimeException("No radio button was selected!");
                 }
 
-                Log.w("ASD!asdaSD", googleAccount[0] + " " + contentVote + "/" + presentationVote);
+                Log.w("ASD!asdaSD", mFeedbackUrl + " " + googleAccount[0] + " " + contentVote + "/" + presentationVote);
+
+                Intent i = new Intent(getActivity(), APIService.class);
+                i.putExtra(APIService.MODE, APIService.POST_FEEDBACK);
+                i.putExtra("url", mFeedbackUrl);
+                i.putExtra("userid", googleAccount[0]);
+                i.putExtra("content", String.valueOf(contentVote));
+                i.putExtra("presentation", String.valueOf(presentationVote));
+                getActivity().startService(i);
+                dismiss();
             }
         }
     };

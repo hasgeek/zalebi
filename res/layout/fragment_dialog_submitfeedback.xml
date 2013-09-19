@@ -24,12 +24,14 @@
         <RadioButton
             android:id="@+id/rb_content_ok"
             android:text="@string/feedback_ok"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <RadioButton
             android:id="@+id/rb_content_good"
             android:text="@string/feedback_good"
+            android:textStyle="bold"
             android:layout_marginLeft="32dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -37,6 +39,7 @@
         <RadioButton
             android:id="@+id/rb_content_awesome"
             android:text="@string/feedback_awesome"
+            android:textStyle="bold"
             android:layout_marginLeft="32dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -64,12 +67,14 @@
         <RadioButton
             android:id="@+id/rb_presentation_ok"
             android:text="@string/feedback_ok"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <RadioButton
             android:id="@+id/rb_presentation_good"
             android:text="@string/feedback_good"
+            android:textStyle="bold"
             android:layout_marginLeft="32dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -77,6 +82,7 @@
         <RadioButton
             android:id="@+id/rb_presentation_awesome"
             android:text="@string/feedback_awesome"
+            android:textStyle="bold"
             android:layout_marginLeft="32dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

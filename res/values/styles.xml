@@ -7,7 +7,7 @@
         <item name="android:background">#d5d5d5</item>
     </style>
 
-    <style name="LineGrayHorizontal">
+    <style name="LineGrayVertical">
         <item name="android:layout_width">1dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">#d5d5d5</item>

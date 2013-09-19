@@ -21,6 +21,7 @@
         android:paddingRight="16dp"
         android:paddingBottom="16dp"
         android:textColor="#555"
+        android:textSize="15sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -36,17 +37,19 @@
             android:padding="16dp"
             android:gravity="center"
             android:textAllCaps="true"
+            android:textSize="12sp"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
 
-        <View style="@style/LineGrayHorizontal" />
+        <View style="@style/LineGrayVertical" />
 
         <TextView
             android:id="@+id/tv_sd_level"
             android:padding="16dp"
             android:gravity="center"
             android:textAllCaps="true"
+            android:textSize="12sp"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
