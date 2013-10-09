@@ -10,17 +10,18 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.hasgeek.R;
 import com.hasgeek.bus.BusProvider;
 import com.hasgeek.bus.JSFooAPICalledEvent;
 import com.hasgeek.bus.SessionFeedbackAlreadySubmittedEvent;
 import com.hasgeek.bus.SessionFeedbackSubmittedEvent;
 import com.hasgeek.misc.DataProvider;
+import com.squareup.okhttp.OkHttpClient;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
@@ -30,11 +31,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.zip.GZIPInputStream;
@@ -63,11 +66,12 @@ public class APIService extends IntentService {
         ContentResolver cr = getContentResolver();
 
         if (mode.equals(SYNC_JSFOO)) {
+            JSFooAPICalledEvent event = new JSFooAPICalledEvent();
             try {
-                HashMap<String, String> response = runHTTPGetRequest(API_BASE + "/jsfoo2013/json");
+                HttpCodeAndResponse reply = runOkHttpGetRequest(API_BASE + "/jsfoo2013/json");
 
-                if (response.get(RESPONSE_CODE).equals("200")) {
-                    JSONObject j = new JSONObject(response.get(RESPONSE_DATA));
+                if (reply.getCode().equals("200")) {
+                    JSONObject j = new JSONObject(reply.getResponse());
                     JSONArray proposals = j.getJSONArray("proposals");
 
                     for (int i = 0; i < proposals.length(); i++) {
@@ -98,6 +102,8 @@ public class APIService extends IntentService {
                         }
                         idCheck.close();
                     }
+                } else {
+                    event.setMessage(getString(R.string.message_apifailed));
                 }
 
             } catch (JSONException e) {
@@ -105,7 +111,7 @@ public class APIService extends IntentService {
                 throw new RuntimeException("Failed to parse JSFoo JSON");
 
             } finally {
-                BusProvider.getInstance().post(new JSFooAPICalledEvent());
+                BusProvider.getInstance().post(event);
                 SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
                 sp.edit().putBoolean("first_run", false).commit();
             }
@@ -131,68 +137,36 @@ public class APIService extends IntentService {
     }
 
 
-    /**
-     * Runs an HTTP GET request.
-     * Always adds the X-AUTH-TOKEN as an HTTP header.
-     */
-    public static HashMap<String, String> runHTTPGetRequest(String URL) {
-        HashMap<String, String> returnValue = new HashMap<String, String>();
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        HttpResponse httpResponse;
+    private HttpCodeAndResponse runOkHttpGetRequest(String url) {
+        OkHttpClient client = new OkHttpClient();
+        HttpCodeAndResponse codeAndResponse = new HttpCodeAndResponse();
 
         try {
-            HttpGet request = new HttpGet();
-            request.setURI(new URI(URL));
+            HttpURLConnection connection = client.open(new URL(url));
+            // Read the response.
+            InputStream in = connection.getInputStream();
+            codeAndResponse.setCode(String.valueOf(connection.getResponseCode()));
+            byte[] response = readFully(in);
+            codeAndResponse.setResponse(new String(response));
+            if (in != null) in.close();
 
-            request.addHeader("Accept-Encoding", "gzip");
-
-            // Connection established over here
-            httpResponse = httpClient.execute(request);
-            returnValue.put(RESPONSE_CODE, String.valueOf(httpResponse.getStatusLine().getStatusCode()));
-
-            switch (httpResponse.getStatusLine().getStatusCode()) {
-                case 200:
-                    // life is good
-                    if (httpResponse.getEntity() != null) {
-                        InputStream in = httpResponse.getEntity().getContent();
-                        Header contentEncoding = httpResponse.getFirstHeader("Content-Encoding");
-                        if (contentEncoding != null && contentEncoding.getValue().equalsIgnoreCase("gzip")) {
-                            in = new GZIPInputStream(in);
-                        }
-                        returnValue.put(RESPONSE_DATA, convertStreamToString(in));
-                        in.close();
-                    }
-                    break;
-
-                case 404:
-                    // not found
-                    Log.w(TAG, "HTTP 404 not found");
-                    break;
-
-                case 403:
-                    // access denied
-                    Log.w(TAG, "HTTP 403 access denied");
-                    break;
-
-                default:
-                    // lol
-            }
-
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         } catch (IOException e) {
-            // Server failed to respond with a valid HTTP response, or server not found
             e.printStackTrace();
-            returnValue.put(RESPONSE_CODE, "000");
-
-        } catch (URISyntaxException e) {
-            // Error in creating the URI
-            e.printStackTrace();
-            returnValue.put(RESPONSE_CODE, "000");
-
-        } finally {
-            httpClient.getConnectionManager().shutdown();
         }
 
-        return returnValue;
+        return codeAndResponse;
+    }
+
+
+    private byte[] readFully(InputStream in) throws IOException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        for (int count; (count = in.read(buffer)) != -1; ) {
+            out.write(buffer, 0, count);
+        }
+        return out.toByteArray();
     }
 
 

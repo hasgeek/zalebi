@@ -1,12 +1,15 @@
 package com.hasgeek.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -22,9 +25,10 @@ import com.squareup.otto.Subscribe;
 
 public class HomeActivity extends Activity {
 
-    public static final String TAG = "HasGeek";
-
     private ProgressDialog mBusy;
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
+
+    public static final String TAG = "HasGeek";
 
 
     @Override
@@ -72,6 +76,19 @@ public class HomeActivity extends Activity {
     public void jsfooAPICallDone(JSFooAPICalledEvent meh) {
         if (mBusy != null) {
             mBusy.dismiss();
+        }
+
+        if (meh.hasMessage()) {
+            final JSFooAPICalledEvent neh = meh;
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    new AlertDialog.Builder(HomeActivity.this)
+                            .setMessage(neh.getMessage())
+                            .setPositiveButton(android.R.string.ok, null)
+                            .show();
+                }
+            });
         }
     }
 }
