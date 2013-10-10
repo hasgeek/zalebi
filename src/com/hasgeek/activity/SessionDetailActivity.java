@@ -1,6 +1,7 @@
 package com.hasgeek.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
@@ -74,12 +75,26 @@ public class SessionDetailActivity extends Activity {
 
     @Subscribe
     public void feedbackSubmittedEvent(SessionFeedbackSubmittedEvent event) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(SessionDetailActivity.this, "Feedback received, thank you!", Toast.LENGTH_LONG).show();
-            }
-        });
+        if (event.hasMessage()) {
+            final SessionFeedbackSubmittedEvent devent = event;
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    new AlertDialog.Builder(SessionDetailActivity.this)
+                            .setMessage(devent.getMessage())
+                            .setPositiveButton(android.R.string.ok, null)
+                            .show();
+                }
+            });
+
+        } else {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(SessionDetailActivity.this, R.string.message_feedback_received_thanks, Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
 
@@ -88,7 +103,7 @@ public class SessionDetailActivity extends Activity {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(SessionDetailActivity.this, "You have already submitted feedback for this session.", Toast.LENGTH_LONG).show();
+                Toast.makeText(SessionDetailActivity.this, R.string.message_feedback_already_submitted, Toast.LENGTH_LONG).show();
             }
         });
     }

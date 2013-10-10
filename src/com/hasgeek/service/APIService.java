@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.hasgeek.R;
 import com.hasgeek.bus.BusProvider;
@@ -18,14 +17,6 @@ import com.hasgeek.bus.SessionFeedbackSubmittedEvent;
 import com.hasgeek.misc.DataProvider;
 import com.squareup.okhttp.OkHttpClient;
 
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,24 +26,20 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.zip.GZIPInputStream;
+import java.net.URLEncoder;
 
 
 public class APIService extends IntentService {
 
     public static final String MODE = "APIService.MODE";
-    public static final String RESPONSE_CODE = "APIService.RESPONSE_CODE";
-    public static final String RESPONSE_DATA = "APIService.RESPONSE_DATA";
     public static final String SYNC_JSFOO = "APIService.SYNC_JSFOO";
     public static final String POST_FEEDBACK = "APIService.POST_FEEDBACK";
 
     private static final String API_BASE = "https://funnel.hasgeek.com";
-    private static final String TAG = "HasGeek";
 
 
     public APIService() {
@@ -69,7 +56,6 @@ public class APIService extends IntentService {
             JSFooAPICalledEvent event = new JSFooAPICalledEvent();
             try {
                 HttpCodeAndResponse reply = runOkHttpGetRequest(API_BASE + "/jsfoo2013/json");
-
                 if (reply.getCode().equals("200")) {
                     JSONObject j = new JSONObject(reply.getResponse());
                     JSONArray proposals = j.getJSONArray("proposals");
@@ -101,34 +87,48 @@ public class APIService extends IntentService {
                             cr.notifyChange(u, null);
                         }
                         idCheck.close();
+                        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+                        sp.edit().putBoolean("first_run", false).commit();
                     }
                 } else {
                     event.setMessage(getString(R.string.message_apifailed));
                 }
+                // Done with everything, post to bus
+                BusProvider.getInstance().post(event);
 
             } catch (JSONException e) {
                 e.printStackTrace();
                 throw new RuntimeException("Failed to parse JSFoo JSON");
 
-            } finally {
-                BusProvider.getInstance().post(event);
-                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-                sp.edit().putBoolean("first_run", false).commit();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
         } else if (mode.equals(APIService.POST_FEEDBACK)) {
-            BasicNameValuePair[] pairs = {
-                    new BasicNameValuePair("id_type", "email"), //todo hard-coded for now, change later?
-                    new BasicNameValuePair("userid", intent.getStringExtra("userid")),
-                    new BasicNameValuePair("content", intent.getStringExtra("content")),
-                    new BasicNameValuePair("presentation", intent.getStringExtra("presentation")),
-            };
+            String charset = "UTF-8";
+            String params = null;
+            try {
+                params = String.format("id_type=%s&userid=%s&content=%s&presentation=%s",
+                        URLEncoder.encode("email", charset),
+                        URLEncoder.encode(intent.getStringExtra("userid"), charset),
+                        URLEncoder.encode(intent.getStringExtra("content"), charset),
+                        URLEncoder.encode(intent.getStringExtra("presentation"), charset));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
 
-            HashMap<String, String> response = runHTTPPostRequest(intent.getStringExtra("url"), pairs);
-            if (response.get(RESPONSE_CODE).equals("201")) {
-                BusProvider.getInstance().post(new SessionFeedbackSubmittedEvent());
-            } else if (response.get(RESPONSE_CODE).equals("403")) {
-                BusProvider.getInstance().post(new SessionFeedbackAlreadySubmittedEvent());
+            try {
+                HttpCodeAndResponse response = runOkHttpPostRequest(intent.getStringExtra("url"), params);
+                if (response.getCode().equals("201")) {
+                    BusProvider.getInstance().post(new SessionFeedbackSubmittedEvent());
+                } else if (response.getCode().equals("403")) {
+                    BusProvider.getInstance().post(new SessionFeedbackAlreadySubmittedEvent());
+                } else {
+                    BusProvider.getInstance().post(new SessionFeedbackSubmittedEvent(getString(R.string.message_apifailed)));
+                }
+            } catch (IOException e) {
+                BusProvider.getInstance().post(new SessionFeedbackSubmittedEvent(getString(R.string.message_apifailed)));
+                e.printStackTrace();
             }
 
         } else {
@@ -137,23 +137,19 @@ public class APIService extends IntentService {
     }
 
 
-    private HttpCodeAndResponse runOkHttpGetRequest(String url) {
+    private HttpCodeAndResponse runOkHttpGetRequest(String url) throws IOException {
         OkHttpClient client = new OkHttpClient();
         HttpCodeAndResponse codeAndResponse = new HttpCodeAndResponse();
-
+        InputStream in = null;
         try {
             HttpURLConnection connection = client.open(new URL(url));
-            // Read the response.
-            InputStream in = connection.getInputStream();
             codeAndResponse.setCode(String.valueOf(connection.getResponseCode()));
+            in = connection.getInputStream();
             byte[] response = readFully(in);
             codeAndResponse.setResponse(new String(response));
-            if (in != null) in.close();
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } finally {
+            if (in != null) in.close();
         }
 
         return codeAndResponse;
@@ -170,93 +166,37 @@ public class APIService extends IntentService {
     }
 
 
-    /**
-     * Runs an HTTP POST request, with a set of key-value pairs as POST data.
-     */
-    public static HashMap<String, String> runHTTPPostRequest(String URL, BasicNameValuePair[] params) {
-        HashMap<String, String> returnValue = new HashMap<String, String>();
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        HttpResponse httpResponse;
-        HttpPost request = new HttpPost(URL);
+    private HttpCodeAndResponse runOkHttpPostRequest(String url, String body) throws IOException {
+        OkHttpClient client = new OkHttpClient();
+        HttpCodeAndResponse codeAndResponse = new HttpCodeAndResponse();
+        OutputStreamWriter out = null;
+        InputStream in = null;
 
         try {
-            UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(Arrays.asList(params), HTTP.UTF_8);
-            urlEncodedFormEntity.setContentEncoding(HTTP.UTF_8);
-            request.setEntity(urlEncodedFormEntity);
-            request.addHeader("Accept-Encoding", "gzip");
+            HttpURLConnection connection = client.open(new URL(url));
+            connection.setRequestMethod("POST");
+            out = new OutputStreamWriter(connection.getOutputStream());
+            out.write(body);
+            out.close();
 
-            // Making connection now...
-            httpResponse = httpClient.execute(request);
-            returnValue.put(RESPONSE_CODE, String.valueOf(httpResponse.getStatusLine().getStatusCode()));
-
-            switch (httpResponse.getStatusLine().getStatusCode()) {
-                case 200:
-                case 201:
-                    if (httpResponse.getEntity() != null) {
-                        InputStream in = httpResponse.getEntity().getContent();
-                        Header contentEncoding = httpResponse.getFirstHeader("Content-Encoding");
-                        if (contentEncoding != null && contentEncoding.getValue().equalsIgnoreCase("gzip")) {
-                            in = new GZIPInputStream(in);
-                        }
-                        returnValue.put(RESPONSE_DATA, convertStreamToString(in));
-                        in.close();
-                    }
-                    break;
-
-                case 404:
-                    // not found
-                    Log.w(TAG, "HTTP 404 not found");
-                    break;
-
-                case 403:
-                    // access denied
-                    Log.w(TAG, "HTTP 403 access denied");
-                    break;
-
-                default:
-                    // lol
+            codeAndResponse.setCode(String.valueOf(connection.getResponseCode()));
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_CREATED) {
+                // There's no need to process inputstream if server doesn't return 201
+                in = connection.getInputStream();
+                codeAndResponse.setResponse(readFirstLine(in));
             }
 
-        } catch (ClientProtocolException e) {
-            // Error with the HTTP protocol (?!)
-            e.printStackTrace();
-            returnValue.put(RESPONSE_CODE, "000");
-
-        } catch (IOException e) {
-            // Connection time-out or server not found
-            e.printStackTrace();
-            returnValue.put(RESPONSE_CODE, "000");
-
         } finally {
-            httpClient.getConnectionManager().shutdown();
+            if (out != null) out.close();
+            if (in != null) in.close();
         }
 
-        return returnValue;
+        return codeAndResponse;
     }
 
 
-    /**
-     * Converts an InputStream to a String.
-     */
-    private static String convertStreamToString(InputStream is) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-
-        try {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line).append("\n");
-            }
-        } catch (IOException e) {
-            // foofy
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                // foofy
-            }
-        }
-        return sb.toString();
+    String readFirstLine(InputStream in) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+        return reader.readLine();
     }
-
 }
