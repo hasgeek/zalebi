@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <ImageView
+    <!-- <ImageView
         android:id="@+id/iv_header"
         android:visibility="gone"
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/holobluedarker" />
+        android:background="@color/holobluedarker" /> -->
 
     <FrameLayout
         android:id="@+id/fl_fragment"

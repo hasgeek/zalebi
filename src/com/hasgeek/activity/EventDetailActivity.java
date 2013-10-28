@@ -2,7 +2,6 @@ package com.hasgeek.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +11,8 @@ import com.hasgeek.R;
 import com.hasgeek.fragment.DaysListFragment;
 
 
-public class EventDetailActivity extends Activity {
+public class EventDetailActivity extends Activity implements ActionBar.TabListener {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,13 +23,11 @@ public class EventDetailActivity extends Activity {
         ab.setTitle(getIntent().getStringExtra("name"));
         ab.setSubtitle(getIntent().getStringExtra("dateString"));
 
-        setContentView(R.layout.activity_eventdetail);
+        ab.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        ab.addTab(ab.newTab().setText(R.string.schedule).setTabListener(this));
+        ab.addTab(ab.newTab().setText(R.string.explore).setTabListener(this));
 
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        DaysListFragment dlf = new DaysListFragment();
-        ft.add(R.id.fl_fragment, dlf);
-        ft.commit();
+        setContentView(R.layout.activity_eventdetail);
     }
 
 
@@ -48,4 +46,29 @@ public class EventDetailActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        switch (tab.getPosition()) {
+            case 0: // SCHEDULE
+                DaysListFragment dlf = new DaysListFragment();
+                fragmentTransaction.add(R.id.fl_fragment, dlf);
+                fragmentTransaction.commit();
+                break;
+
+            case 1: // EXPLORE
+                break;
+
+        }
+    }
+
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
 }

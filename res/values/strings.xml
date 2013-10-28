@@ -32,5 +32,7 @@
     <string name="message_apifailed">There was a problem connecting to the HasGeek servers. Please try again in a short while.</string>
     <string name="message_feedback_received_thanks">Feedback received, thank you!</string>
     <string name="message_feedback_already_submitted">You have already submitted feedback for this session.</string>
+    <string name="schedule">SCHEDULE</string>
+    <string name="explore">EXPLORE</string>
 
 </resources>
