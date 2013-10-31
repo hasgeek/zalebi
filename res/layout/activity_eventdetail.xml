@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
 
-    <!-- <ImageView
-        android:id="@+id/iv_header"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="144dp"
-        android:scaleType="centerCrop"
-        android:background="#999"
-        android:src="@drawable/banner"
-        android:contentDescription="@string/cd_iv_header" />
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:orientation="vertical"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="fill_parent">-->
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:background="@color/holobluelighter" />
+    <!--&lt;!&ndash; <ImageView-->
+        <!--android:id="@+id/iv_header"-->
+        <!--android:visibility="gone"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="144dp"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--android:background="#999"-->
+        <!--android:src="@drawable/banner"-->
+        <!--android:contentDescription="@string/cd_iv_header" />-->
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/holobluedarker" /> -->
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="2px"-->
+        <!--android:background="@color/holobluelighter" />-->
 
-    <FrameLayout
-        android:id="@+id/fl_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1px"-->
+        <!--android:background="@color/holobluedarker" /> &ndash;&gt;-->
 
-</LinearLayout>
+    <!--<FrameLayout-->
+        <!--android:id="@+id/fl_fragment"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
+
+<!--</LinearLayout>-->

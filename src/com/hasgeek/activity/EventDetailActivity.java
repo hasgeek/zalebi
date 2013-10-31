@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.hasgeek.R;
-import com.hasgeek.fragment.DaysListFragment;
 
 
 public class EventDetailActivity extends Activity implements ActionBar.TabListener {
@@ -17,6 +16,7 @@ public class EventDetailActivity extends Activity implements ActionBar.TabListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_eventdetail);
 
         ActionBar ab = getActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
@@ -26,8 +26,6 @@ public class EventDetailActivity extends Activity implements ActionBar.TabListen
         ab.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         ab.addTab(ab.newTab().setText(R.string.schedule).setTabListener(this));
         ab.addTab(ab.newTab().setText(R.string.explore).setTabListener(this));
-
-        setContentView(R.layout.activity_eventdetail);
     }
 
 
@@ -51,9 +49,6 @@ public class EventDetailActivity extends Activity implements ActionBar.TabListen
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         switch (tab.getPosition()) {
             case 0: // SCHEDULE
-                DaysListFragment dlf = new DaysListFragment();
-                fragmentTransaction.add(R.id.fl_fragment, dlf);
-                fragmentTransaction.commit();
                 break;
 
             case 1: // EXPLORE
