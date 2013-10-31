@@ -52,6 +52,13 @@ public class EventDetailActivity extends Activity implements ActionBar.TabListen
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_eventdetail, menu);
+
+        if (getActionBar().getSelectedTab().getPosition() == 0) {
+            menu.findItem(R.id.action_toggle_show_bookmarks).setVisible(true);
+        } else {
+            menu.findItem(R.id.action_toggle_show_bookmarks).setVisible(false);
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -75,6 +82,7 @@ public class EventDetailActivity extends Activity implements ActionBar.TabListen
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         mViewPager.setCurrentItem(tab.getPosition());
+        invalidateOptionsMenu();
     }
 
 
