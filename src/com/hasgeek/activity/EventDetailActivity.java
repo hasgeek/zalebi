@@ -2,21 +2,44 @@ package com.hasgeek.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 
 import com.hasgeek.R;
+import com.hasgeek.fragment.DaysListFragment;
+import com.hasgeek.fragment.ExploreEventFragment;
 
 
 public class EventDetailActivity extends Activity implements ActionBar.TabListener {
+
+    private ViewPager mViewPager;
+    private EventSectionsPagerAdapter mEventSectionsPagerAdapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eventdetail);
+
+        mEventSectionsPagerAdapter = new EventSectionsPagerAdapter(getFragmentManager());
+
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mEventSectionsPagerAdapter);
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                // When swiping between different app sections, select the corresponding tab.
+                // We can also use ActionBar.Tab#select() to do this if we have a reference to the
+                // Tab.
+                getActionBar().setSelectedNavigationItem(position);
+            }
+        });
 
         ActionBar ab = getActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
@@ -47,14 +70,7 @@ public class EventDetailActivity extends Activity implements ActionBar.TabListen
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        switch (tab.getPosition()) {
-            case 0: // SCHEDULE
-                break;
-
-            case 1: // EXPLORE
-                break;
-
-        }
+        mViewPager.setCurrentItem(tab.getPosition());
     }
 
 
@@ -65,5 +81,37 @@ public class EventDetailActivity extends Activity implements ActionBar.TabListen
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+
+
+    /**
+     * Adapter for the schedule and explore tabs on the event detail page
+     */
+    private static class EventSectionsPagerAdapter extends FragmentPagerAdapter {
+
+        public EventSectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+
+        @Override
+        public Fragment getItem(int i) {
+            switch (i) {
+                case 0:
+                    return new DaysListFragment();
+
+                case 1:
+                    return new ExploreEventFragment();
+
+                default:
+                    throw new RuntimeException("Which fragment are we trying to load here?");
+            }
+        }
+
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
     }
 }
