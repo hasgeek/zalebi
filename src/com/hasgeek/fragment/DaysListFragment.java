@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,7 +27,6 @@ public class DaysListFragment extends ListFragment
     public static final int All_SESSIONS = 198264;
 
     private SessionsListAdapter mAdapter;
-    private Button mToggleBookmarksButton;
     private static final int REQUEST_SESSION_DETAIL = 4201;
     private List<EventSession> mSessionsList;
     private int mListMode;
@@ -46,9 +44,6 @@ public class DaysListFragment extends ListFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_sessionslist, container, false);
-        mToggleBookmarksButton = (Button) v.findViewById(R.id.btn_toggle_bookmarked);
-        mToggleBookmarksButton.setText(R.string.show_only_bookmarked);
-        mToggleBookmarksButton.setOnClickListener(toggleBookmarksButtonClickListener);
         return v;
     }
 
@@ -135,17 +130,17 @@ public class DaysListFragment extends ListFragment
     }
 
 
-    private View.OnClickListener toggleBookmarksButtonClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            if (mListMode == All_SESSIONS) {
-                mListMode = BOOKMARKED_SESSIONS;
-                mToggleBookmarksButton.setText(R.string.show_all_sessions);
-            } else {
-                mListMode = All_SESSIONS;
-                mToggleBookmarksButton.setText(R.string.show_only_bookmarked);
-            }
-            getLoaderManager().restartLoader(0, null, DaysListFragment.this);
-        }
-    };
+//    private View.OnClickListener toggleBookmarksButtonClickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            if (mListMode == All_SESSIONS) {
+//                mListMode = BOOKMARKED_SESSIONS;
+//                mToggleBookmarksButton.setText(R.string.show_all_sessions);
+//            } else {
+//                mListMode = All_SESSIONS;
+//                mToggleBookmarksButton.setText(R.string.show_only_bookmarked);
+//            }
+//            getLoaderManager().restartLoader(0, null, DaysListFragment.this);
+//        }
+//    };
 }

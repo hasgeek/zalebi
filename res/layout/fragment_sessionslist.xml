@@ -3,17 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn_toggle_bookmarked"
-        style="@style/HasGeekThinButton"
-        android:text="@string/show_only_bookmarked"
-        android:textAllCaps="true"
-        android:textSize="12sp"
-        android:layout_alignParentTop="true" />
-
     <ListView
         android:id="@android:id/list"
-        android:layout_below="@+id/btn_toggle_bookmarked"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

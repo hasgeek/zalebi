@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.hasgeek.R;
@@ -19,7 +20,6 @@ import com.hasgeek.fragment.ExploreEventFragment;
 public class EventDetailActivity extends Activity implements ActionBar.TabListener {
 
     private ViewPager mViewPager;
-    private EventSectionsPagerAdapter mEventSectionsPagerAdapter;
 
 
     @Override
@@ -27,16 +27,13 @@ public class EventDetailActivity extends Activity implements ActionBar.TabListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eventdetail);
 
-        mEventSectionsPagerAdapter = new EventSectionsPagerAdapter(getFragmentManager());
+        EventSectionsPagerAdapter pagerAdapter = new EventSectionsPagerAdapter(getFragmentManager());
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mEventSectionsPagerAdapter);
+        mViewPager.setAdapter(pagerAdapter);
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                // When swiping between different app sections, select the corresponding tab.
-                // We can also use ActionBar.Tab#select() to do this if we have a reference to the
-                // Tab.
                 getActionBar().setSelectedNavigationItem(position);
             }
         });
@@ -49,6 +46,13 @@ public class EventDetailActivity extends Activity implements ActionBar.TabListen
         ab.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         ab.addTab(ab.newTab().setText(R.string.schedule).setTabListener(this));
         ab.addTab(ab.newTab().setText(R.string.explore).setTabListener(this));
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_eventdetail, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
 
