@@ -34,5 +34,6 @@
     <string name="message_feedback_already_submitted">You have already submitted feedback for this session.</string>
     <string name="schedule">SCHEDULE</string>
     <string name="explore">EXPLORE</string>
+    <string name="showing_only_bookmarked_sessions">Showing only bookmarked sessions</string>
 
 </resources>

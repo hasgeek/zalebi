@@ -3,8 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/tv_showing_only_bookmarked"
+        android:visibility="gone"
+        android:background="#333333"
+        android:textColor="#eee"
+        android:textSize="12sp"
+        android:text="@string/showing_only_bookmarked_sessions"
+        android:textAllCaps="true"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="32dp" />
+
     <ListView
         android:id="@android:id/list"
+        android:layout_below="@+id/tv_showing_only_bookmarked"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

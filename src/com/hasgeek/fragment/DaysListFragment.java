@@ -1,11 +1,14 @@
 package com.hasgeek.fragment;
 
-import android.app.ListFragment;
-import android.app.LoaderManager;
 import android.content.Intent;
-import android.content.Loader;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -26,6 +29,7 @@ public class DaysListFragment extends ListFragment
     public static final int BOOKMARKED_SESSIONS = 198263;
     public static final int All_SESSIONS = 198264;
 
+    private TextView mBookmarkedOnlyNotice;
     private SessionsListAdapter mAdapter;
     private static final int REQUEST_SESSION_DETAIL = 4201;
     private List<EventSession> mSessionsList;
@@ -35,8 +39,11 @@ public class DaysListFragment extends ListFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
         mListMode = All_SESSIONS;
         mAdapter = new SessionsListAdapter();
+
         getLoaderManager().initLoader(0, null, this);
     }
 
@@ -44,7 +51,35 @@ public class DaysListFragment extends ListFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_sessionslist, container, false);
+        mBookmarkedOnlyNotice = (TextView) v.findViewById(R.id.tv_showing_only_bookmarked);
         return v;
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_eventdetail, menu);
+        if (mListMode == All_SESSIONS) {
+            menu.findItem(R.id.action_toggle_show_bookmarks)
+                    .setIcon(R.drawable.ic_show_bookmarked)
+                    .setTitle(R.string.show_only_bookmarked);
+        } else {
+            menu.findItem(R.id.action_toggle_show_bookmarks)
+                    .setIcon(R.drawable.ic_show_not_bookmarked)
+                    .setTitle(R.string.show_all_sessions);
+        }
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_toggle_show_bookmarks:
+                toggleBookmarkedSessions();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -130,17 +165,16 @@ public class DaysListFragment extends ListFragment
     }
 
 
-//    private View.OnClickListener toggleBookmarksButtonClickListener = new View.OnClickListener() {
-//        @Override
-//        public void onClick(View view) {
-//            if (mListMode == All_SESSIONS) {
-//                mListMode = BOOKMARKED_SESSIONS;
-//                mToggleBookmarksButton.setText(R.string.show_all_sessions);
-//            } else {
-//                mListMode = All_SESSIONS;
-//                mToggleBookmarksButton.setText(R.string.show_only_bookmarked);
-//            }
-//            getLoaderManager().restartLoader(0, null, DaysListFragment.this);
-//        }
-//    };
+    public void toggleBookmarkedSessions() {
+        if (mListMode == All_SESSIONS) {
+            mListMode = BOOKMARKED_SESSIONS;
+            mBookmarkedOnlyNotice.setVisibility(View.VISIBLE);
+        } else {
+            mListMode = All_SESSIONS;
+            mBookmarkedOnlyNotice.setVisibility(View.GONE);
+        }
+        getActivity().invalidateOptionsMenu();
+        getLoaderManager().restartLoader(0, null, this);
+    }
+
 }

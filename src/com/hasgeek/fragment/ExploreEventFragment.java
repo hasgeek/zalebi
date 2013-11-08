@@ -1,6 +1,7 @@
 package com.hasgeek.fragment;
 
-import android.app.Fragment;
+
+import android.support.v4.app.Fragment;
 
 
 public class ExploreEventFragment extends Fragment {
