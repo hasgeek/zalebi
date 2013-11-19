@@ -1,5 +1,6 @@
 package com.hasgeek.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -11,15 +12,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
+import com.haarman.listviewanimations.itemmanipulation.ExpandableListItemAdapter;
 import com.hasgeek.R;
-import com.hasgeek.activity.SessionDetailActivity;
 import com.hasgeek.misc.EventSession;
 import com.hasgeek.misc.SessionsListLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -41,8 +41,13 @@ public class DaysListFragment extends ListFragment
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
+        mSessionsList = new ArrayList<EventSession>();
         mListMode = All_SESSIONS;
-        mAdapter = new SessionsListAdapter();
+        mAdapter = new SessionsListAdapter(
+                getActivity(),
+                R.layout.row_session,
+                R.id.ll_top,
+                R.id.ll_bottom);
 
         getLoaderManager().initLoader(0, null, this);
     }
@@ -98,20 +103,40 @@ public class DaysListFragment extends ListFragment
     @Override
     public void onLoadFinished(Loader<List<EventSession>> listLoader, List<EventSession> eventSessions) {
         mSessionsList = eventSessions;
+
         if (getListView().getAdapter() == null) {
             setListAdapter(mAdapter);
         } else {
             mAdapter.notifyDataSetChanged();
         }
+
     }
 
 
     @Override
     public void onLoaderReset(Loader<List<EventSession>> listLoader) {
+
     }
 
 
-    private class SessionsListAdapter extends BaseAdapter {
+    /**
+     * The adapter that fills the ListView with session data
+     */
+    private class SessionsListAdapter extends ExpandableListItemAdapter<EventSession> {
+
+        Context nContext;
+        int nLayoutResId;
+        int nTitleResId;
+        int nContentResId;
+
+        protected SessionsListAdapter(Context context, int layoutResId, int titleParentResId, int contentParentResId) {
+            super(context, layoutResId, titleParentResId, contentParentResId, mSessionsList);
+            nContext = context;
+            nLayoutResId = layoutResId;
+            nTitleResId = titleParentResId;
+            nContentResId = contentParentResId;
+        }
+
 
         @Override
         public int getCount() {
@@ -120,40 +145,37 @@ public class DaysListFragment extends ListFragment
 
 
         @Override
-        public EventSession getItem(int i) {
-            return mSessionsList.get(i);
-        }
-
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup viewGroup) {
+        public View getTitleView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = LayoutInflater.from(getActivity()).inflate(R.layout.row_session, viewGroup, false);
+                convertView = parent;
             }
 
             TextView title = (TextView) convertView.findViewById(R.id.tv_session_title);
             title.setText(mSessionsList.get(position).getTitle());
+            return title;
+        }
+
+
+        @Override
+        public View getContentView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = parent;
+            }
 
             TextView speaker = (TextView) convertView.findViewById(R.id.tv_session_speaker);
             speaker.setText(mSessionsList.get(position).getSpeaker());
-
-            return convertView;
+            return speaker;
         }
+
     }
 
-
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        Intent i = new Intent(getActivity(), SessionDetailActivity.class);
-        i.putExtra("session", mSessionsList.get(position));
-        startActivityForResult(i, REQUEST_SESSION_DETAIL);
-    }
+    //todo move this elsewhere
+//    @Override
+//    public void onListItemClick(ListView l, View v, int position, long id) {
+//        Intent i = new Intent(getActivity(), SessionDetailActivity.class);
+//        i.putExtra("session", mSessionsList.get(position));
+//        startActivityForResult(i, REQUEST_SESSION_DETAIL);
+//    }
 
 
     @Override
@@ -173,6 +195,7 @@ public class DaysListFragment extends ListFragment
             mListMode = All_SESSIONS;
             mBookmarkedOnlyNotice.setVisibility(View.GONE);
         }
+
         getActivity().invalidateOptionsMenu();
         getLoaderManager().restartLoader(0, null, this);
     }
