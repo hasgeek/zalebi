@@ -3,7 +3,7 @@ package com.hasgeek.bus;
 import android.text.TextUtils;
 
 
-public class JSFooAPICalledEvent {
+public class DroidconAPICalledEvent {
     private String message;
 
 

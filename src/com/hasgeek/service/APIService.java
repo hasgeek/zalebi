@@ -11,7 +11,7 @@ import android.preference.PreferenceManager;
 
 import com.hasgeek.R;
 import com.hasgeek.bus.BusProvider;
-import com.hasgeek.bus.JSFooAPICalledEvent;
+import com.hasgeek.bus.DroidconAPICalledEvent;
 import com.hasgeek.bus.SessionFeedbackAlreadySubmittedEvent;
 import com.hasgeek.bus.SessionFeedbackSubmittedEvent;
 import com.hasgeek.misc.DataProvider;
@@ -36,7 +36,7 @@ import java.net.URLEncoder;
 public class APIService extends IntentService {
 
     public static final String MODE = "APIService.MODE";
-    public static final String SYNC_JSFOO = "APIService.SYNC_JSFOO";
+    public static final String SYNC_DROIDCON2013 = "APIService.SYNC_DROIDCON2013";
     public static final String POST_FEEDBACK = "APIService.POST_FEEDBACK";
 
     private static final String API_BASE = "https://funnel.hasgeek.com";
@@ -52,8 +52,8 @@ public class APIService extends IntentService {
         String mode = intent.getStringExtra(MODE);
         ContentResolver cr = getContentResolver();
 
-        if (mode.equals(SYNC_JSFOO)) {
-            JSFooAPICalledEvent event = new JSFooAPICalledEvent();
+        if (mode.equals(SYNC_DROIDCON2013)) {
+            DroidconAPICalledEvent event = new DroidconAPICalledEvent();
             try {
                 HttpCodeAndResponse reply = runOkHttpGetRequest(API_BASE + "/jsfoo2013/json");
                 if (reply.getCode().equals("200")) {
@@ -74,16 +74,16 @@ public class APIService extends IntentService {
 
                         // Check if proposal with this id already exists or not
                         Cursor idCheck = cr.query(
-                                DataProvider.PROPOSAL_URI,
+                                DataProvider.SESSION_URI,
                                 new String[] { "id" },
                                 "id is ?",
                                 new String[] { String.valueOf(pro.getInt("id")) },
                                 null
                         );
                         if (idCheck.moveToFirst() && (idCheck.getCount() == 1)) {
-                            cr.update(DataProvider.PROPOSAL_URI, cv, "id is ?", new String[] { String.valueOf(pro.getInt("id")) });
+                            cr.update(DataProvider.SESSION_URI, cv, "id is ?", new String[] { String.valueOf(pro.getInt("id")) });
                         } else {
-                            Uri u = cr.insert(DataProvider.PROPOSAL_URI, cv);
+                            Uri u = cr.insert(DataProvider.SESSION_URI, cv);
                             cr.notifyChange(u, null);
                         }
                         idCheck.close();

@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 
 import com.hasgeek.R;
 import com.hasgeek.bus.BusProvider;
-import com.hasgeek.bus.JSFooAPICalledEvent;
+import com.hasgeek.bus.DroidconAPICalledEvent;
 import com.hasgeek.fragment.EventsListFragment;
 import com.hasgeek.service.APIService;
 import com.squareup.otto.Subscribe;
@@ -51,7 +51,7 @@ public class HomeActivity extends Activity {
         ft.commit();
 
         Intent i = new Intent(this, APIService.class);
-        i.putExtra(APIService.MODE, APIService.SYNC_JSFOO);
+        i.putExtra(APIService.MODE, APIService.SYNC_DROIDCON2013);
         startService(i);
     }
 
@@ -71,13 +71,13 @@ public class HomeActivity extends Activity {
 
 
     @Subscribe
-    public void jsfooAPICallDone(JSFooAPICalledEvent meh) {
+    public void sillyHardcodedAPICallDone(DroidconAPICalledEvent meh) {
         if (mBusy != null) {
             mBusy.dismiss();
         }
 
         if (meh.hasMessage()) {
-            final JSFooAPICalledEvent neh = meh;
+            final DroidconAPICalledEvent neh = meh;
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {

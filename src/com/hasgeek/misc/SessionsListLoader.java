@@ -28,7 +28,7 @@ public class SessionsListLoader extends AsyncTaskLoader<List<EventSession>> {
         Cursor sessions;
         if (mMode == DaysListFragment.All_SESSIONS) {
             sessions = getContext().getContentResolver().query(
-                    DataProvider.PROPOSAL_URI,
+                    DataProvider.SESSION_URI,
                     new String[] { "id", "title", "speaker", "section", "level", "description", "url", "bookmarked" },
                     null,
                     null,
@@ -36,7 +36,7 @@ public class SessionsListLoader extends AsyncTaskLoader<List<EventSession>> {
             );
         } else {
             sessions = getContext().getContentResolver().query(
-                    DataProvider.PROPOSAL_URI,
+                    DataProvider.SESSION_URI,
                     new String[] { "id", "title", "speaker", "section", "level", "description", "url", "bookmarked" },
                     "bookmarked = ?",
                     new String[] { "true" },

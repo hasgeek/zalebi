@@ -61,7 +61,7 @@ public class EventsListFragment extends ListFragment implements LoaderManager.Lo
 
         public TempEventListAdapter() {
             data = new ArrayList<String>();
-            data.add(getString(R.string.jsfoo_title));
+            data.add(getString(R.string.droidcon2013_title));
         }
 
         @Override
@@ -89,7 +89,7 @@ public class EventsListFragment extends ListFragment implements LoaderManager.Lo
             eventName.setText(data.get(position));
 
             TextView eventDate = (TextView) convertView.findViewById(R.id.tv_event_date);
-            eventDate.setText(R.string.jsfoo_date);
+            eventDate.setText(R.string.droidcon2013_date);
 
             return convertView;
         }
@@ -104,8 +104,8 @@ public class EventsListFragment extends ListFragment implements LoaderManager.Lo
 //        c.moveToPosition(position);
 
         Intent ed = new Intent(getActivity(), EventDetailActivity.class);
-        ed.putExtra("name", getString(R.string.jsfoo_title));
-        ed.putExtra("dateString", getString(R.string.jsfoo_date));
+        ed.putExtra("name", getString(R.string.droidcon2013_title));
+        ed.putExtra("dateString", getString(R.string.droidcon2013_date));
         startActivity(ed);
     }
 

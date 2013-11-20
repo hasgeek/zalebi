@@ -12,11 +12,11 @@ public class DBManager extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "hsgk";
     public static final int DATABASE_VERSION = 1;
 
-    public static final String PROPOSALS_TABLE = "proposals";
+    public static final String SESSIONS_TABLE = "sessions";
 
     private static DBManager mInstance = null;
 
-    private static final String CREATE_TABLE_PROPOSALS = "CREATE TABLE " + PROPOSALS_TABLE + " (" +
+    private static final String CREATE_TABLE_SESSIONS = "CREATE TABLE " + SESSIONS_TABLE + " (" +
             BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "id TEXT NOT NULL UNIQUE, " +
             "title TEXT NOT NULL, " +
@@ -45,8 +45,8 @@ public class DBManager extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TABLE_PROPOSALS);
-        Log.w("Hasgeek", "Created proposals table.");
+        db.execSQL(CREATE_TABLE_SESSIONS);
+        Log.w("Hasgeek", "Created sessions table.");
     }
 
 

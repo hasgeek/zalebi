@@ -11,8 +11,8 @@
 
     <string name="tv_making_magic">Making magic…</string>
     <string name="tv_empty">Nothing here.</string>
-    <string name="jsfoo_date">20th and 21st September 2013</string>
-    <string name="jsfoo_title">JSFoo 2013</string>
+    <string name="droidcon2013_date">28th and 29th November 2013</string>
+    <string name="droidcon2013_title">Droidcon India 2013</string>
     <string name="menu_submit_feedback">Submit feedback</string>
     <string name="menu_remove_bookmark">Remove from bookmarks</string>
     <string name="menu_save_bookmark">Save to bookmarks</string>

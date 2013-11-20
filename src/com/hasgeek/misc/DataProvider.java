@@ -22,16 +22,16 @@ public class DataProvider extends ContentProvider {
     public static final String PROVIDER_NAME = "com.hasgeek.data";
     public static final String SQLITE_INSERT_OR_REPLACE_MODE = "__SQLITE_INSERT_OR_REPLACE_MODE__";
 
-    public static final Uri PROPOSAL_URI = Uri.parse("content://" + PROVIDER_NAME + "/proposals");
+    public static final Uri SESSION_URI = Uri.parse("content://" + PROVIDER_NAME + "/sessions");
 
     private static final UriMatcher uriMatcher;
-    private static final int PROPOSALS_MATCH = 4201;
-    private static final int PROPOSAL_MATCH = 4202;
+    private static final int SESSIONS_MATCH = 4201;
+    private static final int SESSION_MATCH = 4202;
 
     static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(PROVIDER_NAME, "proposals", PROPOSALS_MATCH);
-        uriMatcher.addURI(PROVIDER_NAME, "proposal/#", PROPOSAL_MATCH);
+        uriMatcher.addURI(PROVIDER_NAME, "sessions", SESSIONS_MATCH);
+        uriMatcher.addURI(PROVIDER_NAME, "session/#", SESSION_MATCH);
     }
 
 
@@ -46,10 +46,10 @@ public class DataProvider extends ContentProvider {
     @Override
     public String getType(Uri uri) {
         switch (uriMatcher.match(uri)) {
-            case PROPOSALS_MATCH:
-                return "vnd.android.cursor.dir/vnd.com.hasgeek.proposals";
-            case PROPOSAL_MATCH:
-                return "vnd.android.cursor.item/vnd.com.hasgeek.proposals";
+            case SESSIONS_MATCH:
+                return "vnd.android.cursor.dir/vnd.com.hasgeek.sessions";
+            case SESSION_MATCH:
+                return "vnd.android.cursor.item/vnd.com.hasgeek.sessions";
             default:
                 throw new RuntimeException("Unsupported URI: " + uri);
         }
@@ -61,12 +61,12 @@ public class DataProvider extends ContentProvider {
         SQLiteQueryBuilder sqlBuilder = new SQLiteQueryBuilder();
 
         switch (uriMatcher.match(uri)) {
-            case PROPOSALS_MATCH:
-                sqlBuilder.setTables(DBManager.PROPOSALS_TABLE);
+            case SESSIONS_MATCH:
+                sqlBuilder.setTables(DBManager.SESSIONS_TABLE);
                 break;
 
-            case PROPOSAL_MATCH:
-                sqlBuilder.setTables(DBManager.PROPOSALS_TABLE);
+            case SESSION_MATCH:
+                sqlBuilder.setTables(DBManager.SESSIONS_TABLE);
                 sqlBuilder.appendWhere(BaseColumns._ID + "=" + uri.getPathSegments().get(1));
                 break;
 
@@ -87,13 +87,13 @@ public class DataProvider extends ContentProvider {
         int count;
 
         switch (uriMatcher.match(uri)) {
-            case PROPOSALS_MATCH:
-                count = db.delete(DBManager.PROPOSALS_TABLE, selection, selectionArgs);
+            case SESSIONS_MATCH:
+                count = db.delete(DBManager.SESSIONS_TABLE, selection, selectionArgs);
                 break;
 
-            case PROPOSAL_MATCH:
+            case SESSION_MATCH:
                 count = db.delete(
-                        DBManager.PROPOSALS_TABLE,
+                        DBManager.SESSIONS_TABLE,
                         BaseColumns._ID + " = " + id + (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : ""),
                         selectionArgs
                 );
@@ -119,16 +119,16 @@ public class DataProvider extends ContentProvider {
             v.remove(SQLITE_INSERT_OR_REPLACE_MODE);
         }
 
-        if (uri.getPathSegments().get(0).equals("proposals")) {
+        if (uri.getPathSegments().get(0).equals("sessions")) {
             try {
                 long row;
                 if (replace) {
-                    row = db.replaceOrThrow(DBManager.PROPOSALS_TABLE, null, v);
+                    row = db.replaceOrThrow(DBManager.SESSIONS_TABLE, null, v);
                 } else {
-                    row = db.insertOrThrow(DBManager.PROPOSALS_TABLE, null, v);
+                    row = db.insertOrThrow(DBManager.SESSIONS_TABLE, null, v);
                 }
                 if (row > 0) {
-                    Uri u = ContentUris.withAppendedId(PROPOSAL_URI, row);
+                    Uri u = ContentUris.withAppendedId(SESSION_URI, row);
                     mContext.getContentResolver().notifyChange(u, null);
                     return u;
                 }
@@ -151,12 +151,12 @@ public class DataProvider extends ContentProvider {
         int count;
 
         switch (uriMatcher.match(uri)) {
-            case PROPOSALS_MATCH:
-                count = db.update(DBManager.PROPOSALS_TABLE, values, selection, selectionArgs);
+            case SESSIONS_MATCH:
+                count = db.update(DBManager.SESSIONS_TABLE, values, selection, selectionArgs);
                 break;
-            case PROPOSAL_MATCH:
+            case SESSION_MATCH:
                 String id = uri.getPathSegments().get(1);
-                count = db.update(DBManager.PROPOSALS_TABLE,
+                count = db.update(DBManager.SESSIONS_TABLE,
                         values,
                         BaseColumns._ID + " = " + id + (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : ""),
                         selectionArgs

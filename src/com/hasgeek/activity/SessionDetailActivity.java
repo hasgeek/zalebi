@@ -162,13 +162,13 @@ public class SessionDetailActivity extends Activity {
 
         if (mSession.isBookmarked()) {
             cv.put("bookmarked", "false");
-            getContentResolver().update(DataProvider.PROPOSAL_URI, cv, "id is ?", new String[] { mSession.getId() });
+            getContentResolver().update(DataProvider.SESSION_URI, cv, "id is ?", new String[] { mSession.getId() });
             Toast.makeText(this, R.string.bookmark_removed, Toast.LENGTH_SHORT).show();
             mSession.setBookmarked(false);
 
         } else {
             cv.put("bookmarked", "true");
-            getContentResolver().update(DataProvider.PROPOSAL_URI, cv, "id is ?", new String[] { mSession.getId() });
+            getContentResolver().update(DataProvider.SESSION_URI, cv, "id is ?", new String[] { mSession.getId() });
             Toast.makeText(this, R.string.bookmark_saved, Toast.LENGTH_SHORT).show();
             mSession.setBookmarked(true);
         }
