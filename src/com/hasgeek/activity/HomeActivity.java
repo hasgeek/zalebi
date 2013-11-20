@@ -28,8 +28,6 @@ public class HomeActivity extends Activity {
     private ProgressDialog mBusy;
     private final Handler mHandler = new Handler(Looper.getMainLooper());
 
-    public static final String TAG = "HasGeek";
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

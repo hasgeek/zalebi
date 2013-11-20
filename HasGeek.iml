@@ -21,6 +21,8 @@
     <orderEntry type="library" name="okhttp-1.2.1-jar-with-dependencies" level="project" />
     <orderEntry type="library" name="android-support-v4" level="project" />
     <orderEntry type="library" name="com.haarman.listviewanimations-2.5.2" level="project" />
+    <orderEntry type="library" name="CWAC-WakefulIntentService" level="project" />
+    <orderEntry type="library" name="nineoldandroids-2.4.0" level="project" />
   </component>
 </module>
 
