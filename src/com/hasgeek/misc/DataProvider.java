@@ -23,15 +23,26 @@ public class DataProvider extends ContentProvider {
     public static final String SQLITE_INSERT_OR_REPLACE_MODE = "__SQLITE_INSERT_OR_REPLACE_MODE__";
 
     public static final Uri SESSION_URI = Uri.parse("content://" + PROVIDER_NAME + "/sessions");
+    public static final Uri ROOM_URI = Uri.parse("content://" + PROVIDER_NAME + "/rooms");
+    public static final Uri VENUE_URI = Uri.parse("content://" + PROVIDER_NAME + "/venues");
 
     private static final UriMatcher uriMatcher;
     private static final int SESSIONS_MATCH = 4201;
     private static final int SESSION_MATCH = 4202;
+    private static final int ROOMS_MATCH = 4204;
+    private static final int ROOM_MATCH = 4205;
+    private static final int VENUES_MATCH = 4241;
+    private static final int VENUE_MATCH = 4242;
+
 
     static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(PROVIDER_NAME, "sessions", SESSIONS_MATCH);
         uriMatcher.addURI(PROVIDER_NAME, "session/#", SESSION_MATCH);
+        uriMatcher.addURI(PROVIDER_NAME, "rooms", ROOMS_MATCH);
+        uriMatcher.addURI(PROVIDER_NAME, "room/#", ROOM_MATCH);
+        uriMatcher.addURI(PROVIDER_NAME, "venues", VENUES_MATCH);
+        uriMatcher.addURI(PROVIDER_NAME, "venue/#", VENUE_MATCH);
     }
 
 
@@ -50,6 +61,14 @@ public class DataProvider extends ContentProvider {
                 return "vnd.android.cursor.dir/vnd.com.hasgeek.sessions";
             case SESSION_MATCH:
                 return "vnd.android.cursor.item/vnd.com.hasgeek.sessions";
+            case ROOMS_MATCH:
+                return "vnd.android.cursor.dir/vnd.com.hasgeek.rooms";
+            case ROOM_MATCH:
+                return "vnd.android.cursor.item/vnd.com.hasgeek.rooms";
+            case VENUES_MATCH:
+                return "vnd.android.cursor.dir/vnd.com.hasgeek.venues";
+            case VENUE_MATCH:
+                return "vnd.android.cursor.item/vnd.com.hasgeek.venues";
             default:
                 throw new RuntimeException("Unsupported URI: " + uri);
         }
@@ -67,6 +86,24 @@ public class DataProvider extends ContentProvider {
 
             case SESSION_MATCH:
                 sqlBuilder.setTables(DBManager.SESSIONS_TABLE);
+                sqlBuilder.appendWhere(BaseColumns._ID + "=" + uri.getPathSegments().get(1));
+                break;
+
+            case VENUES_MATCH:
+                sqlBuilder.setTables(DBManager.VENUES_TABLE);
+                break;
+
+            case VENUE_MATCH:
+                sqlBuilder.setTables(DBManager.VENUES_TABLE);
+                sqlBuilder.appendWhere(BaseColumns._ID + "=" + uri.getPathSegments().get(1));
+                break;
+
+            case ROOMS_MATCH:
+                sqlBuilder.setTables(DBManager.ROOMS_TABLE);
+                break;
+
+            case ROOM_MATCH:
+                sqlBuilder.setTables(DBManager.ROOMS_TABLE);
                 sqlBuilder.appendWhere(BaseColumns._ID + "=" + uri.getPathSegments().get(1));
                 break;
 
@@ -94,6 +131,30 @@ public class DataProvider extends ContentProvider {
             case SESSION_MATCH:
                 count = db.delete(
                         DBManager.SESSIONS_TABLE,
+                        BaseColumns._ID + " = " + id + (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : ""),
+                        selectionArgs
+                );
+                break;
+
+            case ROOMS_MATCH:
+                count = db.delete(DBManager.ROOMS_TABLE, selection, selectionArgs);
+                break;
+
+            case ROOM_MATCH:
+                count = db.delete(
+                        DBManager.ROOMS_TABLE,
+                        BaseColumns._ID + " = " + id + (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : ""),
+                        selectionArgs
+                );
+                break;
+
+            case VENUES_MATCH:
+                count = db.delete(DBManager.VENUES_TABLE, selection, selectionArgs);
+                break;
+
+            case VENUE_MATCH:
+                count = db.delete(
+                        DBManager.VENUES_TABLE,
                         BaseColumns._ID + " = " + id + (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : ""),
                         selectionArgs
                 );
@@ -137,6 +198,42 @@ public class DataProvider extends ContentProvider {
                 throw new RuntimeException("Insertion failed.");
             }
 
+        } else if (uri.getPathSegments().get(0).equals("rooms")) {
+            try {
+                long row;
+                if (replace) {
+                    row = db.replaceOrThrow(DBManager.ROOMS_TABLE, null, v);
+                } else {
+                    row = db.insertOrThrow(DBManager.ROOMS_TABLE, null, v);
+                }
+                if (row > 0) {
+                    Uri u = ContentUris.withAppendedId(ROOM_URI, row);
+                    mContext.getContentResolver().notifyChange(u, null);
+                    return u;
+                }
+            } catch (SQLiteConstraintException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Insertion failed.");
+            }
+
+        } else if (uri.getPathSegments().get(0).equals("venues")) {
+            try {
+                long row;
+                if (replace) {
+                    row = db.replaceOrThrow(DBManager.VENUES_TABLE, null, v);
+                } else {
+                    row = db.insertOrThrow(DBManager.VENUES_TABLE, null, v);
+                }
+                if (row > 0) {
+                    Uri u = ContentUris.withAppendedId(VENUE_URI, row);
+                    mContext.getContentResolver().notifyChange(u, null);
+                    return u;
+                }
+            } catch (SQLiteConstraintException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Insertion failed.");
+            }
+
         } else {
             throw new RuntimeException("Insert is broken.");
         }
@@ -148,6 +245,7 @@ public class DataProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         SQLiteDatabase db = mDBM.getWritableDatabase();
+        String id = uri.getPathSegments().get(1);
         int count;
 
         switch (uriMatcher.match(uri)) {
@@ -155,8 +253,29 @@ public class DataProvider extends ContentProvider {
                 count = db.update(DBManager.SESSIONS_TABLE, values, selection, selectionArgs);
                 break;
             case SESSION_MATCH:
-                String id = uri.getPathSegments().get(1);
                 count = db.update(DBManager.SESSIONS_TABLE,
+                        values,
+                        BaseColumns._ID + " = " + id + (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : ""),
+                        selectionArgs
+                );
+                break;
+
+            case ROOMS_MATCH:
+                count = db.update(DBManager.ROOMS_TABLE, values, selection, selectionArgs);
+                break;
+            case ROOM_MATCH:
+                count = db.update(DBManager.ROOMS_TABLE,
+                        values,
+                        BaseColumns._ID + " = " + id + (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : ""),
+                        selectionArgs
+                );
+                break;
+
+            case VENUES_MATCH:
+                count = db.update(DBManager.VENUES_TABLE, values, selection, selectionArgs);
+                break;
+            case VENUE_MATCH:
+                count = db.update(DBManager.VENUES_TABLE,
                         values,
                         BaseColumns._ID + " = " + id + (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : ""),
                         selectionArgs

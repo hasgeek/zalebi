@@ -55,38 +55,97 @@ public class APIService extends IntentService {
         if (mode.equals(SYNC_DROIDCON2013)) {
             DroidconAPICalledEvent event = new DroidconAPICalledEvent();
             try {
-                HttpCodeAndResponse reply = runOkHttpGetRequest(API_BASE + "/jsfoo2013/json");
+                HttpCodeAndResponse reply = runOkHttpGetRequest(API_BASE + "/droidcon2013/schedule/json");
                 if (reply.getCode().equals("200")) {
                     JSONObject j = new JSONObject(reply.getResponse());
-                    JSONArray proposals = j.getJSONArray("proposals");
 
-                    for (int i = 0; i < proposals.length(); i++) {
-                        JSONObject pro = proposals.getJSONObject(i);
-
+                    // Process venue
+                    JSONArray venues = j.getJSONArray("venues");
+                    for (int i = 0; i < venues.length(); i++) {
+                        JSONObject ven = venues.getJSONObject(i);
                         ContentValues cv = new ContentValues();
-                        cv.put("id", pro.getInt("id"));
-                        cv.put("title", pro.getString("title"));
-                        cv.put("speaker", pro.getString("speaker"));
-                        cv.put("section", pro.getString("section"));
-                        cv.put("level", pro.getString("level"));
-                        cv.put("description", pro.getString("description"));
-                        cv.put("url", pro.getString("url"));
+                        cv.put("name", ven.getString("name"));
+                        cv.put("title", ven.getString("title"));
+                        cv.put("address1", ven.optString("address1", null));
+                        cv.put("address2", ven.optString("address2", null));
+                        cv.put("city", ven.optString("city", null));
+                        cv.put("state", ven.optString("state", null));
+                        cv.put("country", ven.optString("country", null));
+                        cv.put("postcode", ven.optString("postcode", null));
+                        cv.put("description", ven.optString("description", null));
+                        cv.put("latitude", ven.optDouble("latitude", 0));
+                        cv.put("longitude", ven.optDouble("longitude", 0));
+                        cv.put(DataProvider.SQLITE_INSERT_OR_REPLACE_MODE, true);
 
-                        // Check if proposal with this id already exists or not
-                        Cursor idCheck = cr.query(
-                                DataProvider.SESSION_URI,
-                                new String[] { "id" },
-                                "id is ?",
-                                new String[] { String.valueOf(pro.getInt("id")) },
-                                null
-                        );
-                        if (idCheck.moveToFirst() && (idCheck.getCount() == 1)) {
-                            cr.update(DataProvider.SESSION_URI, cv, "id is ?", new String[] { String.valueOf(pro.getInt("id")) });
-                        } else {
-                            Uri u = cr.insert(DataProvider.SESSION_URI, cv);
-                            cr.notifyChange(u, null);
+                        Uri u = cr.insert(DataProvider.VENUE_URI, cv);
+                        cr.notifyChange(u, null);
+                    }
+
+                    // Process rooms
+                    JSONArray rooms = j.getJSONArray("rooms");
+                    for (int i = 0; i < rooms.length(); i++) {
+                        JSONObject roo = rooms.getJSONObject(i);
+                        ContentValues cv = new ContentValues();
+                        cv.put("name", roo.getString("name"));
+                        cv.put("title", roo.getString("title"));
+                        cv.put("venue", roo.getString("venue"));
+                        cv.put("bgcolor", roo.getString("bgcolor"));
+                        cv.put("description", roo.optString("description", null));
+                        cv.put(DataProvider.SQLITE_INSERT_OR_REPLACE_MODE, true);
+
+                        Uri u = cr.insert(DataProvider.ROOM_URI, cv);
+                        cr.notifyChange(u, null);
+                    }
+
+                    // Process schedule
+                    JSONArray sessions = j.getJSONArray("schedule");
+                    for (int i = 0; i < sessions.length(); i++) {
+                        JSONObject day = sessions.getJSONObject(i);
+
+                        String date = day.getString("date");
+                        JSONArray slots = day.getJSONArray("slots");
+                        for (int k = 0; k < slots.length(); k++) {
+                            JSONObject slotObject = slots.getJSONObject(k);
+                            String slottime = slotObject.getString("slot");
+
+                            JSONArray slotsessions = slotObject.getJSONArray("sessions");
+                            for (int m = 0; m < slotsessions.length(); m++) {
+                                JSONObject sess = slotsessions.getJSONObject(m);
+                                ContentValues cv = new ContentValues();
+                                // Not-null values first
+                                cv.put("id", sess.getInt("id"));
+                                cv.put("title", sess.getString("title"));
+                                cv.put("start", sess.getString("start"));
+                                cv.put("end", sess.getString("end"));
+                                cv.put("is_break", sess.getString("is_break"));
+                                cv.put("slot_ist", slottime);
+                                cv.put("date_ist", date);
+                                // Now, nullable values...
+                                cv.put("room", sess.optString("room", null));
+                                cv.put("speaker", sess.optString("speaker", null));
+                                cv.put("section", sess.optString("section_title", null));
+                                cv.put("level", sess.optString("technical_level", null));
+                                cv.put("description", sess.optString("description_text", null));
+                                cv.put("url", sess.optString("url", null));
+
+                                // Check if proposal with this id already exists or not
+                                Cursor idCheck = cr.query(
+                                        DataProvider.SESSION_URI,
+                                        new String[] { "id" },
+                                        "id is ?",
+                                        new String[] { String.valueOf(sess.getInt("id")) },
+                                        null
+                                );
+                                if (idCheck.moveToFirst() && (idCheck.getCount() == 1)) {
+                                    cr.update(DataProvider.SESSION_URI, cv, "id is ?", new String[] { String.valueOf(sess.getInt("id")) });
+                                } else {
+                                    Uri u = cr.insert(DataProvider.SESSION_URI, cv);
+                                    cr.notifyChange(u, null);
+                                }
+                                idCheck.close();
+                            }
                         }
-                        idCheck.close();
+
                         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
                         sp.edit().putBoolean("first_run", false).commit();
                     }
@@ -102,6 +161,8 @@ public class APIService extends IntentService {
 
             } catch (IOException e) {
                 e.printStackTrace();
+                event.setMessage(getString(R.string.message_apifailed));
+                BusProvider.getInstance().post(event);
             }
 
         } else if (mode.equals(APIService.POST_FEEDBACK)) {
