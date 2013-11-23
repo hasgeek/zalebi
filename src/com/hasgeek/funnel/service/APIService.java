@@ -1,4 +1,4 @@
-package com.hasgeek.service;
+package com.hasgeek.funnel.service;
 
 import android.app.IntentService;
 import android.content.ContentResolver;
@@ -9,12 +9,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 
-import com.hasgeek.R;
-import com.hasgeek.bus.BusProvider;
-import com.hasgeek.bus.DroidconAPICalledEvent;
-import com.hasgeek.bus.SessionFeedbackAlreadySubmittedEvent;
-import com.hasgeek.bus.SessionFeedbackSubmittedEvent;
-import com.hasgeek.misc.DataProvider;
+import com.hasgeek.funnel.R;
+import com.hasgeek.funnel.bus.BusProvider;
+import com.hasgeek.funnel.bus.DroidconAPICalledEvent;
+import com.hasgeek.funnel.bus.SessionFeedbackAlreadySubmittedEvent;
+import com.hasgeek.funnel.bus.SessionFeedbackSubmittedEvent;
+import com.hasgeek.funnel.misc.DataProvider;
 import com.squareup.okhttp.OkHttpClient;
 
 import org.json.JSONArray;

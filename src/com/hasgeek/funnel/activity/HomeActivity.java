@@ -1,4 +1,4 @@
-package com.hasgeek.activity;
+package com.hasgeek.funnel.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,11 +15,11 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import com.hasgeek.R;
-import com.hasgeek.bus.BusProvider;
-import com.hasgeek.bus.DroidconAPICalledEvent;
-import com.hasgeek.fragment.EventsListFragment;
-import com.hasgeek.service.APIService;
+import com.hasgeek.funnel.R;
+import com.hasgeek.funnel.bus.BusProvider;
+import com.hasgeek.funnel.bus.DroidconAPICalledEvent;
+import com.hasgeek.funnel.fragment.EventsListFragment;
+import com.hasgeek.funnel.service.APIService;
 import com.squareup.otto.Subscribe;
 
 

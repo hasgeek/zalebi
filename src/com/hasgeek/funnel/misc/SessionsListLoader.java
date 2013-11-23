@@ -1,10 +1,10 @@
-package com.hasgeek.misc;
+package com.hasgeek.funnel.misc;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.content.AsyncTaskLoader;
 
-import com.hasgeek.fragment.DaysListFragment;
+import com.hasgeek.funnel.fragment.DaysListFragment;
 
 import java.util.ArrayList;
 import java.util.List;

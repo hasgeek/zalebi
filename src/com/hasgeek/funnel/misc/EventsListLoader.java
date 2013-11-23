@@ -1,4 +1,4 @@
-package com.hasgeek.misc;
+package com.hasgeek.funnel.misc;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;

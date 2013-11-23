@@ -1,4 +1,4 @@
-package com.hasgeek.fragment;
+package com.hasgeek.funnel.fragment;
 
 
 import android.support.v4.app.Fragment;

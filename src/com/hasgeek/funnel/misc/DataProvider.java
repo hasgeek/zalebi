@@ -1,4 +1,4 @@
-package com.hasgeek.misc;
+package com.hasgeek.funnel.misc;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -19,7 +19,7 @@ public class DataProvider extends ContentProvider {
     private DBManager mDBM;
     private Context mContext;
 
-    public static final String PROVIDER_NAME = "com.hasgeek.data";
+    public static final String PROVIDER_NAME = "com.hasgeek.funnel.data";
     public static final String SQLITE_INSERT_OR_REPLACE_MODE = "__SQLITE_INSERT_OR_REPLACE_MODE__";
 
     public static final Uri SESSION_URI = Uri.parse("content://" + PROVIDER_NAME + "/sessions");
@@ -58,17 +58,17 @@ public class DataProvider extends ContentProvider {
     public String getType(Uri uri) {
         switch (uriMatcher.match(uri)) {
             case SESSIONS_MATCH:
-                return "vnd.android.cursor.dir/vnd.com.hasgeek.sessions";
+                return "vnd.android.cursor.dir/vnd.com.hasgeek.funnel.sessions";
             case SESSION_MATCH:
-                return "vnd.android.cursor.item/vnd.com.hasgeek.sessions";
+                return "vnd.android.cursor.item/vnd.com.hasgeek.funnel.sessions";
             case ROOMS_MATCH:
-                return "vnd.android.cursor.dir/vnd.com.hasgeek.rooms";
+                return "vnd.android.cursor.dir/vnd.com.hasgeek.funnel.rooms";
             case ROOM_MATCH:
-                return "vnd.android.cursor.item/vnd.com.hasgeek.rooms";
+                return "vnd.android.cursor.item/vnd.com.hasgeek.funnel.rooms";
             case VENUES_MATCH:
-                return "vnd.android.cursor.dir/vnd.com.hasgeek.venues";
+                return "vnd.android.cursor.dir/vnd.com.hasgeek.funnel.venues";
             case VENUE_MATCH:
-                return "vnd.android.cursor.item/vnd.com.hasgeek.venues";
+                return "vnd.android.cursor.item/vnd.com.hasgeek.funnel.venues";
             default:
                 throw new RuntimeException("Unsupported URI: " + uri);
         }

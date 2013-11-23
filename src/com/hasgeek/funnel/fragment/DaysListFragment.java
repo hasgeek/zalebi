@@ -1,4 +1,4 @@
-package com.hasgeek.fragment;
+package com.hasgeek.funnel.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,9 +15,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.haarman.listviewanimations.itemmanipulation.ExpandableListItemAdapter;
-import com.hasgeek.R;
-import com.hasgeek.misc.EventSession;
-import com.hasgeek.misc.SessionsListLoader;
+import com.hasgeek.funnel.R;
+import com.hasgeek.funnel.misc.EventSession;
+import com.hasgeek.funnel.misc.SessionsListLoader;
 
 import java.util.ArrayList;
 import java.util.List;

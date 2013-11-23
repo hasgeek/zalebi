@@ -1,4 +1,4 @@
-package com.hasgeek.fragment;
+package com.hasgeek.funnel.fragment;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -17,8 +17,8 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.hasgeek.R;
-import com.hasgeek.service.APIService;
+import com.hasgeek.funnel.R;
+import com.hasgeek.funnel.service.APIService;
 
 
 public class SubmitFeedbackFragment extends DialogFragment {

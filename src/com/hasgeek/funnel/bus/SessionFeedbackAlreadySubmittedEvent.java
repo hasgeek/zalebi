@@ -1,4 +1,4 @@
-package com.hasgeek.bus;
+package com.hasgeek.funnel.bus;
 
 public class SessionFeedbackAlreadySubmittedEvent {
 }

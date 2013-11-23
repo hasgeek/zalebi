@@ -1,4 +1,4 @@
-package com.hasgeek.activity;
+package com.hasgeek.funnel.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,13 +14,13 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hasgeek.R;
-import com.hasgeek.bus.BusProvider;
-import com.hasgeek.bus.SessionFeedbackAlreadySubmittedEvent;
-import com.hasgeek.bus.SessionFeedbackSubmittedEvent;
-import com.hasgeek.fragment.SubmitFeedbackFragment;
-import com.hasgeek.misc.DataProvider;
-import com.hasgeek.misc.EventSession;
+import com.hasgeek.funnel.R;
+import com.hasgeek.funnel.bus.BusProvider;
+import com.hasgeek.funnel.bus.SessionFeedbackAlreadySubmittedEvent;
+import com.hasgeek.funnel.bus.SessionFeedbackSubmittedEvent;
+import com.hasgeek.funnel.fragment.SubmitFeedbackFragment;
+import com.hasgeek.funnel.misc.DataProvider;
+import com.hasgeek.funnel.misc.EventSession;
 import com.squareup.otto.Subscribe;
 
 

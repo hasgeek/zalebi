@@ -1,4 +1,4 @@
-package com.hasgeek.fragment;
+package com.hasgeek.funnel.fragment;
 
 import android.app.ListFragment;
 import android.app.LoaderManager;
@@ -14,9 +14,9 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-import com.hasgeek.R;
-import com.hasgeek.activity.EventDetailActivity;
-import com.hasgeek.misc.EventsListLoader;
+import com.hasgeek.funnel.R;
+import com.hasgeek.funnel.activity.EventDetailActivity;
+import com.hasgeek.funnel.misc.EventsListLoader;
 
 import java.util.ArrayList;
 import java.util.List;

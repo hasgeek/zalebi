@@ -1,4 +1,4 @@
-package com.hasgeek.service;
+package com.hasgeek.funnel.service;
 
 import android.os.Parcel;
 import android.os.Parcelable;

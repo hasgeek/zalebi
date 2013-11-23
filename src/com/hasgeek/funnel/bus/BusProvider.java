@@ -1,4 +1,4 @@
-package com.hasgeek.bus;
+package com.hasgeek.funnel.bus;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;

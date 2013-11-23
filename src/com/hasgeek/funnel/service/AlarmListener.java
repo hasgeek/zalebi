@@ -1,4 +1,4 @@
-package com.hasgeek.service;
+package com.hasgeek.funnel.service;
 
 import android.content.Intent;
 import android.util.Log;

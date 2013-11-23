@@ -1,4 +1,4 @@
-package com.hasgeek.activity;
+package com.hasgeek.funnel.activity;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
@@ -8,9 +8,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.hasgeek.R;
-import com.hasgeek.fragment.DaysListFragment;
-import com.hasgeek.fragment.ExploreEventFragment;
+import com.hasgeek.funnel.R;
+import com.hasgeek.funnel.fragment.DaysListFragment;
+import com.hasgeek.funnel.fragment.ExploreEventFragment;
 
 
 public class EventDetailActivity extends FragmentActivity implements ActionBar.TabListener {
