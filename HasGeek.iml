@@ -23,6 +23,7 @@
     <orderEntry type="library" name="com.haarman.listviewanimations-2.5.2" level="project" />
     <orderEntry type="library" name="CWAC-WakefulIntentService" level="project" />
     <orderEntry type="library" name="nineoldandroids-2.4.0" level="project" />
+    <orderEntry type="module" module-name="Android-SlideExpandableListView" />
   </component>
 </module>
 

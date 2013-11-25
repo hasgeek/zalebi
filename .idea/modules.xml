@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/libs/Android-SlideExpandableListView/Android-SlideExpandableListView.iml" filepath="$PROJECT_DIR$/libs/Android-SlideExpandableListView/Android-SlideExpandableListView.iml" />
       <module fileurl="file://$PROJECT_DIR$/HasGeek.iml" filepath="$PROJECT_DIR$/HasGeek.iml" />
     </modules>
   </component>
