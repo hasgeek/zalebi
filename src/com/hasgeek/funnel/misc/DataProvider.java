@@ -245,7 +245,9 @@ public class DataProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         SQLiteDatabase db = mDBM.getWritableDatabase();
-        String id = uri.getPathSegments().get(1);
+        //todo Fix usages of update to use singular match as well.
+        // Uses only multiple matching at the moment like SESSIONS_MATCH and VENUES_MATCH.
+        String id = uri.getPathSegments().get(0);
         int count;
 
         switch (uriMatcher.match(uri)) {
