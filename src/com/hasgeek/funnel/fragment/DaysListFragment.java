@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,11 +15,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hasgeek.funnel.R;
 import com.hasgeek.funnel.misc.EventSession;
 import com.hasgeek.funnel.misc.EventSessionRow;
+import com.hasgeek.funnel.misc.SessionDetailRowPart;
 import com.hasgeek.funnel.misc.SessionsListLoader;
 
 import java.util.ArrayList;
@@ -160,6 +163,9 @@ public class DaysListFragment extends Fragment
             TextView stub2 = (TextView) convertView.findViewById(R.id.tv_session_stub2);
             View colorstub2 = convertView.findViewById(R.id.color_stub2);
 
+            LinearLayout bottom = (LinearLayout) convertView.findViewById(R.id.ll_bottom);
+            bottom.removeAllViews();
+
             switch (sessions.size()) {
                 case 1:
                     stub1.setVisibility(View.VISIBLE);
@@ -168,7 +174,23 @@ public class DaysListFragment extends Fragment
                     colorstub2.setVisibility(View.GONE);
 
                     stub1.setText(sessions.get(0).getTitle());
-                    colorstub1.setBackgroundColor(Color.parseColor("#" + sessions.get(0).getRoomColor()));
+                    int color1;
+                    if (TextUtils.isEmpty(sessions.get(0).getRoomColor())) {
+                        color1 = Color.GRAY;
+                    } else {
+                        color1 = Color.parseColor("#" + sessions.get(0).getRoomColor());
+                    }
+                    colorstub1.setBackgroundColor(color1);
+
+                    SessionDetailRowPart detailRowPart1 = new SessionDetailRowPart(
+                            nContext,
+                            sessions.get(0).getTitle(),
+                            sessions.get(0).getSpeaker(),
+                            sessions.get(0).getSection(),
+                            color1,
+                            sessions.get(0).getRoomTitle()
+                    );
+                    bottom.addView(detailRowPart1);
                     break;
 
                 case 2:
@@ -178,9 +200,41 @@ public class DaysListFragment extends Fragment
                     colorstub2.setVisibility(View.VISIBLE);
 
                     stub1.setText(sessions.get(0).getTitle());
-                    colorstub1.setBackgroundColor(Color.parseColor("#" + sessions.get(0).getRoomColor()));
+                    int color21;
+                    if (TextUtils.isEmpty(sessions.get(0).getRoomColor())) {
+                        color21 = Color.GRAY;
+                    } else {
+                        color21 = Color.parseColor("#" + sessions.get(0).getRoomColor());
+                    }
+                    colorstub1.setBackgroundColor(color21);
+
                     stub2.setText(sessions.get(1).getTitle());
-                    colorstub2.setBackgroundColor(Color.parseColor("#" + sessions.get(1).getRoomColor()));
+                    int color22;
+                    if (TextUtils.isEmpty(sessions.get(1).getRoomColor())) {
+                        color22 = Color.GRAY;
+                    } else {
+                        color22 = Color.parseColor("#" + sessions.get(1).getRoomColor());
+                    }
+                    colorstub2.setBackgroundColor(color22);
+
+                    SessionDetailRowPart detailRowPart21 = new SessionDetailRowPart(
+                            nContext,
+                            sessions.get(0).getTitle(),
+                            sessions.get(0).getSpeaker(),
+                            sessions.get(0).getSection(),
+                            color21,
+                            sessions.get(0).getRoomTitle()
+                    );
+                    bottom.addView(detailRowPart21);
+                    SessionDetailRowPart detailRowPart22 = new SessionDetailRowPart(
+                            nContext,
+                            sessions.get(1).getTitle(),
+                            sessions.get(1).getSpeaker(),
+                            sessions.get(1).getSection(),
+                            color22,
+                            sessions.get(1).getRoomTitle()
+                    );
+                    bottom.addView(detailRowPart22);
                     break;
 
                 default:

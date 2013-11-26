@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.content.AsyncTaskLoader;
-import android.util.Log;
 
 import com.hasgeek.funnel.fragment.DaysListFragment;
 
@@ -31,36 +30,20 @@ public class SessionsListLoader extends AsyncTaskLoader<List<EventSessionRow>> {
         List<EventSession> esList = new ArrayList<EventSession>();
         Cursor sessions;
         if (mMode == DaysListFragment.All_SESSIONS) {
-//            sessions = getContext().getContentResolver().query(
-//                    DataProvider.SESSION_URI,
-//                    new String[] { "id", "title", "speaker", "section", "level", "description", "url", "bookmarked", "date_ist", "slot_ist" },
-//                    null,
-//                    null,
-//                    "date_ist ASC"
-//            );
-
             sessions = mDatabase.rawQuery(
                     "SELECT s.id, s.title, s.speaker, s.section, s.level, s.description, s.url, s.bookmarked, s.date_ist, s.slot_ist, " +
                             "r.title as roomtitle, r.bgcolor " +
                             "FROM sessions s " +
-                            "INNER JOIN rooms r on s.room = r.name " +
+                            "LEFT JOIN rooms r on s.room = r.name " +
                             "ORDER BY s.date_ist ASC",
                     null);
 
         } else {
-//            sessions = getContext().getContentResolver().query(
-//                    DataProvider.SESSION_URI,
-//                    new String[] { "id", "title", "speaker", "section", "level", "description", "url", "bookmarked", "date_ist", "slot_ist" },
-//                    "bookmarked = ?",
-//                    new String[] { "true" },
-//                    "date_ist ASC"
-//            );
-
             sessions = mDatabase.rawQuery(
                     "SELECT s.id, s.title, s.speaker, s.section, s.level, s.description, s.url, s.bookmarked, s.date_ist, s.slot_ist, " +
                             "r.title as roomtitle, r.bgcolor " +
                             "FROM sessions s " +
-                            "INNER JOIN rooms r on s.room = r.name " +
+                            "LEFT JOIN rooms r on s.room = r.name " +
                             "WHERE s.bookmarked = ? " +
                             "ORDER BY s.date_ist ASC",
                     new String[] { "true" });
@@ -99,18 +82,15 @@ public class SessionsListLoader extends AsyncTaskLoader<List<EventSessionRow>> {
         for (EventSession e : esList) {
             if (e.getDateInIst().equals(oldDate) && e.getSlotInIst24Hrs().equals(oldSlotTime)) {
                 temp.add(e);
-                Log.e("Loader", "adding " + e.getTitle() + " to temp row");
             } else {
                 // First, save current row slot
                 EventSessionRow row = new EventSessionRow(oldDate, oldSlotTime, temp);
                 list.add(row);
                 temp = new ArrayList<EventSession>();
-                Log.e("Loader", "Saved row with " + oldDate + " " + oldSlotTime + " " + temp.toString());
                 // Then, start a new row
                 oldDate = e.getDateInIst();
                 oldSlotTime = e.getSlotInIst24Hrs();
                 temp.add(e);
-                Log.e("Loader", "Starting new row with " + oldDate + " " + oldSlotTime + " " + temp.toString());
             }
         }
 
