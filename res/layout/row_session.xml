@@ -1,72 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/rl_top"
-        android:layout_width="match_parent"
-        android:layout_height="48dp">
-
-        <TextView
-            android:id="@+id/tv_session_timeslot"
-            android:gravity="center"
-            android:background="#e5e5e5"
-            android:layout_alignParentLeft="true"
-            android:layout_width="56dp"
-            android:layout_height="match_parent" />
-
-        <View
-            android:id="@+id/color_stub1"
-            android:visibility="gone"
-            android:layout_toRightOf="@id/tv_session_timeslot"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:layout_width="16dp"
-            android:layout_height="16dp" />
-
-        <TextView
-            android:id="@+id/tv_session_stub1"
-            android:visibility="gone"
-            android:gravity="center_vertical"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:drawablePadding="4dp"
-            android:layout_toRightOf="@id/color_stub1"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:layout_width="wrap_content"
-            android:layout_height="24dp" />
-
-        <View
-            android:id="@+id/color_stub2"
-            android:visibility="gone"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:layout_toRightOf="@id/tv_session_timeslot"
-            android:layout_below="@id/color_stub1"
-            android:layout_width="16dp"
-            android:layout_height="16dp" />
-
-        <TextView
-            android:id="@+id/tv_session_stub2"
-            android:visibility="gone"
-            android:gravity="center_vertical"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:layout_toRightOf="@id/color_stub2"
-            android:layout_below="@id/tv_session_stub1"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:layout_width="wrap_content"
-            android:layout_height="24dp" />
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/tv_session_timeslot"
+        android:gravity="center"
+        android:background="#e5e5e5"
+        android:layout_width="56dp"
+        android:layout_height="match_parent" />
 
     <LinearLayout
-        android:id="@+id/ll_bottom"
+        android:id="@+id/ll_sessions"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

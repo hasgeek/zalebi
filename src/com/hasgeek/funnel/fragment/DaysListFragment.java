@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -158,87 +159,26 @@ public class DaysListFragment extends Fragment
 
             List<EventSession> sessions = mSessionsList.get(position).getSessions();
 
-            TextView stub1 = (TextView) convertView.findViewById(R.id.tv_session_stub1);
-            View colorstub1 = convertView.findViewById(R.id.color_stub1);
-            TextView stub2 = (TextView) convertView.findViewById(R.id.tv_session_stub2);
-            View colorstub2 = convertView.findViewById(R.id.color_stub2);
+            LinearLayout sessionsLayout = (LinearLayout) convertView.findViewById(R.id.ll_sessions);
+            sessionsLayout.removeAllViews();
+            for (EventSession e : sessions) {
+                int color;
+                if (TextUtils.isEmpty(e.getRoomColor())) {
+                    color = Color.GRAY;
+                } else {
+                    color = Color.parseColor("#" + e.getRoomColor());
+                }
+                SessionDetailRowPart rowPart = new SessionDetailRowPart(nContext, e.getTitle(), e.getSpeaker(), color);
+                sessionsLayout.addView(rowPart);
+            }
 
-            LinearLayout bottom = (LinearLayout) convertView.findViewById(R.id.ll_bottom);
-            bottom.removeAllViews();
-
-            switch (sessions.size()) {
-                case 1:
-                    stub1.setVisibility(View.VISIBLE);
-                    colorstub1.setVisibility(View.VISIBLE);
-                    stub2.setVisibility(View.GONE);
-                    colorstub2.setVisibility(View.GONE);
-
-                    stub1.setText(sessions.get(0).getTitle());
-                    int color1;
-                    if (TextUtils.isEmpty(sessions.get(0).getRoomColor())) {
-                        color1 = Color.GRAY;
-                    } else {
-                        color1 = Color.parseColor("#" + sessions.get(0).getRoomColor());
-                    }
-                    colorstub1.setBackgroundColor(color1);
-
-                    SessionDetailRowPart detailRowPart1 = new SessionDetailRowPart(
-                            nContext,
-                            sessions.get(0).getTitle(),
-                            sessions.get(0).getSpeaker(),
-                            sessions.get(0).getSection(),
-                            color1,
-                            sessions.get(0).getRoomTitle()
-                    );
-                    bottom.addView(detailRowPart1);
-                    break;
-
-                case 2:
-                    stub1.setVisibility(View.VISIBLE);
-                    colorstub1.setVisibility(View.VISIBLE);
-                    stub2.setVisibility(View.VISIBLE);
-                    colorstub2.setVisibility(View.VISIBLE);
-
-                    stub1.setText(sessions.get(0).getTitle());
-                    int color21;
-                    if (TextUtils.isEmpty(sessions.get(0).getRoomColor())) {
-                        color21 = Color.GRAY;
-                    } else {
-                        color21 = Color.parseColor("#" + sessions.get(0).getRoomColor());
-                    }
-                    colorstub1.setBackgroundColor(color21);
-
-                    stub2.setText(sessions.get(1).getTitle());
-                    int color22;
-                    if (TextUtils.isEmpty(sessions.get(1).getRoomColor())) {
-                        color22 = Color.GRAY;
-                    } else {
-                        color22 = Color.parseColor("#" + sessions.get(1).getRoomColor());
-                    }
-                    colorstub2.setBackgroundColor(color22);
-
-                    SessionDetailRowPart detailRowPart21 = new SessionDetailRowPart(
-                            nContext,
-                            sessions.get(0).getTitle(),
-                            sessions.get(0).getSpeaker(),
-                            sessions.get(0).getSection(),
-                            color21,
-                            sessions.get(0).getRoomTitle()
-                    );
-                    bottom.addView(detailRowPart21);
-                    SessionDetailRowPart detailRowPart22 = new SessionDetailRowPart(
-                            nContext,
-                            sessions.get(1).getTitle(),
-                            sessions.get(1).getSpeaker(),
-                            sessions.get(1).getSection(),
-                            color22,
-                            sessions.get(1).getRoomTitle()
-                    );
-                    bottom.addView(detailRowPart22);
-                    break;
-
-                default:
-                    throw new RuntimeException("Weird. " + sessions.size() + " sessions in this slot?");
+            if (sessions.size() > 1) {
+                View sep = new View(nContext);
+                sep.setBackgroundColor(Color.parseColor("#e5e5e5"));
+                sep.setLayoutParams(new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics())));
+                sessionsLayout.addView(sep, 1);
             }
 
             return convertView;

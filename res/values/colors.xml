@@ -4,4 +4,5 @@
     <color name="holobluelighter">#2CB6E1</color>
     <color name="gray_button">#666666</color>
     <color name="gray_button_pressed">#333333</color>
+    <color name="listview_divider_gray">#bbbbbb</color>
 </resources>
