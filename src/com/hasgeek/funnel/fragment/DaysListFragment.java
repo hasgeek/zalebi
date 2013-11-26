@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hasgeek.funnel.R;
+import com.hasgeek.funnel.activity.SessionDetailActivity;
 import com.hasgeek.funnel.misc.EventSession;
 import com.hasgeek.funnel.misc.EventSessionRow;
 import com.hasgeek.funnel.misc.SessionDetailRowPart;
@@ -165,6 +166,7 @@ public class DaysListFragment extends Fragment
             LinearLayout sessionsLayout = (LinearLayout) convertView.findViewById(R.id.ll_sessions);
             sessionsLayout.removeAllViews();
             for (EventSession e : sessions) {
+                final EventSession fe = e;
                 int color;
                 if (TextUtils.isEmpty(e.getRoomColor())) {
                     color = Color.GRAY;
@@ -172,6 +174,14 @@ public class DaysListFragment extends Fragment
                     color = Color.parseColor("#" + e.getRoomColor());
                 }
                 SessionDetailRowPart rowPart = new SessionDetailRowPart(nContext, e.getTitle(), e.getSpeaker(), color);
+                rowPart.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(getActivity(), SessionDetailActivity.class);
+                        i.putExtra("session", fe);
+                        startActivityForResult(i, REQUEST_SESSION_DETAIL);
+                    }
+                });
                 sessionsLayout.addView(rowPart);
             }
 

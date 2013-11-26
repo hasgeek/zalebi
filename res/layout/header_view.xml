@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="#666"
+    android:background="#777"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,8 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:textColor="#fff"
-        android:padding="4dp"
-        android:layout_marginLeft="16dp" />
+        android:textAllCaps="true"
+        android:padding="8dp"
+        android:layout_marginLeft="8dp" />
 
     <View
         android:layout_width="match_parent"
