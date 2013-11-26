@@ -29,18 +29,18 @@ public class SessionsListLoader extends AsyncTaskLoader<List<EventSession>> {
         if (mMode == DaysListFragment.All_SESSIONS) {
             sessions = getContext().getContentResolver().query(
                     DataProvider.SESSION_URI,
-                    new String[] { "id", "title", "speaker", "section", "level", "description", "url", "bookmarked" },
+                    new String[] { "id", "title", "speaker", "section", "level", "description", "url", "bookmarked", "date_ist" },
                     null,
                     null,
-                    "id ASC"
+                    "date_ist ASC"
             );
         } else {
             sessions = getContext().getContentResolver().query(
                     DataProvider.SESSION_URI,
-                    new String[] { "id", "title", "speaker", "section", "level", "description", "url", "bookmarked" },
+                    new String[] { "id", "title", "speaker", "section", "level", "description", "url", "bookmarked", "date_ist" },
                     "bookmarked = ?",
                     new String[] { "true" },
-                    "id ASC"
+                    "date_ist ASC"
             );
         }
 
@@ -60,6 +60,7 @@ public class SessionsListLoader extends AsyncTaskLoader<List<EventSession>> {
                         sessions.getString(sessions.getColumnIndex("level")),
                         sessions.getString(sessions.getColumnIndex("description")),
                         sessions.getString(sessions.getColumnIndex("url")),
+                        sessions.getString(sessions.getColumnIndex("date_ist")),
                         bookmarkState
                 );
                 esList.add(es);

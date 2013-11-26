@@ -3,7 +3,7 @@ package com.hasgeek.funnel.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
@@ -12,9 +12,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.haarman.listviewanimations.itemmanipulation.ExpandableListItemAdapter;
 import com.hasgeek.funnel.R;
 import com.hasgeek.funnel.misc.EventSession;
 import com.hasgeek.funnel.misc.SessionsListLoader;
@@ -22,14 +22,19 @@ import com.hasgeek.funnel.misc.SessionsListLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
-public class DaysListFragment extends ListFragment
+
+public class DaysListFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<List<EventSession>> {
 
     public static final int BOOKMARKED_SESSIONS = 198263;
     public static final int All_SESSIONS = 198264;
 
     private TextView mBookmarkedOnlyNotice;
+    private StickyListHeadersListView mListView;
+    private TextView mEmptyViewForList;
     private SessionsListAdapter mAdapter;
     private static final int REQUEST_SESSION_DETAIL = 4201;
     private List<EventSession> mSessionsList;
@@ -46,8 +51,7 @@ public class DaysListFragment extends ListFragment
         mAdapter = new SessionsListAdapter(
                 getActivity(),
                 R.layout.row_session,
-                R.id.ll_top,
-                R.id.ll_bottom);
+                mSessionsList);
 
         getLoaderManager().initLoader(0, null, this);
     }
@@ -57,6 +61,8 @@ public class DaysListFragment extends ListFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_sessionslist, container, false);
         mBookmarkedOnlyNotice = (TextView) v.findViewById(R.id.tv_showing_only_bookmarked);
+        mListView = (StickyListHeadersListView) v.findViewById(R.id.list);
+        mEmptyViewForList = (TextView) v.findViewById(R.id.empty);
         return v;
     }
 
@@ -104,12 +110,14 @@ public class DaysListFragment extends ListFragment
     public void onLoadFinished(Loader<List<EventSession>> listLoader, List<EventSession> eventSessions) {
         mSessionsList = eventSessions;
 
-        if (getListView().getAdapter() == null) {
-            setListAdapter(mAdapter);
+        if (mListView.getAdapter() == null) {
+//            mListView.setAdapter(new SlideExpandableListAdapter(mAdapter, R.id.ll_top, R.id.ll_bottom));
+            mListView.setAdapter(mAdapter);
         } else {
             mAdapter.notifyDataSetChanged();
         }
 
+        mListView.setEmptyView(mEmptyViewForList);
     }
 
 
@@ -122,19 +130,29 @@ public class DaysListFragment extends ListFragment
     /**
      * The adapter that fills the ListView with session data
      */
-    private class SessionsListAdapter extends ExpandableListItemAdapter<EventSession> {
+    private class SessionsListAdapter extends ArrayAdapter<EventSession> implements StickyListHeadersAdapter {
 
         Context nContext;
-        int nLayoutResId;
-        int nTitleResId;
-        int nContentResId;
 
-        protected SessionsListAdapter(Context context, int layoutResId, int titleParentResId, int contentParentResId) {
-            super(context, layoutResId, titleParentResId, contentParentResId, mSessionsList);
+
+        public SessionsListAdapter(Context context, int textViewResourceId, List<EventSession> objects) {
+            super(context, textViewResourceId, objects);
             nContext = context;
-            nLayoutResId = layoutResId;
-            nTitleResId = titleParentResId;
-            nContentResId = contentParentResId;
+        }
+
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = LayoutInflater.from(nContext);
+            View daddy = inflater.inflate(R.layout.row_session, parent, false);
+
+            TextView title = (TextView) daddy.findViewById(R.id.tv_session_title);
+            title.setText(mSessionsList.get(position).getTitle());
+
+            TextView speaker = (TextView) daddy.findViewById(R.id.tv_session_speaker);
+            speaker.setText(mSessionsList.get(position).getSpeaker());
+
+            return daddy;
         }
 
 
@@ -145,29 +163,24 @@ public class DaysListFragment extends ListFragment
 
 
         @Override
-        public View getTitleView(int position, View convertView, ViewGroup parent) {
+        public View getHeaderView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = parent;
+                convertView = LayoutInflater.from(getActivity()).inflate(R.layout.header_view, parent, false);
             }
 
-            TextView title = (TextView) convertView.findViewById(R.id.tv_session_title);
-            title.setText(mSessionsList.get(position).getTitle());
-            return title;
+            TextView tv = (TextView) convertView.findViewById(R.id.tv_lv_stickyheader);
+            tv.setText(mSessionsList.get(position).getDateInIst());
+
+            return convertView;
         }
 
 
         @Override
-        public View getContentView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                convertView = parent;
-            }
-
-            TextView speaker = (TextView) convertView.findViewById(R.id.tv_session_speaker);
-            speaker.setText(mSessionsList.get(position).getSpeaker());
-            return speaker;
+        public long getHeaderId(int position) {
+            return Long.parseLong(mSessionsList.get(position).getDateInIst().replaceAll("-", "0"));
         }
-
     }
+
 
     //todo move this elsewhere
 //    @Override

@@ -16,14 +16,14 @@
         android:layout_width="match_parent"
         android:layout_height="32dp" />
 
-    <ListView
-        android:id="@android:id/list"
+    <se.emilsjolander.stickylistheaders.StickyListHeadersListView
+        android:id="@+id/list"
         android:layout_below="@+id/tv_showing_only_bookmarked"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@android:id/empty"
+        android:id="@+id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
