@@ -14,12 +14,15 @@ public class EventSession implements Serializable {
     String url;
     String dateInIst;
     String slotInIst24Hrs;
+    String roomTitle;
+    String roomColor;
     boolean bookmarked;
 
 
     public EventSession(String _id, String _title, String _speaker,
                         String _section, String _level, String _desc,
                         String _url, String _date_ist, String _slot_ist,
+                        String _room_title, String _room_color,
                         boolean _bookmarked) {
         setId(_id);
         setTitle(_title);
@@ -31,6 +34,8 @@ public class EventSession implements Serializable {
         setDateInIst(_date_ist);
         setSlotInIst24Hrs(_slot_ist);
         setBookmarked(_bookmarked);
+        setRoomTitle(_room_title);
+        setRoomColor(_room_color);
     }
 
 
@@ -137,5 +142,25 @@ public class EventSession implements Serializable {
 
     public void setSlotInIst24Hrs(String slotInIst24Hrs) {
         this.slotInIst24Hrs = slotInIst24Hrs;
+    }
+
+
+    public String getRoomTitle() {
+        return roomTitle;
+    }
+
+
+    public void setRoomTitle(String roomTitle) {
+        this.roomTitle = roomTitle;
+    }
+
+
+    public String getRoomColor() {
+        return roomColor;
+    }
+
+
+    public void setRoomColor(String roomColor) {
+        this.roomColor = roomColor;
     }
 }

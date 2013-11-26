@@ -2,6 +2,7 @@ package com.hasgeek.funnel.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -155,34 +156,31 @@ public class DaysListFragment extends Fragment
             List<EventSession> sessions = mSessionsList.get(position).getSessions();
 
             TextView stub1 = (TextView) convertView.findViewById(R.id.tv_session_stub1);
+            View colorstub1 = convertView.findViewById(R.id.color_stub1);
             TextView stub2 = (TextView) convertView.findViewById(R.id.tv_session_stub2);
-            TextView stub3 = (TextView) convertView.findViewById(R.id.tv_session_stub3);
+            View colorstub2 = convertView.findViewById(R.id.color_stub2);
+
             switch (sessions.size()) {
                 case 1:
                     stub1.setVisibility(View.VISIBLE);
+                    colorstub1.setVisibility(View.VISIBLE);
                     stub2.setVisibility(View.GONE);
-                    stub3.setVisibility(View.GONE);
+                    colorstub2.setVisibility(View.GONE);
 
                     stub1.setText(sessions.get(0).getTitle());
+                    colorstub1.setBackgroundColor(Color.parseColor("#" + sessions.get(0).getRoomColor()));
                     break;
 
                 case 2:
                     stub1.setVisibility(View.VISIBLE);
+                    colorstub1.setVisibility(View.VISIBLE);
                     stub2.setVisibility(View.VISIBLE);
-                    stub3.setVisibility(View.GONE);
+                    colorstub2.setVisibility(View.VISIBLE);
 
                     stub1.setText(sessions.get(0).getTitle());
+                    colorstub1.setBackgroundColor(Color.parseColor("#" + sessions.get(0).getRoomColor()));
                     stub2.setText(sessions.get(1).getTitle());
-                    break;
-
-                case 3:
-                    stub1.setVisibility(View.VISIBLE);
-                    stub2.setVisibility(View.VISIBLE);
-                    stub3.setVisibility(View.VISIBLE);
-
-                    stub1.setText(sessions.get(0).getTitle());
-                    stub2.setText(sessions.get(1).getTitle());
-                    stub3.setText(sessions.get(2).getTitle());
+                    colorstub2.setBackgroundColor(Color.parseColor("#" + sessions.get(1).getRoomColor()));
                     break;
 
                 default:

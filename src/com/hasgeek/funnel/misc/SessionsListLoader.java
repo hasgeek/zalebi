@@ -2,6 +2,7 @@ package com.hasgeek.funnel.misc;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
@@ -13,12 +14,14 @@ import java.util.List;
 
 public class SessionsListLoader extends AsyncTaskLoader<List<EventSessionRow>> {
 
+    private SQLiteDatabase mDatabase;
     private List<EventSessionRow> mData;
     private int mMode;
 
 
     public SessionsListLoader(Context context, int mode) {
         super(context);
+        mDatabase = DBManager.getInstance(context).getWritableDatabase();
         mMode = mode;
     }
 
@@ -28,21 +31,39 @@ public class SessionsListLoader extends AsyncTaskLoader<List<EventSessionRow>> {
         List<EventSession> esList = new ArrayList<EventSession>();
         Cursor sessions;
         if (mMode == DaysListFragment.All_SESSIONS) {
-            sessions = getContext().getContentResolver().query(
-                    DataProvider.SESSION_URI,
-                    new String[] { "id", "title", "speaker", "section", "level", "description", "url", "bookmarked", "date_ist", "slot_ist" },
-                    null,
-                    null,
-                    "date_ist ASC"
-            );
+//            sessions = getContext().getContentResolver().query(
+//                    DataProvider.SESSION_URI,
+//                    new String[] { "id", "title", "speaker", "section", "level", "description", "url", "bookmarked", "date_ist", "slot_ist" },
+//                    null,
+//                    null,
+//                    "date_ist ASC"
+//            );
+
+            sessions = mDatabase.rawQuery(
+                    "SELECT s.id, s.title, s.speaker, s.section, s.level, s.description, s.url, s.bookmarked, s.date_ist, s.slot_ist, " +
+                            "r.title as roomtitle, r.bgcolor " +
+                            "FROM sessions s " +
+                            "INNER JOIN rooms r on s.room = r.name " +
+                            "ORDER BY s.date_ist ASC",
+                    null);
+
         } else {
-            sessions = getContext().getContentResolver().query(
-                    DataProvider.SESSION_URI,
-                    new String[] { "id", "title", "speaker", "section", "level", "description", "url", "bookmarked", "date_ist", "slot_ist" },
-                    "bookmarked = ?",
-                    new String[] { "true" },
-                    "date_ist ASC"
-            );
+//            sessions = getContext().getContentResolver().query(
+//                    DataProvider.SESSION_URI,
+//                    new String[] { "id", "title", "speaker", "section", "level", "description", "url", "bookmarked", "date_ist", "slot_ist" },
+//                    "bookmarked = ?",
+//                    new String[] { "true" },
+//                    "date_ist ASC"
+//            );
+
+            sessions = mDatabase.rawQuery(
+                    "SELECT s.id, s.title, s.speaker, s.section, s.level, s.description, s.url, s.bookmarked, s.date_ist, s.slot_ist, " +
+                            "r.title as roomtitle, r.bgcolor " +
+                            "FROM sessions s " +
+                            "INNER JOIN rooms r on s.room = r.name " +
+                            "WHERE s.bookmarked = ? " +
+                            "ORDER BY s.date_ist ASC",
+                    new String[] { "true" });
         }
 
         if (sessions.moveToFirst()) {
@@ -61,6 +82,8 @@ public class SessionsListLoader extends AsyncTaskLoader<List<EventSessionRow>> {
                         sessions.getString(sessions.getColumnIndex("url")),
                         sessions.getString(sessions.getColumnIndex("date_ist")),
                         sessions.getString(sessions.getColumnIndex("slot_ist")),
+                        sessions.getString(sessions.getColumnIndex("roomtitle")),
+                        sessions.getString(sessions.getColumnIndex("bgcolor")),
                         bookmarkState
                 );
                 esList.add(es);
