@@ -13,12 +13,14 @@ public class EventSession implements Serializable {
     String description;
     String url;
     String dateInIst;
+    String slotInIst24Hrs;
     boolean bookmarked;
 
 
     public EventSession(String _id, String _title, String _speaker,
                         String _section, String _level, String _desc,
-                        String _url, String _date_ist, boolean _bookmarked) {
+                        String _url, String _date_ist, String _slot_ist,
+                        boolean _bookmarked) {
         setId(_id);
         setTitle(_title);
         setSpeaker(_speaker);
@@ -27,6 +29,7 @@ public class EventSession implements Serializable {
         setDescription(_desc);
         setUrl(_url);
         setDateInIst(_date_ist);
+        setSlotInIst24Hrs(_slot_ist);
         setBookmarked(_bookmarked);
     }
 
@@ -127,4 +130,12 @@ public class EventSession implements Serializable {
     }
 
 
+    public String getSlotInIst24Hrs() {
+        return slotInIst24Hrs;
+    }
+
+
+    public void setSlotInIst24Hrs(String slotInIst24Hrs) {
+        this.slotInIst24Hrs = slotInIst24Hrs;
+    }
 }

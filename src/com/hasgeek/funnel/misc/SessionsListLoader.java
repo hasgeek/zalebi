@@ -3,6 +3,7 @@ package com.hasgeek.funnel.misc;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.content.AsyncTaskLoader;
+import android.util.Log;
 
 import com.hasgeek.funnel.fragment.DaysListFragment;
 
@@ -10,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SessionsListLoader extends AsyncTaskLoader<List<EventSession>> {
+public class SessionsListLoader extends AsyncTaskLoader<List<EventSessionRow>> {
 
-    private List<EventSession> mData;
+    private List<EventSessionRow> mData;
     private int mMode;
 
 
@@ -23,13 +24,13 @@ public class SessionsListLoader extends AsyncTaskLoader<List<EventSession>> {
 
 
     @Override
-    public List<EventSession> loadInBackground() {
+    public List<EventSessionRow> loadInBackground() {
         List<EventSession> esList = new ArrayList<EventSession>();
         Cursor sessions;
         if (mMode == DaysListFragment.All_SESSIONS) {
             sessions = getContext().getContentResolver().query(
                     DataProvider.SESSION_URI,
-                    new String[] { "id", "title", "speaker", "section", "level", "description", "url", "bookmarked", "date_ist" },
+                    new String[] { "id", "title", "speaker", "section", "level", "description", "url", "bookmarked", "date_ist", "slot_ist" },
                     null,
                     null,
                     "date_ist ASC"
@@ -37,7 +38,7 @@ public class SessionsListLoader extends AsyncTaskLoader<List<EventSession>> {
         } else {
             sessions = getContext().getContentResolver().query(
                     DataProvider.SESSION_URI,
-                    new String[] { "id", "title", "speaker", "section", "level", "description", "url", "bookmarked", "date_ist" },
+                    new String[] { "id", "title", "speaker", "section", "level", "description", "url", "bookmarked", "date_ist", "slot_ist" },
                     "bookmarked = ?",
                     new String[] { "true" },
                     "date_ist ASC"
@@ -46,10 +47,8 @@ public class SessionsListLoader extends AsyncTaskLoader<List<EventSession>> {
 
         if (sessions.moveToFirst()) {
             do {
-                boolean bookmarkState;
-                if (sessions.isNull(sessions.getColumnIndex("bookmarked"))) {
-                    bookmarkState = false;
-                } else {
+                boolean bookmarkState = false;
+                if (!sessions.isNull(sessions.getColumnIndex("bookmarked"))) {
                     bookmarkState = sessions.getString(sessions.getColumnIndex("bookmarked")).equals("true");
                 }
                 EventSession es = new EventSession(
@@ -61,6 +60,7 @@ public class SessionsListLoader extends AsyncTaskLoader<List<EventSession>> {
                         sessions.getString(sessions.getColumnIndex("description")),
                         sessions.getString(sessions.getColumnIndex("url")),
                         sessions.getString(sessions.getColumnIndex("date_ist")),
+                        sessions.getString(sessions.getColumnIndex("slot_ist")),
                         bookmarkState
                 );
                 esList.add(es);
@@ -68,12 +68,35 @@ public class SessionsListLoader extends AsyncTaskLoader<List<EventSession>> {
             } while (sessions.moveToNext());
         }
         sessions.close();
-        return esList;
+
+        List<EventSessionRow> list = new ArrayList<EventSessionRow>();
+        String oldDate = esList.get(0).getDateInIst();
+        String oldSlotTime = esList.get(0).getSlotInIst24Hrs();
+        List<EventSession> temp = new ArrayList<EventSession>();
+        for (EventSession e : esList) {
+            if (e.getDateInIst().equals(oldDate) && e.getSlotInIst24Hrs().equals(oldSlotTime)) {
+                temp.add(e);
+                Log.e("Loader", "adding " + e.getTitle() + " to temp row");
+            } else {
+                // First, save current row slot
+                EventSessionRow row = new EventSessionRow(oldDate, oldSlotTime, temp);
+                list.add(row);
+                temp = new ArrayList<EventSession>();
+                Log.e("Loader", "Saved row with " + oldDate + " " + oldSlotTime + " " + temp.toString());
+                // Then, start a new row
+                oldDate = e.getDateInIst();
+                oldSlotTime = e.getSlotInIst24Hrs();
+                temp.add(e);
+                Log.e("Loader", "Starting new row with " + oldDate + " " + oldSlotTime + " " + temp.toString());
+            }
+        }
+
+        return list;
     }
 
 
     @Override
-    public void deliverResult(List<EventSession> data) {
+    public void deliverResult(List<EventSessionRow> data) {
         if (isReset()) {
             releaseResources(data);
             return;
@@ -82,7 +105,7 @@ public class SessionsListLoader extends AsyncTaskLoader<List<EventSession>> {
         // Hold a reference to the old data so it doesn't get garbage collected.
         // The old data may still be in use (i.e. bound to an adapter, etc.), so
         // we must protect it until the new data has been delivered.
-        List<EventSession> oldData = mData;
+        List<EventSessionRow> oldData = mData;
         mData = data;
 
         if (isStarted()) {
@@ -134,16 +157,15 @@ public class SessionsListLoader extends AsyncTaskLoader<List<EventSession>> {
 
 
     @Override
-    public void onCanceled(List<EventSession> data) {
+    public void onCanceled(List<EventSessionRow> data) {
         super.onCanceled(data);
         releaseResources(data);
     }
 
 
-    private void releaseResources(List<EventSession> data) {
+    private void releaseResources(List<EventSessionRow> data) {
         // For a simple List, there is nothing to do. For something like a Cursor, we
         // would close it in this method. All resources associated with the Loader
         // should be released here.
     }
-
 }

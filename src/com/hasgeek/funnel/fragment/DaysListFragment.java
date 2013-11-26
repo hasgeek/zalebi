@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.hasgeek.funnel.R;
 import com.hasgeek.funnel.misc.EventSession;
+import com.hasgeek.funnel.misc.EventSessionRow;
 import com.hasgeek.funnel.misc.SessionsListLoader;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 
 public class DaysListFragment extends Fragment
-        implements LoaderManager.LoaderCallbacks<List<EventSession>> {
+        implements LoaderManager.LoaderCallbacks<List<EventSessionRow>> {
 
     public static final int BOOKMARKED_SESSIONS = 198263;
     public static final int All_SESSIONS = 198264;
@@ -37,7 +38,7 @@ public class DaysListFragment extends Fragment
     private TextView mEmptyViewForList;
     private SessionsListAdapter mAdapter;
     private static final int REQUEST_SESSION_DETAIL = 4201;
-    private List<EventSession> mSessionsList;
+    private List<EventSessionRow> mSessionsList;
     private int mListMode;
 
 
@@ -46,7 +47,7 @@ public class DaysListFragment extends Fragment
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        mSessionsList = new ArrayList<EventSession>();
+        mSessionsList = new ArrayList<EventSessionRow>();
         mListMode = All_SESSIONS;
         mAdapter = new SessionsListAdapter(
                 getActivity(),
@@ -95,7 +96,7 @@ public class DaysListFragment extends Fragment
 
 
     @Override
-    public Loader<List<EventSession>> onCreateLoader(int i, Bundle bundle) {
+    public Loader<List<EventSessionRow>> onCreateLoader(int i, Bundle bundle) {
         if (mListMode == All_SESSIONS) {
             return new SessionsListLoader(getActivity(), All_SESSIONS);
         } else if (mListMode == BOOKMARKED_SESSIONS) {
@@ -107,7 +108,7 @@ public class DaysListFragment extends Fragment
 
 
     @Override
-    public void onLoadFinished(Loader<List<EventSession>> listLoader, List<EventSession> eventSessions) {
+    public void onLoadFinished(Loader<List<EventSessionRow>> listLoader, List<EventSessionRow> eventSessions) {
         mSessionsList = eventSessions;
 
         if (mListView.getAdapter() == null) {
@@ -122,7 +123,7 @@ public class DaysListFragment extends Fragment
 
 
     @Override
-    public void onLoaderReset(Loader<List<EventSession>> listLoader) {
+    public void onLoaderReset(Loader<List<EventSessionRow>> listLoader) {
 
     }
 
@@ -130,12 +131,12 @@ public class DaysListFragment extends Fragment
     /**
      * The adapter that fills the ListView with session data
      */
-    private class SessionsListAdapter extends ArrayAdapter<EventSession> implements StickyListHeadersAdapter {
+    private class SessionsListAdapter extends ArrayAdapter<EventSessionRow> implements StickyListHeadersAdapter {
 
         Context nContext;
 
 
-        public SessionsListAdapter(Context context, int textViewResourceId, List<EventSession> objects) {
+        public SessionsListAdapter(Context context, int textViewResourceId, List<EventSessionRow> objects) {
             super(context, textViewResourceId, objects);
             nContext = context;
         }
@@ -143,16 +144,52 @@ public class DaysListFragment extends Fragment
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            LayoutInflater inflater = LayoutInflater.from(nContext);
-            View daddy = inflater.inflate(R.layout.row_session, parent, false);
+            if (convertView == null) {
+                LayoutInflater inflater = LayoutInflater.from(nContext);
+                convertView = inflater.inflate(R.layout.row_session, parent, false);
+            }
 
-            TextView title = (TextView) daddy.findViewById(R.id.tv_session_title);
-            title.setText(mSessionsList.get(position).getTitle());
+            TextView timeslot = (TextView) convertView.findViewById(R.id.tv_session_timeslot);
+            timeslot.setText(mSessionsList.get(position).getTimeslotInIst24Hrs());
 
-            TextView speaker = (TextView) daddy.findViewById(R.id.tv_session_speaker);
-            speaker.setText(mSessionsList.get(position).getSpeaker());
+            List<EventSession> sessions = mSessionsList.get(position).getSessions();
 
-            return daddy;
+            TextView stub1 = (TextView) convertView.findViewById(R.id.tv_session_stub1);
+            TextView stub2 = (TextView) convertView.findViewById(R.id.tv_session_stub2);
+            TextView stub3 = (TextView) convertView.findViewById(R.id.tv_session_stub3);
+            switch (sessions.size()) {
+                case 1:
+                    stub1.setVisibility(View.VISIBLE);
+                    stub2.setVisibility(View.GONE);
+                    stub3.setVisibility(View.GONE);
+
+                    stub1.setText(sessions.get(0).getTitle());
+                    break;
+
+                case 2:
+                    stub1.setVisibility(View.VISIBLE);
+                    stub2.setVisibility(View.VISIBLE);
+                    stub3.setVisibility(View.GONE);
+
+                    stub1.setText(sessions.get(0).getTitle());
+                    stub2.setText(sessions.get(1).getTitle());
+                    break;
+
+                case 3:
+                    stub1.setVisibility(View.VISIBLE);
+                    stub2.setVisibility(View.VISIBLE);
+                    stub3.setVisibility(View.VISIBLE);
+
+                    stub1.setText(sessions.get(0).getTitle());
+                    stub2.setText(sessions.get(1).getTitle());
+                    stub3.setText(sessions.get(2).getTitle());
+                    break;
+
+                default:
+                    throw new RuntimeException("Weird. " + sessions.size() + " sessions in this slot?");
+            }
+
+            return convertView;
         }
 
 
