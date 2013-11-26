@@ -25,7 +25,10 @@ import com.hasgeek.funnel.misc.EventSessionRow;
 import com.hasgeek.funnel.misc.SessionDetailRowPart;
 import com.hasgeek.funnel.misc.SessionsListLoader;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
@@ -198,7 +201,16 @@ public class DaysListFragment extends Fragment
             }
 
             TextView tv = (TextView) convertView.findViewById(R.id.tv_lv_stickyheader);
-            tv.setText(mSessionsList.get(position).getDateInIst());
+
+            String dateString = mSessionsList.get(position).getDateInIst();
+            SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date date = fmt.parse(dateString);
+                SimpleDateFormat fmtOut = new SimpleDateFormat("d MMMM, yyyy");
+                tv.setText(fmtOut.format(date));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
             return convertView;
         }
