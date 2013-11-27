@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hasgeek.funnel.R;
@@ -44,7 +45,7 @@ public class DaysListFragment extends Fragment
 
     private TextView mBookmarkedOnlyNotice;
     private StickyListHeadersListView mListView;
-    private TextView mEmptyViewForList;
+    private ProgressBar mLoading;
     private SessionsListAdapter mAdapter;
     private static final int REQUEST_SESSION_DETAIL = 4201;
     private List<EventSessionRow> mSessionsList;
@@ -74,7 +75,7 @@ public class DaysListFragment extends Fragment
         View v = inflater.inflate(R.layout.fragment_sessionslist, container, false);
         mBookmarkedOnlyNotice = (TextView) v.findViewById(R.id.tv_showing_only_bookmarked);
         mListView = (StickyListHeadersListView) v.findViewById(R.id.list);
-        mEmptyViewForList = (TextView) v.findViewById(R.id.empty);
+        mLoading = (ProgressBar) v.findViewById(R.id.pb_sessions_list);
         return v;
     }
 
@@ -123,13 +124,12 @@ public class DaysListFragment extends Fragment
         mSessionsList = eventSessions;
 
         if (mListView.getAdapter() == null) {
-//            mListView.setAdapter(new SlideExpandableListAdapter(mAdapter, R.id.ll_top, R.id.ll_bottom));
             mListView.setAdapter(mAdapter);
         } else {
             mAdapter.notifyDataSetChanged();
         }
 
-        mListView.setEmptyView(mEmptyViewForList);
+        mLoading.setVisibility(View.GONE);
     }
 
 
