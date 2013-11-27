@@ -30,19 +30,23 @@
 
     <TextView
         android:id="@+id/tv_venue_rooms"
-        android:text="Rooms"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:paddingTop="16dp"
+        android:text="ROOMS"
+        android:textSize="14sp"
+        android:paddingTop="24dp"
         android:paddingBottom="4dp"
         android:layout_below="@id/tv_venue_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <View
+        style="@style/LineGrayHorizontal"
+        android:layout_below="@id/tv_venue_rooms" />
+
     <LinearLayout
         android:id="@+id/ll_room1"
         android:orientation="horizontal"
         android:layout_below="@id/tv_venue_rooms"
+        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
