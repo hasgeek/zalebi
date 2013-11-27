@@ -87,7 +87,7 @@ public class EventsListFragment extends ListFragment implements LoaderManager.Lo
         @Override
         public View getView(int position, View convertView, ViewGroup viewGroup) {
             if (convertView == null) {
-                convertView = LayoutInflater.from(getActivity()).inflate(R.layout.item_eventslist, viewGroup, false);
+                convertView = LayoutInflater.from(getActivity()).inflate(R.layout.row_eventslist, viewGroup, false);
             }
 
             TextView eventName = (TextView) convertView.findViewById(R.id.tv_event_name);
