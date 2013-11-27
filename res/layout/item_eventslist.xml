@@ -1,24 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:layout_width="fill_parent"
-    android:layout_height="108dp">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#464258"
+    android:layout_width="match_parent"
+    android:layout_height="160dp">
 
-    <TextView
-        android:id="@+id/tv_event_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:gravity="right"
-        android:textSize="28sp"
-        android:textStyle="bold" />
+    <ImageView
+        android:id="@+id/iv_event_image"
+        android:contentDescription="@string/cd_iv_header"
+        android:src="@drawable/droidcon"
+        android:scaleType="centerInside"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="4dp"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/tv_event_date"
+        android:background="#ee444444"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:gravity="right|bottom"
+        android:paddingRight="4dp"
+        android:paddingBottom="4dp"
+        android:gravity="right"
+        android:textColor="#fff"
         android:textSize="16sp" />
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_event_name"
+        android:background="@drawable/gradient_event_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_above="@id/tv_event_date"
+        android:paddingTop="8dp"
+        android:paddingRight="4dp"
+        android:gravity="right"
+        android:textColor="#fff"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+</RelativeLayout>

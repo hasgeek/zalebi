@@ -59,25 +59,30 @@ public class EventsListFragment extends ListFragment implements LoaderManager.Lo
 
         List<String> data;
 
+
         public TempEventListAdapter() {
             data = new ArrayList<String>();
             data.add(getString(R.string.droidcon2013_title));
         }
+
 
         @Override
         public int getCount() {
             return data.size();
         }
 
+
         @Override
         public Object getItem(int i) {
             return data.get(i);
         }
 
+
         @Override
         public long getItemId(int i) {
             return i;
         }
+
 
         @Override
         public View getView(int position, View convertView, ViewGroup viewGroup) {
@@ -157,10 +162,12 @@ public class EventsListFragment extends ListFragment implements LoaderManager.Lo
 
     // Loader callbacks start here...
 
+
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         return new EventsListLoader(getActivity());
     }
+
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
@@ -172,6 +179,7 @@ public class EventsListFragment extends ListFragment implements LoaderManager.Lo
 
         mAdapter.swapCursor(cursor);
     }
+
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
