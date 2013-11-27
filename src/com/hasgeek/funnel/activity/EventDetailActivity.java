@@ -59,7 +59,6 @@ public class EventDetailActivity extends FragmentActivity implements ActionBar.T
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         mViewPager.setCurrentItem(tab.getPosition());
-        invalidateOptionsMenu();
     }
 
 

@@ -54,7 +54,9 @@ public class DaysListFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+
+        //todo Enable this when we're going ahead with bookmarking
+//        setHasOptionsMenu(true);
 
         mSessionsList = new ArrayList<EventSessionRow>();
         mListMode = All_SESSIONS;
@@ -231,15 +233,6 @@ public class DaysListFragment extends Fragment
             return Long.parseLong(mSessionsList.get(position).getDateInIst().replaceAll("-", "0"));
         }
     }
-
-
-    //todo move this elsewhere
-//    @Override
-//    public void onListItemClick(ListView l, View v, int position, long id) {
-//        Intent i = new Intent(getActivity(), SessionDetailActivity.class);
-//        i.putExtra("session", mSessionsList.get(position));
-//        startActivityForResult(i, REQUEST_SESSION_DETAIL);
-//    }
 
 
     @Override
