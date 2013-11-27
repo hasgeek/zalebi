@@ -10,7 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 
 import com.hasgeek.funnel.R;
-import com.hasgeek.funnel.fragment.DaysListFragment;
+import com.hasgeek.funnel.fragment.SessionsListFragment;
 import com.hasgeek.funnel.fragment.EventVenueFragment;
 import com.hasgeek.funnel.fragment.ExploreEventFragment;
 
@@ -85,7 +85,7 @@ public class EventDetailActivity extends FragmentActivity implements ActionBar.T
         public Fragment getItem(int i) {
             switch (i) {
                 case 0:
-                    return new DaysListFragment();
+                    return new SessionsListFragment();
                 case 1:
                     return new ExploreEventFragment();
                 case 2:

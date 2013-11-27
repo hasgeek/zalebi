@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.content.AsyncTaskLoader;
 
-import com.hasgeek.funnel.fragment.DaysListFragment;
+import com.hasgeek.funnel.fragment.SessionsListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ public class SessionsListLoader extends AsyncTaskLoader<List<EventSessionRow>> {
     public List<EventSessionRow> loadInBackground() {
         List<EventSession> esList = new ArrayList<EventSession>();
         Cursor sessions;
-        if (mMode == DaysListFragment.All_SESSIONS) {
+        if (mMode == SessionsListFragment.All_SESSIONS) {
             sessions = mDatabase.rawQuery(
                     "SELECT s.id, s.title, s.speaker, s.section, s.level, s.description, s.url, s.bookmarked, s.date_ist, s.slot_ist, " +
                             "r.title as roomtitle, r.bgcolor " +

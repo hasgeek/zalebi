@@ -37,7 +37,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 
-public class DaysListFragment extends Fragment
+public class SessionsListFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<List<EventSessionRow>> {
 
     public static final int BOOKMARKED_SESSIONS = 198263;
