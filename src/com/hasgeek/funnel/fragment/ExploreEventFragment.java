@@ -22,6 +22,7 @@ public class ExploreEventFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_explore_event, container, false);
         WebView webView = (WebView) v.findViewById(R.id.wv_explore_event);
         webView.setWebViewClient(mWebViewClient);
+        webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl("http://droidcon.in/2013/explore-app");
         mProgressBar = (ProgressBar) v.findViewById(R.id.pb_explore_event);
         return v;
