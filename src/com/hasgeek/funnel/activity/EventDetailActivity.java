@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 
 import com.hasgeek.funnel.R;
 import com.hasgeek.funnel.fragment.DaysListFragment;
+import com.hasgeek.funnel.fragment.EventVenueFragment;
 import com.hasgeek.funnel.fragment.ExploreEventFragment;
 
 
@@ -43,6 +44,7 @@ public class EventDetailActivity extends FragmentActivity implements ActionBar.T
         ab.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         ab.addTab(ab.newTab().setText(R.string.schedule).setTabListener(this));
         ab.addTab(ab.newTab().setText(R.string.explore).setTabListener(this));
+        ab.addTab(ab.newTab().setText(R.string.venue).setTabListener(this));
     }
 
 
@@ -74,7 +76,7 @@ public class EventDetailActivity extends FragmentActivity implements ActionBar.T
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
 
@@ -85,8 +87,10 @@ public class EventDetailActivity extends FragmentActivity implements ActionBar.T
                     return new DaysListFragment();
                 case 1:
                     return new ExploreEventFragment();
+                case 2:
+                    return new EventVenueFragment();
                 default:
-                    throw new RuntimeException("We don't have more than two fragments!");
+                    throw new RuntimeException("We don't have so many fragments!");
             }
         }
     }
