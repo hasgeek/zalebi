@@ -125,7 +125,7 @@ public class APIService extends IntentService {
                                 cv.put("speaker", sess.optString("speaker", null));
                                 cv.put("section", sess.optString("section_title", null));
                                 cv.put("level", sess.optString("technical_level", null));
-                                cv.put("description", sess.optString("description_text", null));
+                                cv.put("description", sess.optString("description", null));
                                 cv.put("url", sess.optString("url", null));
 
                                 // Check if proposal with this id already exists or not

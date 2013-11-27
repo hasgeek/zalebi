@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -39,19 +40,25 @@ public class SessionDetailActivity extends Activity {
         mSession = (EventSession) getIntent().getSerializableExtra("session");
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setTitle(mSession.getTitle());
-        getActionBar().setSubtitle(mSession.getSpeaker());
+        getActionBar().setTitle(mSession.getSlotInIst24Hrs());
+        getActionBar().setSubtitle(mSession.getRoomTitle());
 
         setContentView(R.layout.activity_sessiondetail);
+
 
         TextView title = (TextView) findViewById(R.id.tv_sd_title);
         title.setText(mSession.getTitle());
         TextView speaker = (TextView) findViewById(R.id.tv_sd_speaker);
         speaker.setText(mSession.getSpeaker());
+
+        Typeface fontawesome = Typeface.createFromAsset(getAssets(), "fonts/FontAwesome.otf");
         TextView section = (TextView) findViewById(R.id.tv_sd_section);
-        section.setText(mSession.getSection());
+        section.setText("\uf018  " + mSession.getSection());
+        section.setTypeface(fontawesome);
         TextView level = (TextView) findViewById(R.id.tv_sd_level);
-        level.setText(mSession.getLevel());
+        level.setText("\uf0e4  " + mSession.getLevel());
+        level.setTypeface(fontawesome);
+
         TextView description = (TextView) findViewById(R.id.tv_sd_description);
         description.setText(Html.fromHtml(mSession.getDescription()));
         description.setMovementMethod(LinkMovementMethod.getInstance());

@@ -14,7 +14,7 @@
         android:layout_gravity="center"
         android:contentDescription="@string/cd_logo_hasgeek" />
 
-    <View style="@style/LineGray" />
+    <View style="@style/LineGrayHorizontal" />
 
     <FrameLayout
         android:id="@+id/fl_events"

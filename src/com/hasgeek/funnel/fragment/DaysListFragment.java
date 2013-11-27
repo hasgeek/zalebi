@@ -176,14 +176,20 @@ public class DaysListFragment extends Fragment
                     color = Color.parseColor("#" + e.getRoomColor());
                 }
                 SessionDetailRowPart rowPart = new SessionDetailRowPart(nContext, e.getTitle(), e.getSpeaker(), color);
-                rowPart.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent i = new Intent(getActivity(), SessionDetailActivity.class);
-                        i.putExtra("session", fe);
-                        startActivityForResult(i, REQUEST_SESSION_DETAIL);
-                    }
-                });
+                if (TextUtils.isEmpty(fe.getDescription())) {
+                    rowPart.setEnabled(false);
+                    rowPart.setOnClickListener(null);
+                } else {
+                    rowPart.setEnabled(true);
+                    rowPart.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent i = new Intent(getActivity(), SessionDetailActivity.class);
+                            i.putExtra("session", fe);
+                            startActivityForResult(i, REQUEST_SESSION_DETAIL);
+                        }
+                    });
+                }
                 sessionsLayout.addView(rowPart);
             }
 
@@ -218,7 +224,7 @@ public class DaysListFragment extends Fragment
             SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
             try {
                 Date date = fmt.parse(dateString);
-                SimpleDateFormat fmtOut = new SimpleDateFormat("d MMMM, yyyy");
+                SimpleDateFormat fmtOut = new SimpleDateFormat("d MMMM yyyy");
                 tv.setText(fmtOut.format(date));
             } catch (ParseException e) {
                 e.printStackTrace();
