@@ -18,6 +18,7 @@
 
     <se.emilsjolander.stickylistheaders.StickyListHeadersListView
         android:id="@+id/list"
+        android:background="@android:color/white"
         android:divider="@color/listview_divider_gray"
         android:dividerHeight="1dp"
         android:layout_below="@+id/tv_showing_only_bookmarked"

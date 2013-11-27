@@ -171,7 +171,7 @@ public class DaysListFragment extends Fragment
                 final EventSession fe = e;
                 int color;
                 if (TextUtils.isEmpty(e.getRoomColor())) {
-                    color = Color.GRAY;
+                    color = getResources().getColor(R.color.break_session_yellow);
                 } else {
                     color = Color.parseColor("#" + e.getRoomColor());
                 }

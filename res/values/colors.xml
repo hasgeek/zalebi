@@ -5,4 +5,5 @@
     <color name="gray_button">#666666</color>
     <color name="gray_button_pressed">#333333</color>
     <color name="listview_divider_gray">#bbbbbb</color>
+    <color name="break_session_yellow">#ffff9e</color>
 </resources>
