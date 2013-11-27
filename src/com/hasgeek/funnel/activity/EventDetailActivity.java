@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.MenuItem;
 
 import com.hasgeek.funnel.R;
 import com.hasgeek.funnel.fragment.DaysListFragment;
@@ -93,5 +94,16 @@ public class EventDetailActivity extends FragmentActivity implements ActionBar.T
                     throw new RuntimeException("We don't have so many fragments!");
             }
         }
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

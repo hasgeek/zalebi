@@ -3,7 +3,6 @@ package com.hasgeek.funnel.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -152,10 +151,7 @@ public class SessionDetailActivity extends Activity {
                 return true;
 
             case android.R.id.home:
-                Intent parentAct = new Intent(this, HomeActivity.class);
-                parentAct.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(parentAct);
-                finish();
+                onBackPressed();
                 return true;
 
             default:
