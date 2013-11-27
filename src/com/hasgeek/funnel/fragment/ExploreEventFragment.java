@@ -8,16 +8,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
+
+import com.hasgeek.funnel.R;
 
 
 public class ExploreEventFragment extends Fragment {
 
+    private ProgressBar mProgressBar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        WebView w = new WebView(getActivity());
-        w.setWebViewClient(new WebViewClient());
-        w.loadUrl("http://droidcon.in/2013/explore-app");
-        return w;
+        View v = inflater.inflate(R.layout.fragment_explore_event, container, false);
+        WebView webView = (WebView) v.findViewById(R.id.wv_explore_event);
+        webView.setWebViewClient(mWebViewClient);
+        webView.loadUrl("http://droidcon.in/2013/explore-app");
+        mProgressBar = (ProgressBar) v.findViewById(R.id.pb_explore_event);
+        return v;
     }
+
+
+    private WebViewClient mWebViewClient = new WebViewClient() {
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            mProgressBar.setVisibility(View.GONE);
+        }
+    };
 
 }
