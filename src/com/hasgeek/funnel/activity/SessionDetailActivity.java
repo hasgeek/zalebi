@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -114,13 +115,13 @@ public class SessionDetailActivity extends Activity {
     }
 
 
-    //todo Enable this when we're going ahead with bookmarking
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        menu.add(0, MENU_SUBMIT_FEEDBACK, 0, R.string.menu_submit_feedback)
-//                .setIcon(R.drawable.ic_ab_feedback)
-//                .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
-//
+    //    todo Enable this when we're going ahead with bookmarking
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(0, MENU_SUBMIT_FEEDBACK, 0, R.string.menu_submit_feedback)
+                .setIcon(R.drawable.ic_ab_feedback)
+                .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
 //        if (mSession.isBookmarked()) {
 //            menu.add(0, MENU_BOOKMARK, 0, R.string.menu_remove_bookmark)
 //                    .setIcon(R.drawable.ic_rating_important)
@@ -130,9 +131,9 @@ public class SessionDetailActivity extends Activity {
 //                    .setIcon(R.drawable.ic_rating_not_important)
 //                    .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
 //        }
-//
-//        return true;
-//    }
+
+        return true;
+    }
 
 
     @Override

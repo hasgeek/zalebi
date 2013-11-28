@@ -126,7 +126,7 @@ public class APIService extends IntentService {
                                 cv.put("section", sess.optString("section_title", null));
                                 cv.put("level", sess.optString("technical_level", null));
                                 cv.put("description", sess.optString("description", null));
-                                cv.put("url", sess.optString("url", null));
+                                cv.put("url", sess.optString("feedback_url", null));
 
                                 // Check if proposal with this id already exists or not
                                 Cursor idCheck = cr.query(
@@ -170,7 +170,7 @@ public class APIService extends IntentService {
             String params = null;
             try {
                 params = String.format("id_type=%s&userid=%s&content=%s&presentation=%s",
-                        URLEncoder.encode("email", charset),
+                        URLEncoder.encode("deviceid", charset),
                         URLEncoder.encode(intent.getStringExtra("userid"), charset),
                         URLEncoder.encode(intent.getStringExtra("content"), charset),
                         URLEncoder.encode(intent.getStringExtra("presentation"), charset));

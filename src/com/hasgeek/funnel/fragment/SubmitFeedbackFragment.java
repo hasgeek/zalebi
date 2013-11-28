@@ -1,15 +1,9 @@
 package com.hasgeek.funnel.fragment;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.app.AlertDialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +18,6 @@ import com.hasgeek.funnel.service.APIService;
 public class SubmitFeedbackFragment extends DialogFragment {
 
     private String mFeedbackUrl;
-    private Button mSubmitButton;
 
 
     public SubmitFeedbackFragment() {
@@ -35,7 +28,7 @@ public class SubmitFeedbackFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mFeedbackUrl = getArguments().getString("url") + "/feedback";
+        mFeedbackUrl = getArguments().getString("url");
     }
 
 
@@ -44,8 +37,8 @@ public class SubmitFeedbackFragment extends DialogFragment {
         getDialog().setTitle(R.string.dialog_submitfeedback);
         View v = inflater.inflate(R.layout.fragment_dialog_submitfeedback, container, false);
 
-        mSubmitButton = (Button) v.findViewById(R.id.btn_dialog_feedback_submit);
-        mSubmitButton.setOnClickListener(submitButtonClickListener);
+        Button submit = (Button) v.findViewById(R.id.btn_dialog_feedback_submit);
+        submit.setOnClickListener(submitButtonClickListener);
 
         return v;
     }
@@ -54,30 +47,6 @@ public class SubmitFeedbackFragment extends DialogFragment {
     private View.OnClickListener submitButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            final String[] googleAccount = new String[1];
-            if (sp.contains("preferred_google_account")) {
-                googleAccount[0] = sp.getString("preferred_google_account", "");
-            } else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle(R.string.select_google_account);
-                AccountManager accountManager = AccountManager.get(getActivity());
-                final Account[] accounts = accountManager.getAccountsByType("com.google");
-                final int size = accounts.length;
-                final String[] names = new String[size];
-                for (int k = 0; k < size; k++) {
-                    names[k] = accounts[k].name;
-                }
-                builder.setItems(names, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        sp.edit().putString("preferred_google_account", names[which]).commit();
-                        googleAccount[0] = names[which];
-                    }
-                });
-                builder.create().show();
-                return;
-            }
-
             RadioGroup con = (RadioGroup) getView().findViewById(R.id.rg_dialog_feedback_content);
             RadioGroup pres = (RadioGroup) getView().findViewById(R.id.rg_dialog_feedback_presentation);
 
@@ -115,12 +84,12 @@ public class SubmitFeedbackFragment extends DialogFragment {
                         throw new RuntimeException("No radio button was selected!");
                 }
 
-                Log.w("ASD!asdaSD", mFeedbackUrl + " " + googleAccount[0] + " " + contentVote + "/" + presentationVote);
+                String android_id = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
 
                 Intent i = new Intent(getActivity(), APIService.class);
                 i.putExtra(APIService.MODE, APIService.POST_FEEDBACK);
                 i.putExtra("url", mFeedbackUrl);
-                i.putExtra("userid", googleAccount[0]);
+                i.putExtra("userid", android_id);
                 i.putExtra("content", String.valueOf(contentVote));
                 i.putExtra("presentation", String.valueOf(presentationVote));
                 getActivity().startService(i);
