@@ -35,7 +35,7 @@ public class SessionsListLoader extends AsyncTaskLoader<List<EventSessionRow>> {
                             "r.title as roomtitle, r.bgcolor " +
                             "FROM sessions s " +
                             "LEFT JOIN rooms r on s.room = r.name " +
-                            "ORDER BY s.date_ist ASC",
+                            "ORDER BY s.date_ist, s.slot_ist",
                     null);
 
         } else {
@@ -45,7 +45,7 @@ public class SessionsListLoader extends AsyncTaskLoader<List<EventSessionRow>> {
                             "FROM sessions s " +
                             "LEFT JOIN rooms r on s.room = r.name " +
                             "WHERE s.bookmarked = ? " +
-                            "ORDER BY s.date_ist ASC",
+                            "ORDER BY s.date_ist, s.slot_ist",
                     new String[] { "true" });
         }
 
