@@ -15,6 +15,6 @@ default.properties
 *.tmproj
 
 # IntelliJ IDEA
-.idea/
-*.iml
+.idea/workspace.xml
+.idea/tasks.xml
 out/

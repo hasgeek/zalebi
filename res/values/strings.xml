@@ -1,15 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">HasGeek</string>
-    <string name="cheesy_footer">A HasGeek &amp; Path Seventeen Production.</string>
+    <string name="app_name">HasGeek Funnel</string>
+    <string name="activity_event_detail">Event detail</string>
     <string name="made_with_love">Made with love by\nPath Seventeen</string>
-    <string name="made_with_lovec">MADE WITH LOVE BY\nPATH SEVENTEEN</string>
 
     <string name="cd_logo_hasgeek">HasGeek logo</string>
     <string name="cd_logo_xvii">Path Seventeen logo</string>
+    <string name="cd_iv_header">Event header image</string>
 
     <string name="tv_making_magic">Making magic…</string>
-    <string name="tv_no_data">Nothing found! :-(</string>
+    <string name="tv_empty">Nothing here.</string>
+    <string name="droidcon2013_date">28&#8211;30 November 2013, Bangalore</string>
+    <string name="droidcon2013_title">Droidcon India</string>
+    <string name="menu_submit_feedback">Submit feedback</string>
+    <string name="menu_remove_bookmark">Remove from bookmarks</string>
+    <string name="menu_save_bookmark">Save to bookmarks</string>
+    <string name="bookmark_removed">Session removed from bookmarks.</string>
+    <string name="bookmark_saved">Session saved to bookmarks.</string>
+    <string name="show_only_bookmarked">Show only bookmarked sessions</string>
+    <string name="show_all_sessions">Show all sessions</string>
+    <string name="dialog_submitfeedback">Submit feedback</string>
+    <string name="content">Talk content</string>
+    <string name="presentation">Speaker presentation and delivery</string>
+    <string name="submit">Submit</string>
+    <string name="feedback_ok">:-|</string>
+    <string name="feedback_good">:-)</string>
+    <string name="feedback_awesome">:-D</string>
+    <string name="select_google_account">Pick a Google account</string>
+
+    <string name="message_apifailed">There was a problem connecting to the HasGeek servers. Please try again in a short while.</string>
+    <string name="message_feedback_received_thanks">Feedback received, thank you!</string>
+    <string name="message_feedback_already_submitted">You have already submitted feedback for this session.</string>
+    <string name="schedule">SCHEDULE</string>
+    <string name="explore">EXPLORE</string>
+    <string name="venue">VENUE</string>
+    <string name="showing_only_bookmarked_sessions">Showing only bookmarked sessions</string>
 
 </resources>

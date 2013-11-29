@@ -1,49 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
     <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="#eaeaea"
-            android:src="@drawable/logo_hasgeek"
-            android:layout_gravity="center"
-            android:contentDescription="@string/cd_logo_hasgeek"
-            />
+        android:layout_width="wrap_content"
+        android:layout_height="64dp"
+        android:layout_margin="8dp"
+        android:background="#eaeaea"
+        android:src="@drawable/logo_hasgeek"
+        android:scaleType="centerInside"
+        android:layout_gravity="center"
+        android:contentDescription="@string/cd_logo_hasgeek" />
 
-    <View style="@style/LineGray" />
+    <View style="@style/LineGrayHorizontal" />
 
     <FrameLayout
-            android:id="@+id/fl_events"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            />
+        android:id="@+id/fl_events"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
     <RelativeLayout
-            android:id="@+id/rl_loading"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+        android:id="@+id/rl_loading"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
         <ProgressBar
-                android:id="@+id/pb"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_centerInParent="true"
-                />
+            android:id="@+id/pb"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true" />
+
         <TextView
-                android:layout_below="@+id/pb"
-                android:layout_centerHorizontal="true"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/tv_making_magic"
-                android:textSize="16sp"
-                />
+            android:layout_below="@+id/pb"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/tv_making_magic"
+            android:textSize="16sp" />
     </RelativeLayout>
 
 </LinearLayout>
