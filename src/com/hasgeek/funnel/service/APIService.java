@@ -55,7 +55,7 @@ public class APIService extends IntentService {
         if (mode.equals(SYNC_DROIDCON2013)) {
             DroidconAPICalledEvent event = new DroidconAPICalledEvent();
             try {
-                HttpCodeAndResponse reply = runOkHttpGetRequest(API_BASE + "/droidcon2013/schedule/json");
+                HttpCodeAndResponse reply = runOkHttpGetRequest(API_BASE + "/droidcon2014/schedule/json");
                 if (reply.getCode().equals("200")) {
                     JSONObject j = new JSONObject(reply.getResponse());
 

@@ -14,7 +14,7 @@
 
     <TextView
         android:id="@+id/tv_venue_title"
-        android:text="MLR Convention Center, Whitefield"
+        android:text="MLR Convention Center, JP Nagar"
         android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -53,7 +53,7 @@
         <ImageView
             android:id="@+id/iv_venue_room1"
             android:contentDescription="@string/cd_iv_header"
-            android:background="#5ab75a"
+            android:background="#e77d59"
             android:layout_width="24dp"
             android:layout_height="24dp" />
 
@@ -77,38 +77,14 @@
 
         <ImageView
             android:id="@+id/iv_venue_room2"
-            android:background="#117ae8"
+            android:background="#5882FA"
             android:contentDescription="@string/cd_iv_header"
             android:layout_width="24dp"
             android:layout_height="24dp" />
 
         <TextView
             android:id="@+id/tv_venue_room2"
-            android:text="Banquet Hall"
-            android:textSize="16sp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp"
-        android:layout_below="@id/ll_room2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/iv_venue_room2"
-            android:background="#2fe82f"
-            android:contentDescription="@string/cd_iv_header"
-            android:layout_width="24dp"
-            android:layout_height="24dp" />
-
-        <TextView
-            android:id="@+id/tv_venue_room2"
-            android:text="Meeting Room"
+            android:text="Banquet"
             android:textSize="16sp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="8dp"

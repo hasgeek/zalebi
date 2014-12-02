@@ -12,6 +12,8 @@ import android.widget.ProgressBar;
 
 import com.hasgeek.funnel.R;
 
+import java.net.URLEncoder;
+
 
 public class ExploreEventFragment extends Fragment {
 
@@ -23,7 +25,8 @@ public class ExploreEventFragment extends Fragment {
         WebView webView = (WebView) v.findViewById(R.id.wv_explore_event);
         webView.setWebViewClient(mWebViewClient);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("http://droidcon.in/2013/explore-app");
+
+        webView.loadUrl("https://scrollback.io/hasgeek?"+URLEncoder.encode("webview={}"));
         mProgressBar = (ProgressBar) v.findViewById(R.id.pb_explore_event);
         return v;
     }
