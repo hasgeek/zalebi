@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">HasGeek Funnel</string>
+    <string name="app_name">Talk Funnel</string>
     <string name="activity_event_detail">Event detail</string>
     <string name="made_with_love">Made with love by\nPath Seventeen</string>
 
