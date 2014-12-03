@@ -39,7 +39,7 @@ public class APIService extends IntentService {
     public static final String SYNC_DROIDCON2013 = "APIService.SYNC_DROIDCON2013";
     public static final String POST_FEEDBACK = "APIService.POST_FEEDBACK";
 
-    private static final String API_BASE = "https://funnel.hasgeek.com";
+    private static final String API_BASE = "https://droidconin.talkfunnel.com";
 
 
     public APIService() {
@@ -55,7 +55,7 @@ public class APIService extends IntentService {
         if (mode.equals(SYNC_DROIDCON2013)) {
             DroidconAPICalledEvent event = new DroidconAPICalledEvent();
             try {
-                HttpCodeAndResponse reply = runOkHttpGetRequest(API_BASE + "/droidcon2014/schedule/json");
+                HttpCodeAndResponse reply = runOkHttpGetRequest(API_BASE + "/2014/schedule/json");
                 if (reply.getCode().equals("200")) {
                     JSONObject j = new JSONObject(reply.getResponse());
 

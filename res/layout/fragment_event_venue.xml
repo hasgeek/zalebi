@@ -22,7 +22,7 @@
     <TextView
         android:id="@+id/tv_venue_address"
         android:paddingTop="4dp"
-        android:text="4th Main, Dyvasandra Industrial Layout\nMahadevapura, Whitefield\nBangalore - 560 048"
+        android:text="Brigade Millennium, 7th Phase\nJ.P. Nagar\nBangalore - 560 078"
         android:textSize="16sp"
         android:layout_below="@id/tv_venue_title"
         android:layout_width="match_parent"

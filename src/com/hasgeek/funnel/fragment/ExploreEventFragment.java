@@ -1,6 +1,7 @@
 package com.hasgeek.funnel.fragment;
 
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -25,8 +26,15 @@ public class ExploreEventFragment extends Fragment {
         WebView webView = (WebView) v.findViewById(R.id.wv_explore_event);
         webView.setWebViewClient(mWebViewClient);
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setDomStorageEnabled(true);
 
-        webView.loadUrl("https://scrollback.io/hasgeek?"+URLEncoder.encode("webview={}"));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WebView.setWebContentsDebuggingEnabled(true);
+        }
+        webView.loadUrl("https://scrollback.io/hasgeek?"+URLEncoder.encode("webview={" +
+                "'nick' :'hasgeeknickname'" +
+                "}"));
         mProgressBar = (ProgressBar) v.findViewById(R.id.pb_explore_event);
         return v;
     }
