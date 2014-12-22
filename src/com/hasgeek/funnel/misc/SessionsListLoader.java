@@ -17,7 +17,6 @@ public class SessionsListLoader extends AsyncTaskLoader<List<EventSessionRow>> {
     private List<EventSessionRow> mData;
     private int mMode;
 
-
     public SessionsListLoader(Context context, int mode) {
         super(context);
         mDatabase = DBManager.getInstance(context).getWritableDatabase();

@@ -119,7 +119,7 @@ public class SessionDetailActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, MENU_SUBMIT_FEEDBACK, 0, R.string.menu_submit_feedback)
-                .setIcon(R.drawable.ic_ab_feedback)
+                //.setIcon(R.drawable.ic_ab_feedback)
                 .setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
 //        if (mSession.isBookmarked()) {

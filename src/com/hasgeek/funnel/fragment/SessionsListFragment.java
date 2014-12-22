@@ -211,7 +211,6 @@ public class SessionsListFragment extends Fragment
             return mSessionsList.size();
         }
 
-
         @Override
         public View getHeaderView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
