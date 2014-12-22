@@ -38,13 +38,13 @@ public class EventDetailActivity extends FragmentActivity implements ActionBar.T
         });
 
         ActionBar ab = getActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+
         ab.setTitle(getIntent().getStringExtra("name"));
         ab.setSubtitle(getIntent().getStringExtra("dateString"));
 
         ab.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         ab.addTab(ab.newTab().setText(R.string.schedule).setTabListener(this));
-        ab.addTab(ab.newTab().setText(R.string.explore).setTabListener(this));
+        ab.addTab(ab.newTab().setText(R.string.scrollbackio_chat).setTabListener(this));
         ab.addTab(ab.newTab().setText(R.string.venue).setTabListener(this));
     }
 
