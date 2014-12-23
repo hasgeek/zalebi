@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/libs/Android-SlideExpandableListView/Android-SlideExpandableListView.iml" filepath="$PROJECT_DIR$/libs/Android-SlideExpandableListView/Android-SlideExpandableListView.iml" />
-      <module fileurl="file://$PROJECT_DIR$/HasGeek.iml" filepath="$PROJECT_DIR$/HasGeek.iml" />
-      <module fileurl="file://$PROJECT_DIR$/libs/StickyListHeaders/StickyListHeaders.iml" filepath="$PROJECT_DIR$/libs/StickyListHeaders/StickyListHeaders.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zalebi.iml" filepath="$PROJECT_DIR$/zalebi.iml" />
     </modules>
   </component>
 </project>
