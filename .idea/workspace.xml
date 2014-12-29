@@ -1,142 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidConfiguredLogFilters">
+    <filters>
+      <filter>
+        <option name="name" value="app: com.hasgeek.zalebi" />
+        <option name="packageNamePattern" value="com.hasgeek.zalebi" />
+      </filter>
+    </filters>
+  </component>
   <component name="AndroidLayouts">
     <shared>
-      <config />
+      <config>
+        <devices>
+          <device id="Nexus 5" />
+        </devices>
+      </config>
     </shared>
+    <layouts>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+        <config>
+          <theme>@style/AppTheme</theme>
+        </config>
+      </layout>
+    </layouts>
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: com.hasgeek.zalebi" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6aa27ab6-c0c0-4cf4-ae8e-8a6130a90995" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/zalebi.iml" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\.idea\.name" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\.idea\ant.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\.idea\codeStyleSettings.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\.idea\compiler.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\.idea\dictionaries\lut4rp.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\.idea\encodings.xml" afterPath="" />
+    <list default="true" id="6aa27ab6-c0c0-4cf4-ae8e-8a6130a90995" name="Default" comment="Added framework for API and Services.">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/api/API.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/event/APIErrorEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/event/APIRequestSpacesEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/event/APIResponseSpacesEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/BusProvider.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/event/LoadSpacesEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/api/model/Proposal.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/api/model/Section.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/api/model/Space.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/activity/SpacesActivity.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/adapters/SpacesAdapter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/event/SpacesLoadedEvent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/api/SpacesService.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/Talkfunnel.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/imageview_gradient.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/spaces_listview_row.xml" />
       <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\.idea\inspectionProfiles\Project_Default.xml" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\.idea\inspectionProfiles\profiles_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\.idea\libraries\CWAC_WakefulIntentService.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\.idea\libraries\android_support_v4.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\.idea\libraries\com_haarman_listviewanimations_2_5_2.xml" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\.idea\libraries\gson_2_3_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\.idea\libraries\nineoldandroids_2_4_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\.idea\libraries\okhttp_1_2_1_jar_with_dependencies.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\.idea\modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\.idea\vcs.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\.travis.yml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\AndroidManifest.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\HasGeek.iml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\README.md" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\ant.properties" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\assets\fonts\FontAwesome.otf" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\build.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\Android-SlideExpandableListView\Android-SlideExpandableListView.iml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\Android-SlideExpandableListView\AndroidManifest.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\Android-SlideExpandableListView\pom.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\Android-SlideExpandableListView\project.properties" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\Android-SlideExpandableListView\res\values\attrs.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\Android-SlideExpandableListView\res\values\ids.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\Android-SlideExpandableListView\src\com\tjerkw\slideexpandable\library\AbstractSlideExpandableListAdapter.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\Android-SlideExpandableListView\src\com\tjerkw\slideexpandable\library\ActionSlideExpandableListView.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\Android-SlideExpandableListView\src\com\tjerkw\slideexpandable\library\ExpandCollapseAnimation.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\Android-SlideExpandableListView\src\com\tjerkw\slideexpandable\library\SlideExpandableListAdapter.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\Android-SlideExpandableListView\src\com\tjerkw\slideexpandable\library\SlideExpandableListView.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\Android-SlideExpandableListView\src\com\tjerkw\slideexpandable\library\WrapperListAdapterImpl.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\CWAC-WakefulIntentService.jar" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\StickyListHeaders\.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\StickyListHeaders\AndroidManifest.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\StickyListHeaders\StickyListHeaders.iml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\StickyListHeaders\build.gradle" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\StickyListHeaders\build.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\StickyListHeaders\gradle.properties" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\StickyListHeaders\proguard-project.txt" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\StickyListHeaders\project.properties" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\StickyListHeaders\res\values\attrs.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\StickyListHeaders\src\se\emilsjolander\stickylistheaders\AdapterWrapper.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\StickyListHeaders\src\se\emilsjolander\stickylistheaders\ApiLevelTooLowException.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\StickyListHeaders\src\se\emilsjolander\stickylistheaders\CheckableWrapperView.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\StickyListHeaders\src\se\emilsjolander\stickylistheaders\SectionIndexerAdapterWrapper.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\StickyListHeaders\src\se\emilsjolander\stickylistheaders\StickyListHeadersAdapter.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\StickyListHeaders\src\se\emilsjolander\stickylistheaders\StickyListHeadersListView.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\StickyListHeaders\src\se\emilsjolander\stickylistheaders\WrapperView.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\StickyListHeaders\src\se\emilsjolander\stickylistheaders\WrapperViewList.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\android-support-v4.jar" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\com.haarman.listviewanimations-2.5.2.jar" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\nineoldandroids-2.4.0.jar" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\okhttp-1.2.1-jar-with-dependencies.jar" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\otto-1.3.4.jar" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\libs\sugar-1.3.jar" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\proguard-project.txt" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\project.properties" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\anim\fadein.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable-hdpi\ic_ab_feedback.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable-hdpi\ic_rating_important.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable-hdpi\ic_rating_not_important.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable-hdpi\ic_show_bookmarked.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable-hdpi\ic_show_not_bookmarked.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable-xhdpi\bg_home.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable-xhdpi\ic_ab_feedback.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable-xhdpi\ic_launcher.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable-xhdpi\ic_rating_important.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable-xhdpi\ic_rating_not_important.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable-xhdpi\ic_show_bookmarked.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable-xhdpi\ic_show_not_bookmarked.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable-xhdpi\logo_hasgeek.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable-xhdpi\logo_xvii.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable\droidcon.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable\feedback_awesome.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable\feedback_good.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable\feedback_ok.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable\gradient_event_row.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable\hg_logo_transparent.png" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable\selector_background_droidcon.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable\selector_button.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\drawable\selector_row_session.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\layout\activity_eventdetail.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\layout\activity_main.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\layout\activity_sessiondetail.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\layout\fragment_dialog_submitfeedback.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\layout\fragment_event_venue.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\layout\fragment_eventslist.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\layout\fragment_explore_event.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\layout\fragment_sessionslist.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\layout\header_view.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\layout\part_lv_xvii.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\layout\row_eventslist.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\layout\row_session.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\layout\row_session_right_part.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\menu\menu_eventdetail.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\values\colors.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\values\strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\res\values\styles.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\src\com\hasgeek\funnel\activity\EventDetailActivity.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\src\com\hasgeek\funnel\activity\HomeActivity.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\src\com\hasgeek\funnel\activity\SessionDetailActivity.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\src\com\hasgeek\funnel\bus\BusProvider.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\src\com\hasgeek\funnel\bus\DroidconAPICalledEvent.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\src\com\hasgeek\funnel\bus\SessionFeedbackAlreadySubmittedEvent.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\src\com\hasgeek\funnel\bus\SessionFeedbackSubmittedEvent.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\src\com\hasgeek\funnel\fragment\EventVenueFragment.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\src\com\hasgeek\funnel\fragment\EventsListFragment.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\src\com\hasgeek\funnel\fragment\ExploreEventFragment.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\src\com\hasgeek\funnel\fragment\SessionsListFragment.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\src\com\hasgeek\funnel\fragment\SubmitFeedbackFragment.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\src\com\hasgeek\funnel\misc\DBManager.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\src\com\hasgeek\funnel\misc\DataProvider.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\src\com\hasgeek\funnel\misc\EventSession.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\src\com\hasgeek\funnel\misc\EventSessionRow.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\src\com\hasgeek\funnel\misc\EventsListLoader.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\src\com\hasgeek\funnel\misc\SessionDetailRowPart.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\src\com\hasgeek\funnel\misc\SessionsListLoader.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\src\com\hasgeek\funnel\service\APIService.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\src\com\hasgeek\funnel\service\AlarmListener.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\src\com\hasgeek\funnel\service\HttpCodeAndResponse.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
+      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\.idea\libraries\sugar_1_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\MyApplication\app\app.iml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\karthik\Documents\GitHub\AndroidStudioProjects\zalebi\app\src\main\java\com\hasgeek\zalebi\MainActivity.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Zalebi.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -159,46 +80,53 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MainActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/MainActivity.java">
+      <file leaf-file-name="SpacesActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/activity/SpacesActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="714">
-              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="884" max-vertical-offset="2465">
+              <caret line="52" column="58" selection-start-line="52" selection-start-column="58" selection-end-line="52" selection-end-column="58" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <file leaf-file-name="SpacesService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/api/SpacesService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
-              <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="697" max-vertical-offset="1224">
+              <caret line="41" column="8" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="82" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="API.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/api/API.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.53898305" vertical-offset="543" max-vertical-offset="1479">
+              <caret line="60" column="36" selection-start-line="60" selection-start-column="36" selection-end-line="60" selection-end-column="36" />
               <folding>
-                <element signature="e#263#281#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="strings.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <file leaf-file-name="APIRequestSpacesEvent.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/event/APIRequestSpacesEvent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.15813954" vertical-offset="0" max-vertical-offset="860">
-              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="459">
+              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="activity_main.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-          <provider selected="true" editor-type-id="android-designer">
-            <state />
-          </provider>
-          <provider editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+      <file leaf-file-name="APIResponseSpacesEvent.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/event/APIResponseSpacesEvent.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="459">
+              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -207,18 +135,51 @@
       <file leaf-file-name="build.gradle" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="578" max-vertical-offset="799">
+              <caret line="34" column="47" selection-start-line="34" selection-start-column="47" selection-end-line="34" selection-end-column="47" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/.gitignore">
+      <file leaf-file-name="Talkfunnel.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/Talkfunnel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="119">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="476" max-vertical-offset="782">
+              <caret line="28" column="15" selection-start-line="28" selection-start-column="15" selection-end-line="28" selection-end-column="15" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="spaces_listview_row.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/spaces_listview_row.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="697">
+              <caret line="27" column="35" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="imageview_gradient.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/imageview_gradient.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="272">
+              <caret line="10" column="8" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SpacesLoadedEvent.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/event/SpacesLoadedEvent.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="578">
+              <caret line="10" column="3" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -290,6 +251,11 @@
                 <option name="name" value="assembleDebugTest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Assembles all PackagingOptions builds" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="assemblePackagingOptions" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="description" value="Assembles all Release builds" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="assembleRelease" />
@@ -317,6 +283,10 @@
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="checkDebugManifest" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="checkPackagingOptionsManifest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
@@ -373,6 +343,26 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="compilePackagingOptionsAidl" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="compilePackagingOptionsJava" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="compilePackagingOptionsNdk" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="compilePackagingOptionsRenderscript" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="compilePackagingOptionsSources" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="compileReleaseAidl" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
@@ -413,6 +403,10 @@
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="dexDebugTest" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="dexPackagingOptions" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
@@ -460,6 +454,26 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="generatePackagingOptionsAssets" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="generatePackagingOptionsBuildConfig" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="generatePackagingOptionsResValues" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="generatePackagingOptionsResources" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="generatePackagingOptionsSources" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="generateReleaseAssets" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
@@ -499,9 +513,19 @@
                 <option name="name" value="lintDebug" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Runs lint on the PackagingOptions build" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="lintPackagingOptions" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="description" value="Runs lint on the Release build" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="lintRelease" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Runs lint on just the fatal issues in the PackagingOptions build" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="lintVitalPackagingOptions" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Runs lint on just the fatal issues in the Release build" />
@@ -526,6 +550,14 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="mergePackagingOptionsAssets" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="mergePackagingOptionsResources" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="mergeReleaseAssets" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
@@ -539,6 +571,10 @@
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="packageDebugTest" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="packagePackagingOptions" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
@@ -566,7 +602,15 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="preDexPackagingOptions" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="preDexRelease" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="prePackagingOptionsBuild" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
@@ -576,6 +620,16 @@
                 <option name="description" value="Prepare com.android.support:appcompat-v7:21.0.2" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="prepareComAndroidSupportAppcompatV72102Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Prepare com.android.support:cardview-v7:21.0.2" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="prepareComAndroidSupportCardviewV72102Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Prepare com.android.support:recyclerview-v7:21.0.2" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="prepareComAndroidSupportRecyclerviewV72102Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Prepare com.android.support:support-v4:21.0.2" />
@@ -589,6 +643,10 @@
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="prepareDebugTestDependencies" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="preparePackagingOptionsDependencies" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
@@ -617,6 +675,18 @@
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="processDebugTestResources" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="processPackagingOptionsJavaRes" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="processPackagingOptionsManifest" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="processPackagingOptionsResources" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
@@ -651,6 +721,11 @@
                 <option name="name" value="uninstallDebugTest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Uninstalls the PackagingOptions build" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="uninstallPackagingOptions" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="description" value="Uninstalls the Release build" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="uninstallRelease" />
@@ -670,7 +745,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="4257975649718" />
+        <entry key="$PROJECT_DIR$" value="4258154962025" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -835,6 +910,32 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/api/Space.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/BusProvider.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/api/model/Section.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/api/model/Proposal.java" />
+        <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/ReceivedSpacesDataEvent.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/activity/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/event/ReceivedSpacesDataEvent.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/api/model/SpacesService.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/event/APIErrorEvent.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/event/LoadSpacesEvent.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/adapters/SpacesAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/imageview_gradient.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/spaces_listview_row.xml" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/event/SpacesLoadedEvent.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/activity/SpacesActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/event/APIGetSpacesEvent.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/event/APIResponseSpacesEvent.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/Talkfunnel.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/api/SpacesService.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/api/API.java" />
       </list>
     </option>
   </component>
@@ -851,7 +952,7 @@
     <OptionsSetting value="true" id="Update" />
     <OptionsSetting value="true" id="Status" />
     <OptionsSetting value="true" id="Edit" />
-    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="2" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectReloadState">
@@ -870,6 +971,69 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Zalebi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="AndroidView">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Zalebi" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Zalebi" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Zalebi" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Zalebi" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1002,6 +1166,36 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Zalebi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zalebi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -1010,62 +1204,114 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Zalebi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zalebi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zalebi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eventbus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Zalebi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zalebi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zalebi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eventbus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="event" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Zalebi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zalebi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="zalebi" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="AndroidView">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Zalebi" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Zalebi" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Zalebi" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Zalebi" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1081,6 +1327,21 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="FullScreen" value="false" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="05b3d3ba09d3269e" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Galaxy_Nexus_API_9" />
+    <property name="android.project.structure.last.selected" value="app" />
+    <property name="android.project.structure.proportion" value="0.15" />
+    <property name="OverrideImplement.combined" value="true" />
+    <property name="OverrideImplement.overriding.sorted" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.hasgeek.zalebi.eventbus.event" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.hasgeek.zalebi.api" />
+    </key>
   </component>
   <component name="RunManager" selected="Android Application.app">
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
@@ -1211,6 +1472,8 @@
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <RunnerSettings RunnerId="AndroidDebugRunner" />
+      <ConfigurationWrapper RunnerId="AndroidDebugRunner" />
       <method />
     </configuration>
     <list size="1">
@@ -1225,6 +1488,11 @@
     </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SliceManager">
+    <option name="analysisUIOptions">
+      <AnalysisUIOptions />
+    </option>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -1236,25 +1504,45 @@
     </task>
     <servers />
   </component>
+  <component name="TodoView" selected-index="0">
+    <todo-panel id="selected-file">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="default-changelist">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32127193" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32833335" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32127193" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25189108" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4649123" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" x="787" y="585" width="770" height="318" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32894737" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1286,27 +1574,202 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
+    <MESSAGE value="Added framework for API and Services." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added framework for API and Services." />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider selected="true" editor-type-id="android-designer">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/spaces_listview_row.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="697">
+          <caret line="27" column="35" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/imageview_gradient.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="272">
+          <caret line="10" column="8" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/event/SpacesLoadedEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="578">
+          <caret line="10" column="3" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/activity/SpacesActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="723" max-vertical-offset="2499">
+          <caret line="62" column="39" selection-start-line="62" selection-start-column="39" selection-end-line="62" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/api/SpacesService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1020" max-vertical-offset="1581">
+          <caret line="60" column="21" selection-start-line="60" selection-start-column="21" selection-end-line="60" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="442">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="578" max-vertical-offset="799">
+          <caret line="34" column="47" selection-start-line="34" selection-start-column="47" selection-end-line="34" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/Talkfunnel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="289" max-vertical-offset="680">
+          <caret line="17" column="41" selection-start-line="17" selection-start-column="41" selection-end-line="17" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/spaces_listview_row.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="697">
+          <caret line="27" column="35" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/imageview_gradient.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="272">
+          <caret line="10" column="8" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/adapters/SpacesAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="503" max-vertical-offset="1292">
+          <caret line="46" column="32" selection-start-line="46" selection-start-column="32" selection-end-line="46" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/event/SpacesLoadedEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="578">
+          <caret line="10" column="3" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/event/APIErrorEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="85" max-vertical-offset="459">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/activity/SpacesActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="748">
+          <caret line="5" column="29" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="204">
+          <caret line="6" column="5" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
       <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="885">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="680">
+          <caret line="30" column="59" selection-start-line="30" selection-start-column="59" selection-end-line="30" selection-end-column="59" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/Talkfunnel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="272" max-vertical-offset="663">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/api/model/Proposal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="17" max-vertical-offset="7514">
+          <caret line="12" column="35" selection-start-line="12" selection-start-column="35" selection-end-line="12" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/api/model/Section.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="2074">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/api/model/Space.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3943" max-vertical-offset="4828">
+          <caret line="277" column="1" selection-start-line="277" selection-start-column="1" selection-end-line="277" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="459">
+          <caret line="18" column="80" selection-start-line="18" selection-start-column="80" selection-end-line="18" selection-end-column="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/proguard-rules.pro">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1314,33 +1777,219 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="885">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="714">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
-          <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
-          <folding>
-            <element signature="e#263#281#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15813954" vertical-offset="0" max-vertical-offset="860">
+        <state vertical-scroll-proportion="-5.44" vertical-offset="0" max-vertical-offset="238">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/zalebi.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="885">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="204">
+          <caret line="6" column="5" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/api/model/Proposal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6137">
+          <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/api/model/Section.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1683">
+          <caret line="112" column="29" selection-start-line="112" selection-start-column="29" selection-end-line="112" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="585">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.6" vertical-offset="0" max-vertical-offset="442">
+          <caret line="20" column="1" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="585">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/proguard-rules.pro">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="885">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/api/model/Space.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="671" max-vertical-offset="3910">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/app.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1666">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/BusProvider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="357">
+          <caret line="17" column="1" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="578">
+          <caret line="4" column="66" selection-start-line="4" selection-start-column="66" selection-end-line="4" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/event/LoadSpacesEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
+          <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/adapters/SpacesAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="503" max-vertical-offset="1292">
+          <caret line="46" column="32" selection-start-line="46" selection-start-column="32" selection-end-line="46" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/event/APIErrorEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="442">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/imageview_gradient.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="272">
+          <caret line="10" column="8" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="799">
+          <caret line="34" column="47" selection-start-line="34" selection-start-column="47" selection-end-line="34" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/spaces_listview_row.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="697">
+          <caret line="27" column="35" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/event/SpacesLoadedEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
+          <caret line="10" column="3" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/activity/SpacesActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="451" max-vertical-offset="2414">
+          <caret line="52" column="58" selection-start-line="52" selection-start-column="58" selection-end-line="52" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/Talkfunnel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
+          <caret line="28" column="15" selection-start-line="28" selection-start-column="15" selection-end-line="28" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/event/APIResponseSpacesEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/eventbus/event/APIRequestSpacesEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/api/SpacesService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="901">
+          <caret line="41" column="8" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="82" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hasgeek/zalebi/api/API.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.53898305" vertical-offset="543" max-vertical-offset="1479">
+          <caret line="60" column="36" selection-start-line="60" selection-start-column="36" selection-end-line="60" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
