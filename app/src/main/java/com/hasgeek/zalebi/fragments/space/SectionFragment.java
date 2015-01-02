@@ -1,70 +1,75 @@
-package com.hasgeek.zalebi.activity;
+package com.hasgeek.zalebi.fragments.space;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.hasgeek.zalebi.R;
-import com.hasgeek.zalebi.adapters.SpacesAdapter;
+import com.hasgeek.zalebi.adapters.SectionsAdapter;
+import com.hasgeek.zalebi.api.model.Space;
 import com.hasgeek.zalebi.eventbus.BusProvider;
 import com.hasgeek.zalebi.eventbus.event.api.APIErrorEvent;
-import com.hasgeek.zalebi.eventbus.event.api.APIRequestSpacesEvent;
-import com.hasgeek.zalebi.eventbus.event.loader.LoadSpacesEvent;
-import com.hasgeek.zalebi.eventbus.event.loader.SpacesLoadedEvent;
+import com.hasgeek.zalebi.eventbus.event.api.APIRequestSingleSpaceEvent;
+import com.hasgeek.zalebi.eventbus.event.loader.LoadSingleSpaceEvent;
+import com.hasgeek.zalebi.eventbus.event.loader.SingleSpaceLoadedEvent;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
-public class SpacesActivity extends ActionBarActivity {
+import org.parceler.Parcels;
 
-    String LOG_TAG = "SpacesActivity";
-    private SwipeRefreshLayout swipeLayout;
-    private RecyclerView mRecyclerView;
-    private SpacesAdapter mAdapter;
+/**
+ * Created by karthik on 30-12-2014.
+ */
+public class SectionFragment extends Fragment {
+
+    String LOG_TAG = "SectionFragment";
+    RecyclerView mRecyclerView;
     private Bus mBus;
-
+    private SwipeRefreshLayout swipeLayout;
+    private SectionsAdapter mAdapter;
+    private Space space;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+        space = Parcels.unwrap(getArguments().getParcelable("space"));
+        View v = inflater.inflate(R.layout.fragment_space_section, container, false);
+
+        swipeLayout = (SwipeRefreshLayout) v.findViewById(R.id.fragment_proposal_swipe_container);
         swipeLayout.setOnRefreshListener(mOnSwipeListener);
         swipeLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.spaces_recyclerview);
+        mRecyclerView = (RecyclerView) v.findViewById(R.id.fragment_space_section_recyclerview);
         mRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(llm);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setOnScrollListener(scrollListener);
 
+        return v;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        swipeLayout.setRefreshing(true);
-        Log.i(LOG_TAG, "onResume() POST LoadSpacesEvent");
         getBus().register(this);
-        getBus().post(new LoadSpacesEvent("start"));
+        mBus.post(new LoadSingleSpaceEvent(space.getJsonUrl()));
     }
 
     @Override
     public void onPause() {
         super.onPause();
-
         getBus().unregister(this);
     }
 
@@ -72,16 +77,10 @@ public class SpacesActivity extends ActionBarActivity {
         @Override
         public void onRefresh() {
             Log.i(LOG_TAG, "onRefresh() POST LoadSpacesEvent");
-            getBus().post(new APIRequestSpacesEvent("spaces"));
+//            getBus().post(new APIErrorEvent(space_id));
+            getBus().post(new APIRequestSingleSpaceEvent(space.getJsonUrl()));
         }
     };
-
-    private Bus getBus() {
-        if (mBus == null) {
-            mBus = BusProvider.getInstance();
-        }
-        return mBus;
-    }
 
     RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
         @Override
@@ -99,9 +98,9 @@ public class SpacesActivity extends ActionBarActivity {
     };
 
     @Subscribe
-    public void onSpacesLoaded(SpacesLoadedEvent event) {
-        Log.i(LOG_TAG, "onSpacesLoaded() SUBSCRIPTION SpacesLoadedEvent");
-        mAdapter = new SpacesAdapter(this, event.getSpaces());
+    public void onSingleSpaceLoaded(SingleSpaceLoadedEvent event) {
+        Log.i(LOG_TAG, "onSingleSpaceLoaded() SUBSCRIPTION SpacesLoadedEvent");
+        mAdapter = new SectionsAdapter(getActivity(), event.getSections());
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
         swipeLayout.setRefreshing(false);
@@ -109,29 +108,15 @@ public class SpacesActivity extends ActionBarActivity {
 
     @Subscribe
     public void onAPIError(APIErrorEvent event) {
-        Toast.makeText(getApplicationContext(), "Network trouble?", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Network trouble?", Toast.LENGTH_SHORT).show();
         swipeLayout.setRefreshing(false);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    private Bus getBus() {
+        if (mBus == null) {
+            mBus = BusProvider.getInstance();
         }
-
-        return super.onOptionsItemSelected(item);
+        return mBus;
     }
+
 }

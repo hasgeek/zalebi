@@ -1,4 +1,4 @@
-package com.hasgeek.zalebi.eventbus.event;
+package com.hasgeek.zalebi.eventbus.event.api;
 
 /**
  * Created by karthik on 29-12-2014.

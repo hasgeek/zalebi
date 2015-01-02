@@ -1,6 +1,4 @@
-package com.hasgeek.zalebi.eventbus.event;
-
-import android.util.Log;
+package com.hasgeek.zalebi.eventbus.event.loader;
 
 import com.hasgeek.zalebi.api.model.Space;
 
@@ -23,6 +21,6 @@ public class SpacesLoadedEvent {
     }
 
     public void setSpaces(List<Space> spaces) {
-        this.spaces=spaces;
+        this.spaces = spaces;
     }
 }

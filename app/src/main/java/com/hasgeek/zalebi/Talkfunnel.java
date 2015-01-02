@@ -6,7 +6,7 @@ import android.util.Log;
 import com.hasgeek.zalebi.api.API;
 import com.hasgeek.zalebi.api.SpacesService;
 import com.hasgeek.zalebi.eventbus.BusProvider;
-import com.hasgeek.zalebi.eventbus.event.APIErrorEvent;
+import com.hasgeek.zalebi.eventbus.event.api.APIErrorEvent;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -26,7 +26,7 @@ public class Talkfunnel extends Application {
         mSpacesService = new SpacesService(mBus, getApplicationContext());
         mBus.register(mSpacesService);
 
-        api.init(mBus, getApplicationContext());
+        api = new API(mBus, getApplicationContext());
         mBus.register(api);
 
         mBus.register(this); //listen for "global" events
