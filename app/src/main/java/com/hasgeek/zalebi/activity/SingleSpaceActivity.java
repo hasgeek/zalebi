@@ -12,7 +12,9 @@ import android.view.MenuItem;
 import com.hasgeek.zalebi.R;
 import com.hasgeek.zalebi.api.model.Space;
 import com.hasgeek.zalebi.fragments.space.ProposalFragment;
+import com.hasgeek.zalebi.fragments.space.RoomFragment;
 import com.hasgeek.zalebi.fragments.space.SectionFragment;
+import com.hasgeek.zalebi.fragments.space.VenueFragment;
 
 import org.parceler.Parcels;
 
@@ -30,13 +32,16 @@ public class SingleSpaceActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_space);
-        if (getIntent().getExtras() != null) {
-            spaceBundle = getIntent().getExtras().getBundle("bundle");
-            space = Parcels.unwrap(spaceBundle.getParcelable("space"));
+        if (getIntent() != null) {
+            if (getIntent().getExtras() != null) {
+                spaceBundle = getIntent().getExtras().getBundle("bundle");
+                space = Parcels.unwrap(spaceBundle.getParcelable("space"));
 
-            getSupportActionBar().setTitle(space.getTitle());
-            getSupportActionBar().setSubtitle(space.getDatelocation());
-        } else if (savedInstanceState != null) {
+                getSupportActionBar().setTitle(space.getTitle());
+                getSupportActionBar().setSubtitle(space.getDatelocation());
+            }
+        }
+        if (savedInstanceState != null) {
             spaceBundle = savedInstanceState.getBundle("state");
             space = Parcels.unwrap(spaceBundle.getParcelable("space"));
 
@@ -55,14 +60,23 @@ public class SingleSpaceActivity extends ActionBarActivity {
     private List<Fragment> getFragments() {
         List<Fragment> fList = new ArrayList<Fragment>();
 
-        ProposalFragment p = new ProposalFragment();
-        p.setArguments(spaceBundle);
-
         SectionFragment s = new SectionFragment();
         s.setArguments(spaceBundle);
 
+        ProposalFragment p = new ProposalFragment();
+        p.setArguments(spaceBundle);
+
+        VenueFragment v = new VenueFragment();
+        v.setArguments(spaceBundle);
+
+        RoomFragment r = new RoomFragment();
+        r.setArguments(spaceBundle);
+
+
         fList.add(s);
         fList.add(p);
+        fList.add(v);
+        fList.add(r);
 
 
         return fList;
@@ -70,11 +84,8 @@ public class SingleSpaceActivity extends ActionBarActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        outState.putBundle("state", spaceBundle);
         super.onSaveInstanceState(outState);
-
-        if (outState != null) {
-            outState.putBundle("state", spaceBundle);
-        }
     }
 
     @Override
@@ -124,6 +135,10 @@ public class SingleSpaceActivity extends ActionBarActivity {
                     return "Sections";
                 case 1:
                     return "Proposals";
+                case 2:
+                    return "Venues";
+                case 3:
+                    return "Rooms";
             }
             return null;
         }

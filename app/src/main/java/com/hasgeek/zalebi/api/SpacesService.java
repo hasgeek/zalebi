@@ -8,8 +8,10 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hasgeek.zalebi.api.model.Proposal;
+import com.hasgeek.zalebi.api.model.Room;
 import com.hasgeek.zalebi.api.model.Section;
 import com.hasgeek.zalebi.api.model.Space;
+import com.hasgeek.zalebi.api.model.Venue;
 import com.hasgeek.zalebi.eventbus.event.api.APIErrorEvent;
 import com.hasgeek.zalebi.eventbus.event.api.APIResponseSingleSpaceEvent;
 import com.hasgeek.zalebi.eventbus.event.api.APIResponseSpacesEvent;
@@ -37,8 +39,8 @@ public class SpacesService {
     SharedPreferences prefs;
 
     public SpacesService(Bus bus, Context ctx) {
-        mBus=bus;
-        this.ctx=ctx;
+        mBus = bus;
+        this.ctx = ctx;
         this.prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
     }
 
@@ -105,10 +107,12 @@ public class SpacesService {
         JSONObject obj = null;
         try {
             obj = new JSONObject(prefs.getString("space_data_" + event.getSpace_id(), "{}"));
-            List<Proposal> proposals = Arrays.asList(gson.fromJson(obj.optString("proposals", "{}"), Proposal[].class));
-            List<Section> sections = Arrays.asList(gson.fromJson(obj.optString("sections", "{}"), Section[].class));
+            List<Proposal> proposals = Arrays.asList(gson.fromJson(obj.optString("proposals", "[]"), Proposal[].class));
+            List<Section> sections = Arrays.asList(gson.fromJson(obj.optString("sections", "[]"), Section[].class));
+            List<Room> rooms = Arrays.asList(gson.fromJson(obj.optString("rooms", "[]"), Room[].class));
+            List<Venue> venues = Arrays.asList(gson.fromJson(obj.optString("venues", "[]"), Venue[].class));
             Space space = gson.fromJson(obj.optString("space", "{}"), Space.class);
-            mBus.post(new SingleSpaceLoadedEvent(proposals, sections, space));
+            mBus.post(new SingleSpaceLoadedEvent(proposals, sections, rooms, venues, space));
 
         } catch (Exception e) {
             e.printStackTrace();

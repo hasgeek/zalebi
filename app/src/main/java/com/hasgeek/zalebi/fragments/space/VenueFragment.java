@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.hasgeek.zalebi.R;
-import com.hasgeek.zalebi.adapters.ProposalsAdapter;
+import com.hasgeek.zalebi.adapters.VenuesAdapter;
 import com.hasgeek.zalebi.api.model.Space;
 import com.hasgeek.zalebi.eventbus.BusProvider;
 import com.hasgeek.zalebi.eventbus.event.api.APIErrorEvent;
@@ -27,34 +27,20 @@ import org.parceler.Parcels;
 /**
  * Created by karthik on 30-12-2014.
  */
-public class ProposalFragment extends Fragment {
+public class VenueFragment extends Fragment {
 
-    String LOG_TAG = "ProposalFragment";
+    String LOG_TAG = "VenueFragment";
     RecyclerView mRecyclerView;
     private Bus mBus;
     private SwipeRefreshLayout swipeLayout;
-    private ProposalsAdapter mAdapter;
+    private VenuesAdapter mAdapter;
     private Space space;
-    Bundle spaceBundle;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            spaceBundle = getArguments();
-            space = Parcels.unwrap(spaceBundle.getParcelable("space"));
-
-        }
-        if (savedInstanceState != null) {
-            spaceBundle = savedInstanceState.getBundle("state");
-            space = Parcels.unwrap(spaceBundle.getParcelable("space"));
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_space_proposal, container, false);
+        space = Parcels.unwrap(getArguments().getParcelable("space"));
+        View v = inflater.inflate(R.layout.fragment_space_venue, container, false);
 
         swipeLayout = (SwipeRefreshLayout) v.findViewById(R.id.fragment_proposal_swipe_container);
         swipeLayout.setOnRefreshListener(mOnSwipeListener);
@@ -63,7 +49,7 @@ public class ProposalFragment extends Fragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.fragment_space_proposal_recyclerview);
+        mRecyclerView = (RecyclerView) v.findViewById(R.id.fragment_space_venue_recyclerview);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -85,15 +71,6 @@ public class ProposalFragment extends Fragment {
     public void onPause() {
         super.onPause();
         getBus().unregister(this);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        if (outState != null) {
-            outState.putBundle("state", spaceBundle);
-        }
     }
 
     private SwipeRefreshLayout.OnRefreshListener mOnSwipeListener = new SwipeRefreshLayout.OnRefreshListener() {
@@ -123,7 +100,7 @@ public class ProposalFragment extends Fragment {
     @Subscribe
     public void onSingleSpaceLoaded(SingleSpaceLoadedEvent event) {
         Log.i(LOG_TAG, "onSingleSpaceLoaded() SUBSCRIPTION SpacesLoadedEvent");
-        mAdapter = new ProposalsAdapter(getActivity(), event.getProposals(), spaceBundle);
+        mAdapter = new VenuesAdapter(getActivity(), event.getVenues());
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
         swipeLayout.setRefreshing(false);
