@@ -3,5 +3,9 @@
 /.idea
 .DS_Store
 /build
-
-.idea
+/gradle
+gradlew
+gradlew.bat
+gradle.properties
+zalebi.iml
+local.properties
