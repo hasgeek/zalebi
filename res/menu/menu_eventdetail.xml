@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/action_toggle_show_bookmarks"
-        android:icon="@drawable/ic_show_bookmarked"
-        android:showAsAction="always"
-        android:title="@string/show_only_bookmarked" />
-</menu>

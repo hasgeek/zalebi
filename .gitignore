@@ -1,20 +1,11 @@
-# Android
-bin/
-gen/
-local.properties
-default.properties
-
-# Mac OS X
-*~
+.gradle
+/local.properties
+/.idea
 .DS_Store
-
-# Eclipse
-.settings/
-
-# Textmate
-*.tmproj
-
-# IntelliJ IDEA
-.idea/workspace.xml
-.idea/tasks.xml
-out/
+/build
+/gradle
+gradlew
+gradlew.bat
+gradle.properties
+zalebi.iml
+local.properties
