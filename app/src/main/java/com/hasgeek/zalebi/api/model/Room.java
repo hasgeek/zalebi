@@ -1,0 +1,128 @@
+package com.hasgeek.zalebi.api.model;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import org.parceler.Parcel;
+
+/**
+ * Created by karthik on 06-01-2015.
+ */
+
+@Parcel
+public class Room {
+
+    @Expose
+    private String bgcolor;
+    @Expose
+    private String description;
+    @SerializedName("json_url")
+    @Expose
+    private String jsonUrl;
+    @Expose
+    private String name;
+    @Expose
+    private String title;
+    @Expose
+    private String url;
+    @Expose
+    private String venue;
+
+    /**
+     * @return The bgcolor
+     */
+    public String getBgcolor() {
+        return bgcolor;
+    }
+
+    /**
+     * @param bgcolor The bgcolor
+     */
+    public void setBgcolor(String bgcolor) {
+        this.bgcolor = bgcolor;
+    }
+
+    /**
+     * @return The description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description The description
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * @return The jsonUrl
+     */
+    public Object getJsonUrl() {
+        return jsonUrl;
+    }
+
+    /**
+     * @param jsonUrl The json_url
+     */
+    public void setJsonUrl(String jsonUrl) {
+        this.jsonUrl = jsonUrl;
+    }
+
+    /**
+     * @return The name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name The name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return The title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @param title The title
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    /**
+     * @return The url
+     */
+    public Object getUrl() {
+        return url;
+    }
+
+    /**
+     * @param url The url
+     */
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    /**
+     * @return The venue
+     */
+    public String getVenue() {
+        return venue;
+    }
+
+    /**
+     * @param venue The venue
+     */
+    public void setVenue(String venue) {
+        this.venue = venue;
+    }
+}
