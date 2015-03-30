@@ -1,20 +1,31 @@
 package com.hasgeek.zalebi.activity;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.hasgeek.zalebi.R;
+import com.hasgeek.zalebi.adapters.SectionsAdapter;
 import com.hasgeek.zalebi.api.model.Space;
+import com.hasgeek.zalebi.eventbus.BusProvider;
+import com.hasgeek.zalebi.eventbus.event.loader.LoadSingleSpaceEvent;
+import com.hasgeek.zalebi.eventbus.event.loader.SingleSpaceLoadedEvent;
 import com.hasgeek.zalebi.fragments.space.ProposalFragment;
 import com.hasgeek.zalebi.fragments.space.RoomFragment;
+import com.hasgeek.zalebi.fragments.space.ScannerFragment;
+import com.hasgeek.zalebi.fragments.space.ScheduleFragment;
 import com.hasgeek.zalebi.fragments.space.SectionFragment;
 import com.hasgeek.zalebi.fragments.space.VenueFragment;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 
 import org.parceler.Parcels;
 
@@ -27,6 +38,9 @@ public class SingleSpaceActivity extends ActionBarActivity {
     SpacePagerAdapter pageAdapter;
     Space space;
     Bundle spaceBundle;
+    Bus mBus;
+
+    public SingleSpaceLoadedEvent spaceData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,28 +69,60 @@ public class SingleSpaceActivity extends ActionBarActivity {
                 (ViewPager) findViewById(R.id.activity_single_space_viewpager);
         pager.setAdapter(pageAdapter);
         pager.setCurrentItem(1);
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.activity_single_space_viewpager_tabstrip);
+        tabs.setViewPager(pager);
+        mBus=getBus();
+    }
+
+    @Subscribe
+    public void onSingleSpaceLoaded(SingleSpaceLoadedEvent event) {
+        Log.i(LOG_TAG, "onSingleSpaceLoaded() SUBSCRIPTION SpacesLoadedEvent");
+        spaceData=event;
+        pageAdapter.notifyDataSetChanged();
+    }
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mBus.register(this);
+        mBus.post(new LoadSingleSpaceEvent(space.getJsonUrl()));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mBus.unregister(this);
     }
 
     private List<Fragment> getFragments() {
         List<Fragment> fList = new ArrayList<Fragment>();
 
-        SectionFragment s = new SectionFragment();
-        s.setArguments(spaceBundle);
+//        SectionFragment s = new SectionFragment();
+//        s.setArguments(spaceBundle);
+//        fList.add(s);
+//
+//        ProposalFragment p = new ProposalFragment();
+//        p.setArguments(spaceBundle);
+//        fList.add(p);
+//
+//        VenueFragment v = new VenueFragment();
+//        v.setArguments(spaceBundle);
+//        fList.add(v);
+//
+//        RoomFragment r = new RoomFragment();
+//        r.setArguments(spaceBundle);
+//        fList.add(r);
 
-        ProposalFragment p = new ProposalFragment();
-        p.setArguments(spaceBundle);
+        ScheduleFragment sched = new ScheduleFragment();
+        sched.setArguments(spaceBundle);
+        fList.add(sched);
 
-        VenueFragment v = new VenueFragment();
-        v.setArguments(spaceBundle);
+        //ScrollbackFragment chat = new ScrollbackFragment();
 
-        RoomFragment r = new RoomFragment();
-        r.setArguments(spaceBundle);
-
-
-        fList.add(s);
-        fList.add(p);
-        fList.add(v);
-        fList.add(r);
+        //ScannerFragment scan = new ScannerFragment();
+        //fList.add(scan);
 
 
         return fList;
@@ -132,15 +178,24 @@ public class SingleSpaceActivity extends ActionBarActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Sections";
+                    return "Schedule";
                 case 1:
-                    return "Proposals";
+                    return "Chat";
                 case 2:
-                    return "Venues";
-                case 3:
-                    return "Rooms";
+                    return "Scan";
+//                case 3:
+//                    return "Rooms";
+//                case 4:
+//                    return "Scanner";
             }
             return null;
         }
+    }
+
+    private Bus getBus() {
+        if (mBus == null) {
+            mBus = BusProvider.getInstance();
+        }
+        return mBus;
     }
 }

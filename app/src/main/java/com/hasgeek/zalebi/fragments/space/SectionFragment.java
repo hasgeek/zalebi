@@ -64,7 +64,6 @@ public class SectionFragment extends Fragment {
     public void onResume() {
         super.onResume();
         getBus().register(this);
-        mBus.post(new LoadSingleSpaceEvent(space.getJsonUrl()));
     }
 
     @Override

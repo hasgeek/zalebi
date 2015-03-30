@@ -12,7 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.hasgeek.zalebi.R;
+import com.hasgeek.zalebi.adapters.SessionsAdapter;
 import com.hasgeek.zalebi.adapters.VenuesAdapter;
+import com.hasgeek.zalebi.adapters.utils.DividerItemDecoration;
+import com.hasgeek.zalebi.api.model.Section;
+import com.hasgeek.zalebi.api.model.Session;
 import com.hasgeek.zalebi.api.model.Space;
 import com.hasgeek.zalebi.eventbus.BusProvider;
 import com.hasgeek.zalebi.eventbus.event.api.APIErrorEvent;
@@ -24,23 +28,30 @@ import com.squareup.otto.Subscribe;
 
 import org.parceler.Parcels;
 
-/**
- * Created by karthik on 30-12-2014.
- */
-public class VenueFragment extends Fragment {
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.TimeZone;
 
-    String LOG_TAG = "VenueFragment";
+/**
+ * Created by karthikbalakrishnan on 30/03/15.
+ */
+public class ScheduleFragment extends Fragment {
+
+    String LOG_TAG = "ScheduleFragment";
     RecyclerView mRecyclerView;
     private Bus mBus;
     private SwipeRefreshLayout swipeLayout;
-    private VenuesAdapter mAdapter;
+    private SessionsAdapter mAdapter;
     private Space space;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         space = Parcels.unwrap(getArguments().getParcelable("space"));
-        View v = inflater.inflate(R.layout.fragment_space_venue, container, false);
+        View v = inflater.inflate(R.layout.fragment_space_schedule, container, false);
 
         swipeLayout = (SwipeRefreshLayout) v.findViewById(R.id.fragment_proposal_swipe_container);
         swipeLayout.setOnRefreshListener(mOnSwipeListener);
@@ -49,11 +60,12 @@ public class VenueFragment extends Fragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.fragment_space_venue_recyclerview);
+        mRecyclerView = (RecyclerView) v.findViewById(R.id.fragment_space_schedule_recyclerview);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(llm);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setOnScrollListener(scrollListener);
 
@@ -64,6 +76,7 @@ public class VenueFragment extends Fragment {
     public void onResume() {
         super.onResume();
         getBus().register(this);
+        mBus.post(new LoadSingleSpaceEvent(space.getJsonUrl()));
     }
 
     @Override
@@ -75,8 +88,7 @@ public class VenueFragment extends Fragment {
     private SwipeRefreshLayout.OnRefreshListener mOnSwipeListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            Log.i(LOG_TAG, "onRefresh() POST LoadSpacesEvent");
-//            getBus().post(new APIErrorEvent(space_id));
+            Log.i(LOG_TAG, "onRefresh() POST LoadScheduleEvent");
             getBus().post(new APIRequestSingleSpaceEvent(space.getJsonUrl()));
         }
     };
@@ -99,7 +111,22 @@ public class VenueFragment extends Fragment {
     @Subscribe
     public void onSingleSpaceLoaded(SingleSpaceLoadedEvent event) {
         Log.i(LOG_TAG, "onSingleSpaceLoaded() SUBSCRIPTION SpacesLoadedEvent");
-        mAdapter = new VenuesAdapter(getActivity(), event.getVenues());
+        Collections.sort(event.getSessions(), new Comparator<Session>() {
+            @Override
+            public int compare(Session lhs, Session rhs) {
+
+                DateFormat m_ISO8601Local = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+                m_ISO8601Local.setTimeZone(TimeZone.getTimeZone("GMT+0"));
+
+                try {
+                    return m_ISO8601Local.parse(lhs.getStart()).compareTo(m_ISO8601Local.parse(rhs.getStart()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return 0;
+            }
+        });
+        mAdapter = new SessionsAdapter(getActivity(), event.getSessions());
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
         swipeLayout.setRefreshing(false);
@@ -117,5 +144,4 @@ public class VenueFragment extends Fragment {
         }
         return mBus;
     }
-
 }

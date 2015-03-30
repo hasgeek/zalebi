@@ -7,13 +7,14 @@ import com.hasgeek.zalebi.api.API;
 import com.hasgeek.zalebi.api.SpacesService;
 import com.hasgeek.zalebi.eventbus.BusProvider;
 import com.hasgeek.zalebi.eventbus.event.api.APIErrorEvent;
+import com.orm.SugarApp;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 /**
  * Created by karthik on 23-12-2014.
  */
-public class Talkfunnel extends Application {
+public class Talkfunnel extends SugarApp {
 
     private Bus mBus = BusProvider.getInstance();
     private SpacesService mSpacesService;
