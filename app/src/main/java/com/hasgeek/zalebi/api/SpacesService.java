@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import com.hasgeek.zalebi.api.model.Proposal;
 import com.hasgeek.zalebi.api.model.Room;
 import com.hasgeek.zalebi.api.model.Section;
+import com.hasgeek.zalebi.api.model.Session;
 import com.hasgeek.zalebi.api.model.Space;
 import com.hasgeek.zalebi.api.model.Venue;
 import com.hasgeek.zalebi.eventbus.event.api.APIErrorEvent;
@@ -23,8 +24,10 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -111,8 +114,23 @@ public class SpacesService {
             List<Section> sections = Arrays.asList(gson.fromJson(obj.optString("sections", "[]"), Section[].class));
             List<Room> rooms = Arrays.asList(gson.fromJson(obj.optString("rooms", "[]"), Room[].class));
             List<Venue> venues = Arrays.asList(gson.fromJson(obj.optString("venues", "[]"), Venue[].class));
+
+            List<Session> sessions = new ArrayList<>();
+            JSONArray schedule = new JSONArray(obj.optString("schedule", "[]"));
+
+            for(int i=0; i<schedule.length(); i++) {
+                JSONArray slots = schedule.getJSONObject(i).getJSONArray("slots");
+                for(int k=0; k<slots.length();k++) {
+                    sessions.addAll(Arrays.asList(gson.fromJson(slots.getJSONObject(k).optString("sessions", "[]"), Session[].class)));
+                }
+            }
+
+            for(Session s: sessions) {
+                s.setSpace_id(event.getSpace_id());
+            }
+
             Space space = gson.fromJson(obj.optString("space", "{}"), Space.class);
-            mBus.post(new SingleSpaceLoadedEvent(proposals, sections, rooms, venues, space));
+            mBus.post(new SingleSpaceLoadedEvent(proposals, sections, rooms, venues, sessions, space));
 
         } catch (Exception e) {
             e.printStackTrace();

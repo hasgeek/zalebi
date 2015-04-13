@@ -4,19 +4,22 @@ import android.app.Application;
 import android.util.Log;
 
 import com.hasgeek.zalebi.api.API;
+import com.hasgeek.zalebi.api.ContactExchangeService;
 import com.hasgeek.zalebi.api.SpacesService;
 import com.hasgeek.zalebi.eventbus.BusProvider;
 import com.hasgeek.zalebi.eventbus.event.api.APIErrorEvent;
+import com.orm.SugarApp;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 /**
  * Created by karthik on 23-12-2014.
  */
-public class Talkfunnel extends Application {
+public class Talkfunnel extends SugarApp {
 
     private Bus mBus = BusProvider.getInstance();
     private SpacesService mSpacesService;
+    private ContactExchangeService mContactExchangeService;
     private API api;
 
     @Override
@@ -24,7 +27,10 @@ public class Talkfunnel extends Application {
         super.onCreate();
 
         mSpacesService = new SpacesService(mBus, getApplicationContext());
+        mContactExchangeService = new ContactExchangeService(mBus, getApplicationContext());
+
         mBus.register(mSpacesService);
+        mBus.register(mContactExchangeService);
 
         api = new API(mBus, getApplicationContext());
         mBus.register(api);
@@ -34,7 +40,7 @@ public class Talkfunnel extends Application {
 
     @Subscribe
     public void onApiError(APIErrorEvent event) {
-        Log.e("TalkfunnelApp", event.getMessage());
+        Log.e("TalkfunnelApp", event.getMessage()+"");
     }
 
 }

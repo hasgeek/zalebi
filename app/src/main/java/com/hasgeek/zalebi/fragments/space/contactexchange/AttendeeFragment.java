@@ -1,4 +1,4 @@
-package com.hasgeek.zalebi.fragments.space;
+package com.hasgeek.zalebi.fragments.space.contactexchange;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,48 +12,46 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.hasgeek.zalebi.R;
-import com.hasgeek.zalebi.adapters.VenuesAdapter;
-import com.hasgeek.zalebi.api.model.Space;
+import com.hasgeek.zalebi.adapters.AttendeesAdapter;
+import com.hasgeek.zalebi.adapters.ExchangeContactsAdapter;
+import com.hasgeek.zalebi.api.ContactExchangeService;
+import com.hasgeek.zalebi.api.model.ExchangeContact;
 import com.hasgeek.zalebi.eventbus.BusProvider;
 import com.hasgeek.zalebi.eventbus.event.api.APIErrorEvent;
-import com.hasgeek.zalebi.eventbus.event.api.APIRequestSingleSpaceEvent;
-import com.hasgeek.zalebi.eventbus.event.loader.LoadSingleSpaceEvent;
+import com.hasgeek.zalebi.eventbus.event.api.APIRequestSyncAttendeesEvent;
 import com.hasgeek.zalebi.eventbus.event.loader.SingleSpaceLoadedEvent;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
-import org.parceler.Parcels;
-
 /**
- * Created by karthik on 30-12-2014.
+ * Created by karthikbalakrishnan on 30/03/15.
  */
-public class VenueFragment extends Fragment {
+public class AttendeeFragment extends Fragment {
 
-    String LOG_TAG = "VenueFragment";
+    String LOG_TAG = "ContactFragment";
     RecyclerView mRecyclerView;
     private Bus mBus;
     private SwipeRefreshLayout swipeLayout;
-    private VenuesAdapter mAdapter;
-    private Space space;
+    private AttendeesAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        space = Parcels.unwrap(getArguments().getParcelable("space"));
-        View v = inflater.inflate(R.layout.fragment_space_venue, container, false);
+        View v = inflater.inflate(R.layout.fragment_space_contactexhange_attendee, container, false);
 
-        swipeLayout = (SwipeRefreshLayout) v.findViewById(R.id.fragment_proposal_swipe_container);
+        swipeLayout = (SwipeRefreshLayout) v.findViewById(R.id.fragment_space_contactexchange_attendee_swipe_container);
         swipeLayout.setOnRefreshListener(mOnSwipeListener);
         swipeLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.fragment_space_venue_recyclerview);
+        mRecyclerView = (RecyclerView) v.findViewById(R.id.fragment_space_contactexchange_attendee_recyclerview);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(llm);
+        mAdapter = new AttendeesAdapter(getActivity(), ContactExchangeService.getAttendeeList());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setOnScrollListener(scrollListener);
 
@@ -76,8 +74,11 @@ public class VenueFragment extends Fragment {
         @Override
         public void onRefresh() {
             Log.i(LOG_TAG, "onRefresh() POST LoadSpacesEvent");
-//            getBus().post(new APIErrorEvent(space_id));
-            getBus().post(new APIRequestSingleSpaceEvent(space.getJsonUrl()));
+            mAdapter = new AttendeesAdapter(getActivity(), ContactExchangeService.getAttendeeList());
+            mRecyclerView.setAdapter(mAdapter);
+            mAdapter.notifyDataSetChanged();
+            swipeLayout.setRefreshing(false);
+            mBus.post(new APIRequestSyncAttendeesEvent("metarefresh"));
         }
     };
 
@@ -99,9 +100,6 @@ public class VenueFragment extends Fragment {
     @Subscribe
     public void onSingleSpaceLoaded(SingleSpaceLoadedEvent event) {
         Log.i(LOG_TAG, "onSingleSpaceLoaded() SUBSCRIPTION SpacesLoadedEvent");
-        mAdapter = new VenuesAdapter(getActivity(), event.getVenues());
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
         swipeLayout.setRefreshing(false);
     }
 
@@ -117,5 +115,4 @@ public class VenueFragment extends Fragment {
         }
         return mBus;
     }
-
 }

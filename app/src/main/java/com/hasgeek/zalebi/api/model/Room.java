@@ -13,20 +13,20 @@ import org.parceler.Parcel;
 public class Room {
 
     @Expose
-    private String bgcolor;
+    public String bgcolor;
     @Expose
-    private String description;
+    public String description;
     @SerializedName("json_url")
     @Expose
-    private String jsonUrl;
+    public String jsonUrl;
     @Expose
-    private String name;
+    public String name;
     @Expose
-    private String title;
+    public String title;
     @Expose
-    private String url;
+    public String url;
     @Expose
-    private String venue;
+    public String venue;
 
     /**
      * @return The bgcolor
