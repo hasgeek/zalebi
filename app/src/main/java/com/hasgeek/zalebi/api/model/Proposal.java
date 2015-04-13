@@ -3,7 +3,6 @@ package com.hasgeek.zalebi.api.model;
 /**
  * Created by karthik on 23-12-2014.
  */
-import com.activeandroid.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -13,49 +12,49 @@ import org.parceler.Parcel;
 public class Proposal{
 
     @Expose
-    private String bio;
+    public String bio;
     @Expose
-    private Integer comments;
+    public Integer comments;
     @Expose
-    private Boolean confirmed;
+    public Boolean confirmed;
     @Expose
-    private String description;
+    public String description;
     @Expose
-    private String fullname;
+    public String fullname;
     @SerializedName("id")
     @Expose
-    private Integer proposalId;
+    public Integer proposalId;
     @SerializedName("json_url")
     @Expose
-    private String jsonUrl;
+    public String jsonUrl;
     @Expose
-    private String level;
+    public String level;
     @Expose
-    private String links;
+    public String links;
     @Expose
-    private String name;
+    public String name;
     @Expose
-    private String objective;
+    public String objective;
     @Expose
-    private String proposer;
+    public String proposer;
     @Expose
-    private String requirements;
+    public String requirements;
     @Expose
-    private String section;
+    public String section;
     @Expose
-    private String slides;
+    public String slides;
     @Expose
-    private String speaker;
+    public String speaker;
     @Expose
-    private String submitted;
+    public String submitted;
     @Expose
-    private String title;
+    public String title;
     @Expose
-    private String type;
+    public String type;
     @Expose
-    private String url;
+    public String url;
     @Expose
-    private Integer votes;
+    public Integer votes;
 
     /**
      *

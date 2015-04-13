@@ -12,52 +12,52 @@ import org.parceler.Parcel;
 public class Session {
 
     @Expose
-    private String description;
+    public String description;
     @SerializedName("description_text")
     @Expose
-    private String descriptionText;
+    public String descriptionText;
     @Expose
-    private String end;
+    public String end;
     @SerializedName("feedback_url")
     @Expose
-    private String feedbackUrl;
+    public String feedbackUrl;
     @Expose
-    private Integer id;
+    public Integer id;
     @SerializedName("is_break")
     @Expose
-    private Boolean isBreak;
+    public Boolean isBreak;
     @SerializedName("json_url")
     @Expose
-    private String jsonUrl;
+    public String jsonUrl;
     @Expose
-    private Integer proposal;
+    public Integer proposal;
     @Expose
-    private String room;
+    public String room;
     @SerializedName("section_name")
     @Expose
-    private String sectionName;
+    public String sectionName;
     @SerializedName("section_title")
     @Expose
-    private String sectionTitle;
+    public String sectionTitle;
     @Expose
-    private String speaker;
+    public String speaker;
     @SerializedName("speaker_bio")
     @Expose
-    private String speakerBio;
+    public String speakerBio;
     @SerializedName("speaker_bio_text")
     @Expose
-    private String speakerBioText;
+    public String speakerBioText;
     @Expose
-    private String start;
+    public String start;
     @SerializedName("technical_level")
     @Expose
-    private String technicalLevel;
+    public String technicalLevel;
     @Expose
-    private String title;
+    public String title;
     @Expose
-    private String url;
+    public String url;
 
-    private String space_id;
+    public String space_id;
 
     public String getSpace_id() {
         return space_id;

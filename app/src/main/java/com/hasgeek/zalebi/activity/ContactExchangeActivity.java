@@ -11,15 +11,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.hasgeek.zalebi.R;
-import com.hasgeek.zalebi.api.model.Proposal;
 import com.hasgeek.zalebi.api.model.Space;
 import com.hasgeek.zalebi.eventbus.BusProvider;
 import com.hasgeek.zalebi.eventbus.event.api.APIErrorEvent;
-import com.hasgeek.zalebi.eventbus.event.loader.LoadSingleSpaceEvent;
 import com.hasgeek.zalebi.eventbus.event.loader.SingleSpaceLoadedEvent;
-import com.hasgeek.zalebi.fragments.space.ScannerFragment;
-import com.hasgeek.zalebi.fragments.space.proposal.SingleProposalFragment;
+import com.hasgeek.zalebi.fragments.space.contactexchange.ContactFragment;
+import com.hasgeek.zalebi.fragments.space.contactexchange.ScannerFragment;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -36,7 +35,7 @@ public class ContactExchangeActivity extends ActionBarActivity {
     private final String LOG_TAG = "ContactExchangeActivity";
 
     private Bus mBus;
-    ProposalPagerAdapter pageAdapter;
+    ContactExchangeAdapter pageAdapter;
     ViewPager pager;
     Space space;
     Bundle spaceBundle;
@@ -53,13 +52,20 @@ public class ContactExchangeActivity extends ActionBarActivity {
         getSupportActionBar().setTitle("Contact Exchange");
         getSupportActionBar().setSubtitle(space.getTitle());
 
-
+        pageAdapter = new ContactExchangeAdapter(getSupportFragmentManager(), getFragments());
+        ViewPager pager =
+                (ViewPager) findViewById(R.id.activity_contactexchange_viewpager);
+        pager.setAdapter(pageAdapter);
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.activity_contactexchange_viewpager_tabstrip);
+        tabs.setViewPager(pager);
     }
 
-    private List<Fragment> getFragmentsFromProposals(List<Proposal> proposals) {
+    private List<Fragment> getFragments() {
         List<Fragment> fList = new ArrayList<Fragment>();
 
         fList.add(new ScannerFragment());
+
+        fList.add(new ContactFragment());
 
         return fList;
     }
@@ -68,9 +74,7 @@ public class ContactExchangeActivity extends ActionBarActivity {
     @Override
     public void onResume() {
         super.onResume();
-        Log.i(LOG_TAG, "onResume() POST LoadSpacesEvent");
         getBus().register(this);
-        getBus().post(new LoadSingleSpaceEvent(space.getJsonUrl()));
     }
 
     @Override
@@ -83,11 +87,6 @@ public class ContactExchangeActivity extends ActionBarActivity {
     @Subscribe
     public void onSingleSpaceLoaded(SingleSpaceLoadedEvent event) {
         Log.i(LOG_TAG, "onSpacesLoaded() SUBSCRIPTION SpacesLoadedEvent");
-
-        pageAdapter = new ProposalPagerAdapter(getSupportFragmentManager(), getFragmentsFromProposals(event.getProposals()));
-        pager = (ViewPager) findViewById(R.id.activity_proposal_viewpager);
-        pager.setAdapter(pageAdapter);
-        pager.setCurrentItem(proposal_index);
     }
 
     @Subscribe
@@ -117,10 +116,10 @@ public class ContactExchangeActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    class ProposalPagerAdapter extends FragmentPagerAdapter {
+    class ContactExchangeAdapter extends FragmentPagerAdapter {
         private List<Fragment> fragments;
 
-        public ProposalPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
+        public ContactExchangeAdapter(FragmentManager fm, List<Fragment> fragments) {
             super(fm);
             this.fragments = fragments;
         }
@@ -137,7 +136,13 @@ public class ContactExchangeActivity extends ActionBarActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return (position + 1) + "/" + fragments.size();
+            switch (position) {
+                case 0:
+                    return "Scan";
+                case 1:
+                    return "Contacts";
+            }
+            return "";
         }
 
 

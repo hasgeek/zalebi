@@ -1,6 +1,8 @@
 package com.hasgeek.zalebi.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hasgeek.zalebi.R;
+import com.hasgeek.zalebi.api.ContactExchangeService;
 import com.hasgeek.zalebi.api.model.Room;
 import com.hasgeek.zalebi.api.model.Session;
 
@@ -83,7 +86,13 @@ public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.ListIt
         viewHolder.mListener = new ListItemViewHolder.ViewHolderClick() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Day: "+start.get(Calendar.DAY_OF_WEEK), Toast.LENGTH_SHORT).show();
+
+                new AlertDialog.Builder(context)
+                        .setTitle(s.getTitle())
+                        .setMessage(Html.fromHtml(s.getDescription()))
+                        .setCancelable(true)
+                        .setPositiveButton("Ok",null)
+                        .create().show();
             }
         };
 

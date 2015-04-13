@@ -13,32 +13,32 @@ import org.parceler.Parcel;
 public class Venue {
 
     @Expose
-    private String address1;
+    public String address1;
     @Expose
-    private String address2;
+    public String address2;
     @Expose
-    private String city;
+    public String city;
     @Expose
-    private String country;
+    public String country;
     @Expose
-    private String description;
+    public String description;
     @SerializedName("json_url")
     @Expose
-    private String jsonUrl;
+    public String jsonUrl;
     @Expose
-    private String latitude;
+    public String latitude;
     @Expose
-    private String longitude;
+    public String longitude;
     @Expose
-    private String name;
+    public String name;
     @Expose
-    private String postcode;
+    public String postcode;
     @Expose
-    private String state;
+    public String state;
     @Expose
-    private String title;
+    public String title;
     @Expose
-    private String url;
+    public String url;
 
     /**
      * @return The address1
