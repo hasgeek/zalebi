@@ -70,6 +70,7 @@ public class ProposalFragment extends Fragment {
         mRecyclerView.setLayoutManager(llm);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setOnScrollListener(scrollListener);
+        swipeLayout.setRefreshing(false);
 
         return v;
     }
@@ -78,7 +79,6 @@ public class ProposalFragment extends Fragment {
     public void onResume() {
         super.onResume();
         getBus().register(this);
-        mBus.post(new LoadSingleSpaceEvent(space.getJsonUrl()));
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.hasgeek.zalebi.eventbus.event.loader;
 import com.hasgeek.zalebi.api.model.Proposal;
 import com.hasgeek.zalebi.api.model.Room;
 import com.hasgeek.zalebi.api.model.Section;
+import com.hasgeek.zalebi.api.model.Session;
 import com.hasgeek.zalebi.api.model.Space;
 import com.hasgeek.zalebi.api.model.Venue;
 
@@ -17,14 +18,17 @@ public class SingleSpaceLoadedEvent {
     private List<Section> sections;
     private List<Room> rooms;
     private List<Venue> venues;
+    private List<Session> sessions;
     private Space space;
 
-    public SingleSpaceLoadedEvent(List<Proposal> proposals, List<Section> sections, List<Room> rooms, List<Venue> venues, Space space) {
+    public SingleSpaceLoadedEvent(List<Proposal> proposals, List<Section> sections, List<Room> rooms, List<Venue> venues, List<Session> sessions, Space space) {
         this.proposals = proposals;
         this.sections = sections;
         this.rooms = rooms;
         this.venues = venues;
+        this.sessions = sessions;
         this.space = space;
+
     }
 
     public List<Room> getRooms() {
@@ -67,5 +71,11 @@ public class SingleSpaceLoadedEvent {
         this.sections = sections;
     }
 
+    public List<Session> getSessions() {
+        return sessions;
+    }
 
+    public void setSessions(List<Session> sessions) {
+        this.sessions = sessions;
+    }
 }

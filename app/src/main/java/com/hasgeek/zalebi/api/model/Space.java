@@ -4,42 +4,46 @@ import org.parceler.Parcel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by karthik on 23-12-2014.
  */
 @Parcel
-public class Space {
+public class Space implements Serializable {
+
+
 
         @SerializedName("bg_color")
         @Expose
-        private String bgColor;
+        public String bgColor;
         @SerializedName("bg_image")
         @Expose
-        private String bgImage;
+        public String bgImage;
         @Expose
-        private String datelocation;
+        public String datelocation;
         @Expose
-        private String end;
+        public String end;
         @SerializedName("explore_url")
         @Expose
-        private String exploreUrl;
+        public String exploreUrl;
         @SerializedName("json_url")
         @Expose
-        private String jsonUrl;
+        public String jsonUrl;
         @Expose
-        private String name;
+        public String name;
         @Expose
-        private String start;
+        public String start;
         @Expose
-        private Integer status;
+        public Integer status;
         @Expose
-        private String timezone;
+        public String timezone;
         @Expose
-        private String title;
+        public String title;
         @Expose
-        private String url;
+        public String url;
         @Expose
-        private String website;
+        public String website;
 
         /**
          *

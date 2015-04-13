@@ -3,6 +3,10 @@
     package="com.hasgeek.zalebi">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature android:name="android.hardware.camera.flash" />
 
     <application
         android:name=".Talkfunnel"
@@ -35,6 +39,25 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.hasgeek.zalebi.activity.SingleSpaceActivity" />
         </activity>
+        <activity android:name=".activity.LoginActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="talkfunnel"/>
+            </intent-filter>
+        </activity>
+
+        <!--<provider-->
+            <!--android:name=".providers.VCFProvider"-->
+            <!--android:authorities="com.example.prov"-->
+            <!--android:exported="true"-->
+            <!--/>-->
+
+        <meta-data android:name="DATABASE" android:value="test.db" />
+        <meta-data android:name="VERSION" android:value="1" />
+        <meta-data android:name="QUERY_LOG" android:value="true" />
+        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.hasgeek.zalebi" />
     </application>
 
 </manifest>
