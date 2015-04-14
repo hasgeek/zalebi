@@ -48,11 +48,14 @@
             </intent-filter>
         </activity>
 
-        <!--<provider-->
-            <!--android:name=".providers.VCFProvider"-->
-            <!--android:authorities="com.example.prov"-->
-            <!--android:exported="true"-->
-            <!--/>-->
+        <provider
+            android:name=".providers.VCFProvider"
+            android:authorities="com.hasgeek.zalebi.providers.VCFProvider"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/export_paths" />
+        </provider>
 
         <meta-data android:name="DATABASE" android:value="test.db" />
         <meta-data android:name="VERSION" android:value="1" />

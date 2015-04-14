@@ -34,6 +34,13 @@ public class Attendee extends SugarRecord<Attendee> {
     public Attendee() {
     }
 
+    public boolean diff(Attendee a) {
+        boolean flag = false;
+        if(this.getCompany()!=a.getCompany() || this.getFullname()!=a.getFullname() || this.getJobTitle()!=a.getJobTitle() || this.getKey()!=a.getKey() || this.getSpaceId()!=a.getSpaceId())
+            flag=true;
+        return flag;
+    }
+
     public void update(Attendee a) {
         this.setCompany(a.getCompany());
         this.setFullname(a.getFullname());
