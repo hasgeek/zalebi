@@ -152,7 +152,7 @@ public class ContactExchangeService {
 
     public static void addAttendeeToSyncQueue(Attendee d) {
         if(SyncQueueContact.find(SyncQueueContact.class,"user_puk = ?", d.getPuk()).isEmpty()) {
-            new SyncQueueContact(d.getPuk(), d.getKey(), "metafresh").save();
+            new SyncQueueContact(d.getUserId(), d.getPuk(), d.getKey(), "metafresh").save();
             BusProvider.getInstance().post(new APIRequestSyncContactsEvent("metarefresh"));
         }
     }
