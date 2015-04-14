@@ -1,6 +1,8 @@
 package com.hasgeek.zalebi.activity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -34,12 +36,14 @@ import com.hasgeek.zalebi.fragments.space.ScheduleFragment;
 import com.hasgeek.zalebi.fragments.space.contactexchange.AttendeeFragment;
 import com.hasgeek.zalebi.fragments.space.contactexchange.ContactFragment;
 import com.hasgeek.zalebi.fragments.space.contactexchange.ScannerFragment;
+import com.hasgeek.zalebi.providers.VCFProvider;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import org.parceler.Parcels;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -201,21 +205,34 @@ public class SingleSpaceActivity extends ActionBarActivity {
             updatePages();
         }
 
-//        else if (id == R.id.action_export) {
-//            Collection<VCard> exportContactList = ContactExchangeService.getVCardsFromExchangeContacts();
-//            if(!exportContactList.isEmpty()) {
-//                try {
-//                    File file = new File(SingleSpaceActivity.this.getEx(), "contacts.vcf");
-//                    if (!file.exists()) {
-//                        file.createNewFile();
-//                    }
-//                    Ezvcard.write(exportContactList).go(file);
-//                }
-//                catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
+        else if (id == R.id.action_export) {
+            Collection<VCard> exportContactList = ContactExchangeService.getVCardsFromExchangeContacts();
+            if(!exportContactList.isEmpty()) {
+                try {
+                    File cacheDir = getCacheDir();
+                    File file = new File(cacheDir, "contacts.vcf");
+                    if (!file.exists()) {
+                        file.createNewFile();
+                    }
+                    Ezvcard.write(exportContactList).go(file);
+
+                    Intent shareIntent = new Intent();
+                    shareIntent.setAction(Intent.ACTION_SEND);
+                    shareIntent.setType("*/*");
+                    //Add the attachment by specifying a reference to our custom ContentProvider
+                    //and the specific file of interest
+                    shareIntent.putExtra(
+                            Intent.EXTRA_STREAM,
+                            Uri.parse("content://" + VCFProvider.AUTHORITY + "/"
+                                    + "contacts.vcf"));
+                    startActivity(Intent.createChooser(shareIntent, "Export contacts"));
+
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
         return super.onOptionsItemSelected(item);
     }

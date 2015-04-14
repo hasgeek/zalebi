@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,8 +70,9 @@ public class ScannerFragment extends DialogFragment implements ZBarScannerView.R
 
     @Override
     public void handleResult(Result rawResult) {
+        Log.i("handleResult()", "Raw Data:"+rawResult.getContents());
         mScannerView.stopCamera();
-        final Attendee a = ContactExchangeService.getAttendeeFromScannedData(rawResult.getContents(), space.getJsonUrl());
+        final Attendee a = ContactExchangeService.getAttendeeFromScannedData(rawResult.getContents(), space.getJsonUrl(), getActivity());
         if(a != null) {
             new AlertDialog.Builder(getActivity())
                     .setTitle("Add attendee?")
@@ -93,7 +95,6 @@ public class ScannerFragment extends DialogFragment implements ZBarScannerView.R
                     .create().show();
         }
         else {
-            Toast.makeText(getActivity(), "Invalid", Toast.LENGTH_SHORT).show();
             mScannerView.startCamera();
         }
     }

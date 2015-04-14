@@ -56,7 +56,7 @@ public class API {
 
         final String mURL = event.getSpaceId();
 
-        for(SyncQueueContact syncQueueContact: SyncQueueContact.listAll(SyncQueueContact.class)) {
+        for(final SyncQueueContact syncQueueContact: SyncQueueContact.listAll(SyncQueueContact.class)) {
 
             Request request = new Request.Builder()
                     .url(CONTACTEXCHANGESYNC_URL+"?puk="+syncQueueContact.getUserPuk()+"&key="+syncQueueContact.getUserKey())
@@ -81,7 +81,7 @@ public class API {
                         @Override
                         public void run() {
                             try {
-                                mBus.post(new APIResponseSyncContactsEvent(response.body().string()));
+                                mBus.post(new APIResponseSyncContactsEvent(response.body().string(), syncQueueContact.getUserId()));
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 mBus.post(new APIErrorEvent(e.getMessage()));

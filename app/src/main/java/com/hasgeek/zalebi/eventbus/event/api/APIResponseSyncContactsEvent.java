@@ -5,9 +5,11 @@ package com.hasgeek.zalebi.eventbus.event.api;
  */
 public class APIResponseSyncContactsEvent {
     private String response;
+    private String userId;
 
-    public APIResponseSyncContactsEvent(String response) {
+    public APIResponseSyncContactsEvent(String response, String userId) {
         this.response = response;
+        this.userId = userId;
     }
 
     public String getResponse() {
@@ -16,5 +18,13 @@ public class APIResponseSyncContactsEvent {
 
     public void setResponse(String response) {
         this.response = response;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }
