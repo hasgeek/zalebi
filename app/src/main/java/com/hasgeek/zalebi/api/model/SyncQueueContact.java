@@ -6,6 +6,8 @@ import com.orm.SugarRecord;
  * Created by karthikbalakrishnan on 31/03/15.
  */
 public class SyncQueueContact extends SugarRecord<SyncQueueContact> {
+
+    public String userId;
     public String userPuk;
     public String userKey;
     public String spaceId;
@@ -13,10 +15,19 @@ public class SyncQueueContact extends SugarRecord<SyncQueueContact> {
     public SyncQueueContact() {
     }
 
-    public SyncQueueContact(String userPuk, String userKey, String spaceId) {
+    public SyncQueueContact(String userId, String userPuk, String userKey, String spaceId) {
+        this.userId = userId;
         this.userPuk = userPuk;
         this.userKey = userKey;
         this.spaceId = spaceId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUserPuk() {
