@@ -50,6 +50,7 @@ public class LoginActivity extends Activity {
                 @Override
                 public void onFailure(Request request, final IOException e) {
                     e.printStackTrace();
+                    Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                     finish();
                 }
 
@@ -61,11 +62,15 @@ public class LoginActivity extends Activity {
                         JSONObject json = new JSONObject(res);
                         if(json.optInt("code", 0)==200) {
                             AuthService.saveUserToken(access_token);
+                            Intent i = new Intent(LoginActivity.this, SpacesActivity.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                            startActivity(i);
                             finish();
                         }
 
                     } catch (Exception e) {
                         e.printStackTrace();
+                        Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                         finish();
                     }
 

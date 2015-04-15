@@ -100,7 +100,7 @@ public class SingleSpaceActivity extends ActionBarActivity {
         tabs.setViewPager(pager);
         mBus=getBus();
         mBus.register(this);
-        mBus.post(new APIRequestSyncAttendeesEvent("metarefresh"));
+        mBus.post(new APIRequestSyncAttendeesEvent(space.getId(), space.getUrl()));
     }
 
     @Subscribe

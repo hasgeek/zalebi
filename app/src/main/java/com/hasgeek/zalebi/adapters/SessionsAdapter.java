@@ -55,7 +55,7 @@ public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.ListIt
     public void onBindViewHolder(ListItemViewHolder viewHolder, int position) {
         final Session s = sessions.get(position);
         viewHolder.title.setText(s.getTitle());
-        viewHolder.description.setText(Html.fromHtml(s.getDescription()));
+        viewHolder.speaker.setText(s.getSpeaker());
 
         DateFormat m_ISO8601Local = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         m_ISO8601Local.setTimeZone(TimeZone.getTimeZone("GMT+0"));
@@ -72,8 +72,6 @@ public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.ListIt
         String duration = String.format("%d min", TimeUnit.MILLISECONDS.toMinutes(end.getTimeInMillis()-start.getTimeInMillis()));
 
         viewHolder.duration.setText(duration+"");
-
-        viewHolder.section.setText(s.getSectionTitle());
 
         SimpleDateFormat sdfs = new SimpleDateFormat("hh:mm a");
         sdfs.setTimeZone(TimeZone.getDefault());
@@ -115,9 +113,8 @@ public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.ListIt
 
     public final static class ListItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView title;
-        public TextView description;
+        public TextView speaker;
         public TextView time;
-        public TextView section;
         public TextView duration;
         public LinearLayout colorIndicator;
         public ViewHolderClick mListener;
@@ -125,9 +122,8 @@ public class SessionsAdapter extends RecyclerView.Adapter<SessionsAdapter.ListIt
         public ListItemViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.fragment_space_schedule_list_row_title);
-            description = (TextView) itemView.findViewById(R.id.fragment_space_schedule_list_row_description);
+            speaker = (TextView) itemView.findViewById(R.id.fragment_space_schedule_list_row_speaker);
             time = (TextView) itemView.findViewById(R.id.fragment_space_schedule_list_row_time);
-            section = (TextView) itemView.findViewById(R.id.fragment_space_schedule_list_row_section);
             duration = (TextView) itemView.findViewById(R.id.fragment_space_schedule_list_row_duration);
             colorIndicator = (LinearLayout) itemView.findViewById(R.id.fragment_space_schedule_list_row_color_indicator);
             itemView.setOnClickListener(this);

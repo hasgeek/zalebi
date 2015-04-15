@@ -49,14 +49,14 @@ public class ExchangeContactsAdapter extends RecyclerView.Adapter<ExchangeContac
         final ExchangeContact c = contacts.get(position);
         viewHolder.name.setText(c.getFullname()+"");
         viewHolder.email.setText(c.getEmail() + "");
-        viewHolder.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                contacts.remove(position);
-                ContactExchangeService.deleteExchangeContact(c);
-                notifyDataSetChanged();
-            }
-        });
+//        viewHolder.delete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                contacts.remove(position);
+//                ContactExchangeService.deleteExchangeContact(c);
+//                notifyDataSetChanged();
+//            }
+//        });
         viewHolder.mListener = new ListItemViewHolder.ViewHolderClick() {
             @Override
             public void onClick(View v) {
@@ -76,6 +76,25 @@ public class ExchangeContactsAdapter extends RecyclerView.Adapter<ExchangeContac
                                 intent.putExtra(ContactsContract.Intents.Insert.EMAIL, c.getEmail());
                                 intent.putExtra(ContactsContract.Intents.Insert.JOB_TITLE, c.getJobTitle());
                                 context.startActivity(intent);
+                            }
+                        })
+                        .setNeutralButton("Delete", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                new AlertDialog.Builder(context)
+                                        .setTitle("Confirm")
+                                        .setMessage("Are you sure you want to delete this contact?")
+                                        .setPositiveButton("Yes, Delete", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                contacts.remove(position);
+                                                ContactExchangeService.deleteExchangeContact(c);
+                                                notifyDataSetChanged();
+                                            }
+                                        })
+                                        .setNegativeButton("No", null)
+                                        .create()
+                                        .show();
                             }
                         })
                         .setNegativeButton("Ok", null)
@@ -105,6 +124,7 @@ public class ExchangeContactsAdapter extends RecyclerView.Adapter<ExchangeContac
             name = (TextView) itemView.findViewById(R.id.fragment_space_contactexchange_contact_list_row_name);
             email = (TextView) itemView.findViewById(R.id.fragment_space_contactexchange_contact_list_row_email);
             delete = (Button) itemView.findViewById(R.id.fragment_space_contactexchange_contact_list_row_btn_delete);
+            delete.setVisibility(View.GONE);
             itemView.setOnClickListener(this);
         }
 

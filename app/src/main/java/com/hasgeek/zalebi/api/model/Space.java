@@ -13,6 +13,9 @@ import java.io.Serializable;
 public class Space implements Serializable {
 
 
+        @SerializedName("id")
+        @Expose
+        String id;
 
         @SerializedName("bg_color")
         @Expose
@@ -44,6 +47,15 @@ public class Space implements Serializable {
         public String url;
         @Expose
         public String website;
+
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
 
         /**
          *

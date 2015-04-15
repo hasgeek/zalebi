@@ -68,6 +68,8 @@ public class ContactExchangeService {
         try {
             JSONObject obj = new JSONObject(event.getResponse());
             ExchangeContact contact = gson.fromJson(obj.optString("participant","{}"), ExchangeContact.class);
+
+            Log.d("Contact", contact.getSpaceId());
             List<ExchangeContact> foundContacts = ExchangeContact.find(ExchangeContact.class,"user_id = ?", contact.getUserId());
             if(foundContacts.isEmpty()){
                 contact.save();
@@ -118,12 +120,12 @@ public class ContactExchangeService {
         try {
             JSONObject obj = new JSONObject(event.getResponse());
             final List<Attendee> attendees = Arrays.asList(gson.fromJson(obj.optString("participants", "{}"), Attendee[].class));
-            Log.d("Attendees", attendees.toString()+"");
             SugarTransactionHelper.doInTansaction(new SugarTransactionHelper.Callback() {
                 @Override
                 public void manipulateInTransaction() {
                     for(Attendee d: attendees ) {
                         List<Attendee> foundAttendees = Attendee.find(Attendee.class,"user_id = ?", d.getUserId());
+                        Log.d("Attendee", d.getSpaceId());
                         if(foundAttendees.isEmpty()) {
                             d.save();
                         }
@@ -147,7 +149,7 @@ public class ContactExchangeService {
         }
     }
 
-    public static Attendee getAttendeeFromScannedData(String data, String spaceId, Context ctx) {
+    public static Attendee getAttendeeFromScannedData(String data, String spaceId, String spaceURL, Context ctx) {
         Attendee result = null;
         if(data!=null) {
             if(data.length()==16) {
@@ -155,8 +157,8 @@ public class ContactExchangeService {
                 String key = data.substring(8);
                 Log.i("Puk",puk);
                 Log.i("Key", key);
-                if(!Attendee.find(Attendee.class, "puk = ?", puk).isEmpty()) {
-                    if(ExchangeContact.find(ExchangeContact.class,"puk = ?", puk).isEmpty()) {
+                if(!Attendee.find(Attendee.class, "puk = ? and space_id = ?", puk, spaceId).isEmpty()) {
+                    if(ExchangeContact.find(ExchangeContact.class,"puk = ? and space_id = ?", puk, spaceId).isEmpty()) {
                         result = Attendee.find(Attendee.class, "puk = ?", puk).get(0);
                         result.setKey(key);
                     }
@@ -168,7 +170,7 @@ public class ContactExchangeService {
                 else {
                     // Cannot find Attendee
                     Toast.makeText(ctx, "Cannot find attendee record", Toast.LENGTH_SHORT).show();
-                    BusProvider.getInstance().post(new APIRequestSyncAttendeesEvent("metarefresh"));
+                    BusProvider.getInstance().post(new APIRequestSyncAttendeesEvent(spaceId, spaceURL));
                 }
             }
             else {
@@ -179,10 +181,10 @@ public class ContactExchangeService {
         return result;
     }
 
-    public static void addAttendeeToSyncQueue(Attendee d) {
+    public static void addAttendeeToSyncQueue(Attendee d, String spaceId, String spaceUrl) {
         if(SyncQueueContact.find(SyncQueueContact.class,"user_puk = ?", d.getPuk()).isEmpty()) {
-            new SyncQueueContact(d.getUserId(), d.getPuk(), d.getKey(), "metafresh").save();
-            BusProvider.getInstance().post(new APIRequestSyncContactsEvent("metarefresh"));
+            new SyncQueueContact(d.getUserId(), d.getPuk(), d.getKey(), spaceId).save();
+            BusProvider.getInstance().post(new APIRequestSyncContactsEvent(spaceId, spaceUrl));
         }
     }
 
@@ -190,15 +192,15 @@ public class ContactExchangeService {
         e.delete();
     }
 
-    public static List<Attendee> getAttendeeList() {
+    public static List<Attendee> getAttendeeList(String spaceId) {
         List<Attendee> attendees = new ArrayList<>();
-        attendees.addAll(Attendee.listAll(Attendee.class));
+        attendees.addAll(Attendee.find(Attendee.class, "space_id = ?", spaceId));
         return attendees;
     }
 
-    public static List<ExchangeContact> getExchangeContacts() {
+    public static List<ExchangeContact> getExchangeContacts(String spaceId) {
         List<ExchangeContact> contacts = new ArrayList<>();
-        contacts.addAll(ExchangeContact.listAll(ExchangeContact.class));
+        contacts.addAll(ExchangeContact.find(ExchangeContact.class, "space_id = ?", spaceId));
         return contacts;
     }
 

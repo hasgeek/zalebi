@@ -8,11 +8,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_weight="25">
-
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
             <TextView
                 android:id="@+id/fragment_space_schedule_list_row_title"
                 android:layout_width="0dp"
@@ -26,21 +28,27 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:gravity="right"
                 android:text="2:00PM - 03:00PM"
                 />
-
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp">
 
             <TextView
-                android:id="@+id/fragment_space_schedule_list_row_section"
+                android:id="@+id/fragment_space_schedule_list_row_speaker"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Medium Text"
+                android:maxLines="1"
                 android:layout_weight="8"
-                android:text="Performance – full talk"/>
+                android:ellipsize="end" />
 
             <TextView
                 android:id="@+id/fragment_space_schedule_list_row_duration"
@@ -48,19 +56,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:textStyle="italic"
+                android:gravity="right"
                 android:text="45 mins"/>
         </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/fragment_space_schedule_list_row_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:maxLines="3"
-            android:ellipsize="end"
-            android:layout_gravity="start" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/fragment_space_schedule_list_row_color_indicator"

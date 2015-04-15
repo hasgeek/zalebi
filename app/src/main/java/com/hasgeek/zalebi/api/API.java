@@ -37,10 +37,6 @@ public class API {
 
     private final static String SPACES_ENDPOINT = BASE_URL + "/json";
 
-    private final static String CONTACTEXCHANGESYNC_URL = "https://metarefresh.talkfunnel.com/2015/participant";
-
-    private final static String ATTENDEESYNC_URL = "https://metarefresh.talkfunnel.com/2015/participants/json";
-
     private static Bus mBus;
 
     private static Context ctx;
@@ -54,12 +50,12 @@ public class API {
     public void syncContacts(APIRequestSyncContactsEvent event) {
         Log.i(LOG_TAG, "syncContacts() SUBSCRIPTION APIRequestSyncContactsEvent");
 
-        final String mURL = event.getSpaceId();
+        final String mURL = event.getSpaceUrl()+"participant";
 
         for(final SyncQueueContact syncQueueContact: SyncQueueContact.listAll(SyncQueueContact.class)) {
 
             Request request = new Request.Builder()
-                    .url(CONTACTEXCHANGESYNC_URL+"?puk="+syncQueueContact.getUserPuk()+"&key="+syncQueueContact.getUserKey())
+                    .url(mURL+"?puk="+syncQueueContact.getUserPuk()+"&key="+syncQueueContact.getUserKey())
                     .addHeader("Authorization", AuthService.getAuthHeader())
                     .build();
             client.newCall(request).enqueue(new Callback() {
@@ -97,9 +93,9 @@ public class API {
     @Subscribe
     public void syncAttendees(APIRequestSyncAttendeesEvent event) {
         Log.i(LOG_TAG, "syncAttendees() SUBSCRIPTION APIRequestSyncAttendeesEvent");
-
+        String mURL = event.getSpaceUrl()+"participants/json";
         Request request = new Request.Builder()
-                .url(ATTENDEESYNC_URL)
+                .url(mURL)
                 .addHeader("Authorization", AuthService.getAuthHeader())
                 .build();
 
