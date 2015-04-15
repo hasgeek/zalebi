@@ -14,7 +14,7 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/action_export"
-        android:title="Export Contact"
+        android:title="Export Contacts"
         android:orderInCategory="101"
         app:showAsAction="never" />
     <item

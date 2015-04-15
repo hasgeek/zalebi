@@ -35,6 +35,7 @@ import com.hasgeek.zalebi.eventbus.event.api.APIRequestSyncContactsEvent;
 import com.hasgeek.zalebi.eventbus.event.loader.LoadSingleSpaceEvent;
 import com.hasgeek.zalebi.eventbus.event.loader.SingleSpaceLoadedEvent;
 import com.hasgeek.zalebi.fragments.space.ScheduleFragment;
+import com.hasgeek.zalebi.fragments.space.ScrollbackFragment;
 import com.hasgeek.zalebi.fragments.space.contactexchange.AttendeeFragment;
 import com.hasgeek.zalebi.fragments.space.contactexchange.ContactFragment;
 import com.hasgeek.zalebi.fragments.space.contactexchange.ScannerFragment;
@@ -152,6 +153,8 @@ public class SingleSpaceActivity extends ActionBarActivity {
         ContactFragment contactFragment = new ContactFragment();
         contactFragment.setArguments(spaceBundle);
         fList.add(contactFragment);
+
+        fList.add(new ScrollbackFragment());
 
 //        AttendeeFragment attendeeFragment = new AttendeeFragment();
 //        attendeeFragment.setArguments(spaceBundle);
@@ -297,7 +300,7 @@ public class SingleSpaceActivity extends ActionBarActivity {
                 case 1:
                     return "Contacts";
                 case 2:
-                    return "Attendees";
+                    return "Chat";
                 case 3:
                     return "Scan";
 //                case 4:
