@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.hasgeek.zalebi.api.API;
+import com.hasgeek.zalebi.api.AuthService;
 import com.hasgeek.zalebi.api.ContactExchangeService;
 import com.hasgeek.zalebi.api.SpacesService;
 import com.hasgeek.zalebi.eventbus.BusProvider;
@@ -20,6 +21,7 @@ public class Talkfunnel extends SugarApp {
     private Bus mBus = BusProvider.getInstance();
     private SpacesService mSpacesService;
     private ContactExchangeService mContactExchangeService;
+    private AuthService mAuthService;
     private API api;
 
     @Override
@@ -28,6 +30,7 @@ public class Talkfunnel extends SugarApp {
 
         mSpacesService = new SpacesService(mBus, getApplicationContext());
         mContactExchangeService = new ContactExchangeService(mBus, getApplicationContext());
+        mAuthService = new AuthService(getApplicationContext());
 
         mBus.register(mSpacesService);
         mBus.register(mContactExchangeService);

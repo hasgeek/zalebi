@@ -20,9 +20,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.hasgeek.zalebi.R;
+import com.hasgeek.zalebi.api.AuthService;
 import com.hasgeek.zalebi.api.ContactExchangeService;
 import com.hasgeek.zalebi.api.model.Attendee;
 import com.hasgeek.zalebi.api.model.ExchangeContact;
@@ -75,6 +77,7 @@ public class SingleSpaceActivity extends ActionBarActivity {
 
                 getSupportActionBar().setTitle(space.getTitle());
                 getSupportActionBar().setSubtitle(space.getDatelocation());
+                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             }
         }
         if (savedInstanceState != null) {
@@ -83,6 +86,7 @@ public class SingleSpaceActivity extends ActionBarActivity {
 
             getSupportActionBar().setTitle(space.getTitle());
             getSupportActionBar().setSubtitle(space.getDatelocation());
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
 
         List<Fragment> fragments = getFragments();
@@ -113,6 +117,7 @@ public class SingleSpaceActivity extends ActionBarActivity {
         super.onResume();
         mBus.register(this);
         mBus.post(new LoadSingleSpaceEvent(space.getJsonUrl()));
+        this.invalidateOptionsMenu();
     }
 
     @Override
@@ -178,6 +183,20 @@ public class SingleSpaceActivity extends ActionBarActivity {
         return true;
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        if(!AuthService.isLoggedIn()) {
+            menu.findItem(R.id.action_scan).setVisible(false);
+            menu.findItem(R.id.action_export).setVisible(false);
+            menu.findItem(R.id.action_logout).setVisible(false);
+        }
+        else {
+            menu.findItem(R.id.action_login).setVisible(false);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
     public void updatePages() {
         int i = pager.getCurrentItem();
         pager.setAdapter(pageAdapter);
@@ -232,6 +251,21 @@ public class SingleSpaceActivity extends ActionBarActivity {
                     e.printStackTrace();
                 }
             }
+            else {
+                Toast.makeText(SingleSpaceActivity.this, "No contacts to export", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        else if(id == R.id.action_login) {
+            String url = "http://auth.hasgeek.com/auth?client_id=eDnmYKApSSOCXonBXtyoDQ&scope=id+email+phone+organizations+teams+com.talkfunnel:*&response_type=token";
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+        }
+
+        else if(id == R.id.action_logout) {
+            AuthService.deleteUserToken();
+            this.invalidateOptionsMenu();
         }
 
         return super.onOptionsItemSelected(item);
