@@ -37,9 +37,9 @@ public class API {
 
     private final static String SPACES_ENDPOINT = BASE_URL + "/json";
 
-    private final static String CONTACTEXCHANGESYNC_URL = "http://metarefresh.funnel.shreyas.dev:3000/2015/participant";
+    private final static String CONTACTEXCHANGESYNC_URL = "http://metarefresh.talkfunnel.com/2015/participant";
 
-    private final static String ATTENDEESYNC_URL = "http://metarefresh.funnel.shreyas.dev:3000/2015/participants/json";
+    private final static String ATTENDEESYNC_URL = "http://metarefresh.talkfunnel.com/2015/participants/json";
 
     private static Bus mBus;
 
