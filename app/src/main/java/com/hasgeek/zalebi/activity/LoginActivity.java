@@ -1,6 +1,7 @@
 package com.hasgeek.zalebi.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,7 +32,11 @@ public class LoginActivity extends Activity {
         Intent intent = getIntent();
         // check if this intent is started via custom scheme link
         if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-
+            final ProgressDialog pg = new ProgressDialog(LoginActivity.this);
+            pg.setTitle("Loading");
+            pg.setMessage("Logging in...");
+            pg.setCancelable(false);
+            pg.show();
             Uri uri = Uri.parse("talkfunnel://login?"+intent.getData().getFragment());
             // may be some test here with your custom uri
 
@@ -52,6 +57,8 @@ public class LoginActivity extends Activity {
                     e.printStackTrace();
                     Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                     finish();
+                    if(pg.isShowing())
+                        pg.dismiss();
                 }
 
                 @Override
@@ -64,14 +71,19 @@ public class LoginActivity extends Activity {
                             AuthService.saveUserToken(access_token);
                             Intent i = new Intent(LoginActivity.this, SpacesActivity.class);
                             i.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                            Toast.makeText(LoginActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
                             startActivity(i);
                             finish();
+                            if(pg.isShowing())
+                                pg.dismiss();
                         }
 
                     } catch (Exception e) {
                         e.printStackTrace();
                         Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                         finish();
+                        if(pg.isShowing())
+                            pg.dismiss();
                     }
 
                 }

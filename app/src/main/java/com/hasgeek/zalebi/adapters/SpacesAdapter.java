@@ -1,5 +1,6 @@
 package com.hasgeek.zalebi.adapters;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -62,13 +63,18 @@ public class SpacesAdapter extends RecyclerView.Adapter<SpacesAdapter.ListItemVi
         viewHolder.mListener = new ListItemViewHolder.ViewHolderClick() {
             @Override
             public void onClick(View v) {
+                final ProgressDialog pg = new ProgressDialog(context);
+                pg.setTitle("Loading");
+                pg.setCancelable(false);
+                pg.show();
                 Intent i = new Intent(context, SingleSpaceActivity.class);
                 Bundle extras = new Bundle();
                 extras.setClassLoader(Thread.currentThread().getContextClassLoader());
                 extras.putParcelable("space", Parcels.wrap(s));
                 i.putExtra("bundle", extras);
-                Log.i(LOG_TAG, "OnClick " + s.getJsonUrl());
                 context.startActivity(i);
+                if(pg.isShowing())
+                    pg.dismiss();
             }
         };
 

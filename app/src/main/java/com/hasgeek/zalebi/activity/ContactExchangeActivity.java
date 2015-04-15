@@ -91,7 +91,7 @@ public class ContactExchangeActivity extends ActionBarActivity {
 
     @Subscribe
     public void onAPIError(APIErrorEvent event) {
-        Toast.makeText(this, "Network trouble?", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Network trouble? Are you logged in?", Toast.LENGTH_SHORT).show();
     }
 
     @Override

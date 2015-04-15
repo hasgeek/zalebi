@@ -8,14 +8,17 @@
         android:layout_width="0dip"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="9">
+        android:layout_weight="9"
+        android:padding="10dp">
         <TextView
             android:id="@+id/fragment_space_contactexchange_contact_list_row_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
-            android:layout_gravity="start" />
+            android:layout_gravity="start"
+            android:padding="5dp"
+            android:paddingBottom="0dp"/>
 
         <TextView
             android:id="@+id/fragment_space_contactexchange_contact_list_row_email"
@@ -23,7 +26,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
-            android:layout_gravity="start" />
+            android:layout_gravity="start"
+            android:padding="5dp"/>
 
     </LinearLayout>
 
