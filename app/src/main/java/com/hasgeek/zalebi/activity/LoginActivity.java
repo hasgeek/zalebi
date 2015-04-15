@@ -4,7 +4,20 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.hasgeek.zalebi.api.AuthService;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 /**
  * Created by karthikbalakrishnan on 09/04/15.
@@ -22,10 +35,42 @@ public class LoginActivity extends Activity {
             Uri uri = Uri.parse("talkfunnel://login?"+intent.getData().getFragment());
             // may be some test here with your custom uri
 
-            String access_token = uri.getQueryParameter("access_token"); // "str" is set
-            String token_type = uri.getQueryParameter("token_type"); // "string" is set
+            final String access_token = uri.getQueryParameter("access_token");
+            String token_type = uri.getQueryParameter("token_type");
 
             Log.d("LoginActivity", ""+access_token+" "+token_type);
+
+            final Request request = new Request.Builder()
+                    .url("https://talkfunnel.com/api/whoami")
+                    .addHeader("Authorization", "Bearer "+access_token)
+                    .build();
+            OkHttpClient client = new OkHttpClient();
+
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Request request, final IOException e) {
+                    e.printStackTrace();
+                    finish();
+                }
+
+                @Override
+                public void onResponse(final Response response) {
+                    try {
+                        String res =response.body().string();
+                        Log.d("Response", res);
+                        JSONObject json = new JSONObject(res);
+                        if(json.optInt("code", 0)==200) {
+                            AuthService.saveUserToken(access_token);
+                            finish();
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        finish();
+                    }
+
+                }
+            });
         }
     }
 }

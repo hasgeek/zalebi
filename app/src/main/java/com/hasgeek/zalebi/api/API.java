@@ -31,15 +31,15 @@ public class API {
 
     private final static String LOG_TAG = "API";
 
-    private final static String BASE_URL = "http://talkfunnel.com";
+    private final static String BASE_URL = "https://talkfunnel.com";
 
     private final static OkHttpClient client = new OkHttpClient();
 
     private final static String SPACES_ENDPOINT = BASE_URL + "/json";
 
-    private final static String CONTACTEXCHANGESYNC_URL = "http://metarefresh.talkfunnel.com/2015/participant";
+    private final static String CONTACTEXCHANGESYNC_URL = "https://metarefresh.talkfunnel.com/2015/participant";
 
-    private final static String ATTENDEESYNC_URL = "http://metarefresh.talkfunnel.com/2015/participants/json";
+    private final static String ATTENDEESYNC_URL = "https://metarefresh.talkfunnel.com/2015/participants/json";
 
     private static Bus mBus;
 
@@ -60,8 +60,8 @@ public class API {
 
             Request request = new Request.Builder()
                     .url(CONTACTEXCHANGESYNC_URL+"?puk="+syncQueueContact.getUserPuk()+"&key="+syncQueueContact.getUserKey())
+                    .addHeader("Authorization", AuthService.getAuthHeader())
                     .build();
-
             client.newCall(request).enqueue(new Callback() {
 
                 @Override
@@ -100,6 +100,7 @@ public class API {
 
         Request request = new Request.Builder()
                 .url(ATTENDEESYNC_URL)
+                .addHeader("Authorization", AuthService.getAuthHeader())
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
