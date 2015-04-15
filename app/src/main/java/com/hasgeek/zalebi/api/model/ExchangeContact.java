@@ -37,6 +37,8 @@ public class ExchangeContact extends SugarRecord<ExchangeContact> {
     @Expose
     private String twitter;
 
+    @SerializedName("space_id")
+    @Expose
     private String spaceId;
 
     public ExchangeContact() {

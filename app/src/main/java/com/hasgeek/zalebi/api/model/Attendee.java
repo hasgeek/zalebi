@@ -29,6 +29,8 @@ public class Attendee extends SugarRecord<Attendee> {
     @Expose
     private String key;
 
+    @SerializedName("space_id")
+    @Expose
     private String spaceId;
 
     public Attendee() {

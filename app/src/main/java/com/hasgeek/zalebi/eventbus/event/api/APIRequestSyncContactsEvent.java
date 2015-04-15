@@ -5,9 +5,11 @@ package com.hasgeek.zalebi.eventbus.event.api;
  */
 public class APIRequestSyncContactsEvent {
     private String spaceId;
+    private String spaceUrl;
 
-    public APIRequestSyncContactsEvent(String spaceId) {
+    public APIRequestSyncContactsEvent(String spaceId, String spaceUrl) {
         this.spaceId = spaceId;
+        this.spaceUrl = spaceUrl;
     }
 
     public String getSpaceId() {
@@ -16,5 +18,13 @@ public class APIRequestSyncContactsEvent {
 
     public void setSpaceId(String spaceId) {
         this.spaceId = spaceId;
+    }
+
+    public String getSpaceUrl() {
+        return spaceUrl;
+    }
+
+    public void setSpaceUrl(String spaceUrl) {
+        this.spaceUrl = spaceUrl;
     }
 }

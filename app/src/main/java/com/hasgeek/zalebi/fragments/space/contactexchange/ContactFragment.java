@@ -14,12 +14,15 @@ import android.widget.Toast;
 import com.hasgeek.zalebi.R;
 import com.hasgeek.zalebi.adapters.ExchangeContactsAdapter;
 import com.hasgeek.zalebi.api.ContactExchangeService;
+import com.hasgeek.zalebi.api.model.Space;
 import com.hasgeek.zalebi.eventbus.BusProvider;
 import com.hasgeek.zalebi.eventbus.event.api.APIErrorEvent;
 import com.hasgeek.zalebi.eventbus.event.api.APIRequestSyncAttendeesEvent;
 import com.hasgeek.zalebi.eventbus.event.loader.SingleSpaceLoadedEvent;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
+
+import org.parceler.Parcels;
 
 /**
  * Created by karthikbalakrishnan on 30/03/15.
@@ -31,10 +34,11 @@ public class ContactFragment extends Fragment {
     private Bus mBus;
     private SwipeRefreshLayout swipeLayout;
     public ExchangeContactsAdapter mAdapter;
+    private Space space;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        space = Parcels.unwrap(getArguments().getParcelable("space"));
         View v = inflater.inflate(R.layout.fragment_space_contactexhange_contact, container, false);
 
         swipeLayout = (SwipeRefreshLayout) v.findViewById(R.id.fragment_space_contactexchange_contact_swipe_container);
@@ -49,7 +53,7 @@ public class ContactFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(llm);
-        mAdapter = new ExchangeContactsAdapter(getActivity(), ContactExchangeService.getExchangeContacts());
+        mAdapter = new ExchangeContactsAdapter(getActivity(), ContactExchangeService.getExchangeContacts(space.getId()));
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setOnScrollListener(scrollListener);
 
@@ -72,7 +76,7 @@ public class ContactFragment extends Fragment {
         @Override
         public void onRefresh() {
             Log.i(LOG_TAG, "onRefresh() POST LoadSpacesEvent");
-            mAdapter = new ExchangeContactsAdapter(getActivity(), ContactExchangeService.getExchangeContacts());
+            mAdapter = new ExchangeContactsAdapter(getActivity(), ContactExchangeService.getExchangeContacts(space.getId()));
             mRecyclerView.setAdapter(mAdapter);
             mAdapter.notifyDataSetChanged();
             swipeLayout.setRefreshing(false);

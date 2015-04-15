@@ -72,7 +72,7 @@ public class ScannerFragment extends DialogFragment implements ZBarScannerView.R
     public void handleResult(Result rawResult) {
         Log.i("handleResult()", "Raw Data:"+rawResult.getContents());
         mScannerView.stopCamera();
-        final Attendee a = ContactExchangeService.getAttendeeFromScannedData(rawResult.getContents(), space.getJsonUrl(), getActivity());
+        final Attendee a = ContactExchangeService.getAttendeeFromScannedData(rawResult.getContents(), space.getId(), space.getUrl(), getActivity());
         if(a != null) {
             new AlertDialog.Builder(getActivity())
                     .setTitle("Add attendee?")
@@ -81,7 +81,7 @@ public class ScannerFragment extends DialogFragment implements ZBarScannerView.R
                     .setPositiveButton("Sync", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ContactExchangeService.addAttendeeToSyncQueue(a);
+                            ContactExchangeService.addAttendeeToSyncQueue(a, space.getId(), space.getUrl() );
                             mScannerView.startCamera();
 
                         }

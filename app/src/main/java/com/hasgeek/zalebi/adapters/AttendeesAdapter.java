@@ -26,10 +26,12 @@ import java.util.List;
 public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.ListItemViewHolder> {
     private final Context context;
     private final List<Attendee> attendees;
+    private String spaceUrl;
 
-    public AttendeesAdapter(Context context, List<Attendee> attendees) {
+    public AttendeesAdapter(Context context, List<Attendee> attendees, String spaceUrl) {
         this.context = context;
         this.attendees = attendees;
+        this.spaceUrl = spaceUrl;
     }
 
     @Override
@@ -58,7 +60,7 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.List
                     .setPositiveButton("Sync", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ContactExchangeService.addAttendeeToSyncQueue(a);
+                            ContactExchangeService.addAttendeeToSyncQueue(a, a.getSpaceId(), spaceUrl);
                         }
                     })
                     .setNegativeButton("No", null)

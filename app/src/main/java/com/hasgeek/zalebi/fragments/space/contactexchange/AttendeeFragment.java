@@ -16,12 +16,15 @@ import com.hasgeek.zalebi.adapters.AttendeesAdapter;
 import com.hasgeek.zalebi.adapters.ExchangeContactsAdapter;
 import com.hasgeek.zalebi.api.ContactExchangeService;
 import com.hasgeek.zalebi.api.model.ExchangeContact;
+import com.hasgeek.zalebi.api.model.Space;
 import com.hasgeek.zalebi.eventbus.BusProvider;
 import com.hasgeek.zalebi.eventbus.event.api.APIErrorEvent;
 import com.hasgeek.zalebi.eventbus.event.api.APIRequestSyncAttendeesEvent;
 import com.hasgeek.zalebi.eventbus.event.loader.SingleSpaceLoadedEvent;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
+
+import org.parceler.Parcels;
 
 /**
  * Created by karthikbalakrishnan on 30/03/15.
@@ -33,9 +36,11 @@ public class AttendeeFragment extends Fragment {
     private Bus mBus;
     private SwipeRefreshLayout swipeLayout;
     private AttendeesAdapter mAdapter;
+    private Space space;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        space = Parcels.unwrap(getArguments().getParcelable("space"));
 
         View v = inflater.inflate(R.layout.fragment_space_contactexhange_attendee, container, false);
 
@@ -51,7 +56,7 @@ public class AttendeeFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(llm);
-        mAdapter = new AttendeesAdapter(getActivity(), ContactExchangeService.getAttendeeList());
+        mAdapter = new AttendeesAdapter(getActivity(), ContactExchangeService.getAttendeeList(space.getId()), space.getUrl());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setOnScrollListener(scrollListener);
 
@@ -74,11 +79,11 @@ public class AttendeeFragment extends Fragment {
         @Override
         public void onRefresh() {
             Log.i(LOG_TAG, "onRefresh() POST LoadSpacesEvent");
-            mAdapter = new AttendeesAdapter(getActivity(), ContactExchangeService.getAttendeeList());
+            mAdapter = new AttendeesAdapter(getActivity(), ContactExchangeService.getAttendeeList(space.getId()), space.getUrl());
             mRecyclerView.setAdapter(mAdapter);
             mAdapter.notifyDataSetChanged();
             swipeLayout.setRefreshing(false);
-            mBus.post(new APIRequestSyncAttendeesEvent("metarefresh"));
+            mBus.post(new APIRequestSyncAttendeesEvent(space.getId(), space.getUrl()));
         }
     };
 
