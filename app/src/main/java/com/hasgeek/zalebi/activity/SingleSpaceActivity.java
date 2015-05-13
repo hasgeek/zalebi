@@ -32,6 +32,7 @@ import com.hasgeek.zalebi.api.model.Space;
 import com.hasgeek.zalebi.eventbus.BusProvider;
 import com.hasgeek.zalebi.eventbus.event.api.APIRequestSyncAttendeesEvent;
 import com.hasgeek.zalebi.eventbus.event.api.APIRequestSyncContactsEvent;
+import com.hasgeek.zalebi.eventbus.event.api.APIResponseSyncContactsEvent;
 import com.hasgeek.zalebi.eventbus.event.loader.LoadSingleSpaceEvent;
 import com.hasgeek.zalebi.eventbus.event.loader.SingleSpaceLoadedEvent;
 import com.hasgeek.zalebi.fragments.space.ScheduleFragment;
@@ -204,6 +205,7 @@ public class SingleSpaceActivity extends ActionBarActivity {
         int i = pager.getCurrentItem();
         pager.setAdapter(pageAdapter);
         pager.setCurrentItem(i);
+        mBus.post(new APIRequestSyncContactsEvent(space.getId(), space.getUrl()));
     }
 
     @Override

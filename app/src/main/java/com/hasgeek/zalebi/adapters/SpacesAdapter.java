@@ -59,6 +59,8 @@ public class SpacesAdapter extends RecyclerView.Adapter<SpacesAdapter.ListItemVi
             if(!s.getBgColor().equals(""))
                 color="#"+s.getBgColor();
 
+        if(!color.equals("#2a2a2a"))
+            viewHolder.name.setTextColor(Color.BLACK);
         viewHolder.background.setBackgroundColor((Color.parseColor(color)));
         viewHolder.mListener = new ListItemViewHolder.ViewHolderClick() {
             @Override

@@ -14,7 +14,7 @@
         <ImageView
             android:id="@+id/spaces_listview_row_image"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
             android:scaleType="centerCrop"
             android:layout_centerInParent="true"
             android:src="@drawable/imageview_gradient"
@@ -23,7 +23,7 @@
         <TextView
             android:id="@+id/spaces_listview_row_name"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
             android:padding="5dp"
             android:textSize="20dp"
             android:layout_alignParentBottom="true"
