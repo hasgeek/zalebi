@@ -41,6 +41,8 @@ public class SpacesActivity extends ActionBarActivity {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         mRecyclerView = (RecyclerView) findViewById(R.id.spaces_recyclerview);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);

@@ -135,7 +135,7 @@ public class ScheduleFragment extends Fragment {
 
     @Subscribe
     public void onAPIError(APIErrorEvent event) {
-        Toast.makeText(getActivity(), "Network trouble?", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Network trouble? Are you logged in?", Toast.LENGTH_SHORT).show();
         swipeLayout.setRefreshing(false);
     }
 

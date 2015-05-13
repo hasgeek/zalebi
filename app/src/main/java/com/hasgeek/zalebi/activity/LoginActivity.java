@@ -10,6 +10,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.hasgeek.zalebi.R;
 import com.hasgeek.zalebi.api.AuthService;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
@@ -28,15 +29,11 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
 
         Intent intent = getIntent();
         // check if this intent is started via custom scheme link
         if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-            final ProgressDialog pg = new ProgressDialog(LoginActivity.this);
-            pg.setTitle("Loading");
-            pg.setMessage("Logging in...");
-            pg.setCancelable(false);
-            pg.show();
             Uri uri = Uri.parse("talkfunnel://login?"+intent.getData().getFragment());
             // may be some test here with your custom uri
 
@@ -55,10 +52,15 @@ public class LoginActivity extends Activity {
                 @Override
                 public void onFailure(Request request, final IOException e) {
                     e.printStackTrace();
-                    Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     finish();
-                    if(pg.isShowing())
-                        pg.dismiss();
+                    return;
                 }
 
                 @Override
@@ -71,19 +73,28 @@ public class LoginActivity extends Activity {
                             AuthService.saveUserToken(access_token);
                             Intent i = new Intent(LoginActivity.this, SpacesActivity.class);
                             i.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-                            Toast.makeText(LoginActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
-                            startActivity(i);
+                            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(LoginActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                             finish();
-                            if(pg.isShowing())
-                                pg.dismiss();
+                            startActivity(i);
+                            return;
+
                         }
 
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                    Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                         finish();
-                        if(pg.isShowing())
-                            pg.dismiss();
+                        return;
                     }
 
                 }

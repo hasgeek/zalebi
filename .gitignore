@@ -9,3 +9,5 @@ gradlew.bat
 gradle.properties
 zalebi.iml
 local.properties
+gen
+out

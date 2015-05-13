@@ -14,6 +14,7 @@ import com.hasgeek.zalebi.api.model.Session;
 import com.hasgeek.zalebi.api.model.Space;
 import com.hasgeek.zalebi.api.model.Venue;
 import com.hasgeek.zalebi.eventbus.event.api.APIErrorEvent;
+import com.hasgeek.zalebi.eventbus.event.api.APIRequestSpacesEvent;
 import com.hasgeek.zalebi.eventbus.event.api.APIResponseSingleSpaceEvent;
 import com.hasgeek.zalebi.eventbus.event.api.APIResponseSpacesEvent;
 import com.hasgeek.zalebi.eventbus.event.loader.LoadSingleSpaceEvent;
@@ -97,7 +98,7 @@ public class SpacesService {
 
         } catch (Exception e) {
             e.printStackTrace();
-            mBus.post(new APIErrorEvent(e.getMessage()));
+            mBus.post(new APIRequestSpacesEvent("start"));
         }
     }
 

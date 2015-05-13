@@ -5,11 +5,11 @@ android {
     buildToolsVersion "21.0.2"
 
     defaultConfig {
-        applicationId "com.hasgeek.zalebi"
+        applicationId "com.hasgeek.funnel"
         minSdkVersion 9
         targetSdkVersion 21
-        versionCode 7
-        versionName "1.1"
+        versionCode 10
+        versionName "1.1.2"
     }
     buildTypes {
         release {
