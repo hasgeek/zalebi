@@ -76,8 +76,8 @@ public class ScheduleFragment extends Fragment {
     public void onResume() {
         super.onResume();
         getBus().register(this);
-        getBus().post(new APIRequestSingleSpaceEvent(space.getJsonUrl()));
-        mBus.post(new LoadSingleSpaceEvent(space.getJsonUrl()));
+//        getBus().post(new APIRequestSingleSpaceEvent(space.getJsonUrl()));
+//        mBus.post(new LoadSingleSpaceEvent(space.getJsonUrl()));
     }
 
     @Override

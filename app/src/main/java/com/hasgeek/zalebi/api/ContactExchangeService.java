@@ -2,6 +2,7 @@ package com.hasgeek.zalebi.api;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -67,7 +68,7 @@ public class ContactExchangeService {
         Gson gson = gsonBuilder.create();
         try {
             JSONObject obj = new JSONObject(event.getResponse());
-            ExchangeContact contact = gson.fromJson(obj.optString("participant","{}"), ExchangeContact.class);
+            ExchangeContact contact = gson.fromJson(obj.optString("participant", "{}"), ExchangeContact.class);
 
             Log.d("Contact", contact.getSpaceId());
             List<ExchangeContact> foundContacts = ExchangeContact.find(ExchangeContact.class,"user_id = ?", contact.getUserId());
@@ -113,40 +114,57 @@ public class ContactExchangeService {
     }
 
     @Subscribe
-    public void onAttendeeSyncedEvent(APIResponseSyncAttendeesEvent event) {
+    public void onAttendeeSyncedEvent(final APIResponseSyncAttendeesEvent event) {
         Log.i(LOG_TAG, "onAttendeeSyncedEvent() SUBSCRIPTION APIResponseSyncAttendeesEvent");
         GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.create();
-        try {
-            JSONObject obj = new JSONObject(event.getResponse());
-            final List<Attendee> attendees = Arrays.asList(gson.fromJson(obj.optString("participants", "{}"), Attendee[].class));
-            SugarTransactionHelper.doInTansaction(new SugarTransactionHelper.Callback() {
-                @Override
-                public void manipulateInTransaction() {
-                    for(Attendee d: attendees ) {
-                        List<Attendee> foundAttendees = Attendee.find(Attendee.class,"user_id = ?", d.getUserId());
-                        Log.d("Attendee", d.getSpaceId());
-                        if(foundAttendees.isEmpty()) {
-                            d.save();
-                        }
-                        else {
-                            for(Attendee f: foundAttendees) {
-                                if(f.diff(d)) {
-                                    f.update(d);
-                                    f.save();
+        final Gson gson = gsonBuilder.create();
+        new AsyncTask<String, Void, String>() {
+            @Override
+            protected String doInBackground(String... params) {
+                try {
+                    JSONObject obj = new JSONObject(event.getResponse());
+                    final List<Attendee> attendees = Arrays.asList(gson.fromJson(obj.optString("participants", "{}"), Attendee[].class));
+                    SugarTransactionHelper.doInTansaction(new SugarTransactionHelper.Callback() {
+                        @Override
+                        public void manipulateInTransaction() {
+                            for (Attendee d : attendees) {
+                                List<Attendee> foundAttendees = Attendee.find(Attendee.class, "user_id = ?", d.getUserId());
+                                Log.d("Attendee", d.getSpaceId());
+                                if (foundAttendees.isEmpty()) {
+                                    d.save();
+                                } else {
+                                    for (Attendee f : foundAttendees) {
+                                        if (f.diff(d)) {
+                                            f.update(d);
+                                            f.save();
+                                        }
+                                    }
                                 }
                             }
                         }
-                    }
+                    });
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+
                 }
-            });
-            Toast.makeText(ctx, "Refreshed event data", Toast.LENGTH_SHORT).show();
+                return "Success";
+            }
 
+            @Override
+            protected void onPostExecute(String s) {
+                if(s.equals("Success")){
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            mBus.post(new APIErrorEvent(e.getMessage()));
-        }
+                    Toast.makeText(ctx, "Refreshed event data", Toast.LENGTH_SHORT).show();
+
+                }
+                else {
+                    mBus.post(new APIErrorEvent("Failed AsyncTask"));
+
+                }
+            }
+        }.execute("");
     }
 
     public static Attendee getAttendeeFromScannedData(String data, String spaceId, String spaceURL, Context ctx) {

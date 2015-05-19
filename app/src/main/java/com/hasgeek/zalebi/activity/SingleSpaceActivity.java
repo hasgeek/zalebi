@@ -249,6 +249,7 @@ public class SingleSpaceActivity extends ActionBarActivity {
                             Intent.EXTRA_STREAM,
                             Uri.parse("content://" + VCFProvider.AUTHORITY + "/"
                                     + "contacts.vcf"));
+                    shareIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     startActivity(Intent.createChooser(shareIntent, "Export contacts"));
 
                 }

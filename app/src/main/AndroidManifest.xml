@@ -50,7 +50,8 @@
         <provider
             android:name=".providers.VCFProvider"
             android:authorities="com.hasgeek.zalebi.providers.VCFProvider"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true"
+            android:exported="false">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/export_paths" />
