@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.hasgeek.zalebi">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        tools:replace="android:icon"
+        android:name=".Talkfunnel"
+        android:allowBackup="true"
+        android:icon="@drawable/appicon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".activity.SpacesActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.SingleSpaceActivity"
+            android:label="@string/title_activity_single_space"
+            android:parentActivityName=".activity.SpacesActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hasgeek.zalebi.activity.SpacesActivity" />
+        </activity>
+        <activity
+            android:name=".activity.ProposalActivity"
+            android:label="@string/title_activity_proposal"
+            android:parentActivityName=".activity.SingleSpaceActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hasgeek.zalebi.activity.SingleSpaceActivity" />
+        </activity>
+        <activity android:name=".activity.LoginActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="talkfunnel"/>
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name=".providers.VCFProvider"
+            android:authorities="com.hasgeek.zalebi.providers.VCFProvider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/export_paths" />
+        </provider>
+
+        <meta-data android:name="DATABASE" android:value="test.db" />
+        <meta-data android:name="VERSION" android:value="1" />
+        <meta-data android:name="QUERY_LOG" android:value="false" />
+        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.hasgeek.zalebi" />
+    </application>
+
+</manifest>

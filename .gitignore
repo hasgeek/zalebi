@@ -1,51 +1,13 @@
-# Android
-bin/
-gen/
-local.properties
-default.properties
-
-# Mac OS X
-*~
-.DS_Store
-
-# Eclipse
-.settings/
-
-# Textmate
-*.tmproj
-
-# IntelliJ IDEA
-.idea/workspace.xml
-.idea/tasks.xml
-out/
-
-#built application files
-*.apk
-*.ap_
-
-# files for the dex VM
-*.dex
-
-# Java class files
-*.class
-
-# Windows thumbnail db
-Thumbs.db
-
-# Eclipse project files
-.classpath
-.project
-
-# Android Studio
-.idea
-#.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
-
 .gradle
-build/
-
-/*/out
-/*/*/build
-/*/*/production
-*.iws
-*.ipr
-*.swp
+/local.properties
+/.idea
+.DS_Store
+/build
+/gradle
+gradlew
+gradlew.bat
+gradle.properties
+zalebi.iml
+local.properties
+gen
+out
