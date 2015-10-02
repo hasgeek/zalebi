@@ -230,7 +230,7 @@ public class SingleSpaceActivity extends ActionBarActivity {
         }
 
         else if (id == R.id.action_export) {
-            Collection<VCard> exportContactList = ContactExchangeService.getVCardsFromExchangeContacts();
+            Collection<VCard> exportContactList = ContactExchangeService.getVCardsFromExchangeContacts(space.getId());
             if(!exportContactList.isEmpty()) {
                 try {
                     File cacheDir = getCacheDir();

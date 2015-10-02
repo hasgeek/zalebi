@@ -222,9 +222,9 @@ public class ContactExchangeService {
         return contacts;
     }
 
-    public static Collection<VCard> getVCardsFromExchangeContacts() {
+    public static Collection<VCard> getVCardsFromExchangeContacts(String spaceId) {
         Collection<VCard> vCardCollection = new ArrayList<>();
-        List<ExchangeContact> exchangeContacts = ExchangeContact.listAll(ExchangeContact.class);
+        List<ExchangeContact> exchangeContacts = ExchangeContact.find(ExchangeContact.class, "space_id = ?", spaceId);
         for(ExchangeContact c: exchangeContacts) {
             VCard vcard = new VCard();
 
