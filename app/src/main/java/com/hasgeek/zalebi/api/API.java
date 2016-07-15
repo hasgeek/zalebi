@@ -50,12 +50,12 @@ public class API {
     public void syncContacts(APIRequestSyncContactsEvent event) {
         Log.i(LOG_TAG, "syncContacts() SUBSCRIPTION APIRequestSyncContactsEvent");
 
-        final String mURL = event.getSpaceUrl()+"participant";
+        final String mURL = event.getSpaceUrl() + "participant";
 
-        for(final SyncQueueContact syncQueueContact: SyncQueueContact.listAll(SyncQueueContact.class)) {
+        for (final SyncQueueContact syncQueueContact : SyncQueueContact.listAll(SyncQueueContact.class)) {
 
             Request request = new Request.Builder()
-                    .url(mURL+"?puk="+syncQueueContact.getUserPuk()+"&key="+syncQueueContact.getUserKey())
+                    .url(mURL + "?puk=" + syncQueueContact.getUserPuk() + "&key=" + syncQueueContact.getUserKey())
                     .addHeader("Authorization", AuthService.getAuthHeader())
                     .build();
             client.newCall(request).enqueue(new Callback() {
@@ -93,7 +93,7 @@ public class API {
     @Subscribe
     public void syncAttendees(APIRequestSyncAttendeesEvent event) {
         Log.i(LOG_TAG, "syncAttendees() SUBSCRIPTION APIRequestSyncAttendeesEvent");
-        String mURL = event.getSpaceUrl()+"participants/json";
+        String mURL = event.getSpaceUrl() + "participants/json";
         Request request = new Request.Builder()
                 .url(mURL)
                 .addHeader("Authorization", AuthService.getAuthHeader())
@@ -132,7 +132,7 @@ public class API {
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
                         public void run() {
-                                mBus.post(new APIErrorEvent(e.getMessage()));
+                            mBus.post(new APIErrorEvent(e.getMessage()));
                         }
                     });
                 }
@@ -166,17 +166,22 @@ public class API {
 
             @Override
             public void onResponse(final Response response) {
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            mBus.post(new APIResponseSpacesEvent(response.body().string()));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            mBus.post(new APIErrorEvent(e.getMessage()));
+                try {
+                    final String spaceResponse = response.body().string();
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                mBus.post(new APIResponseSpacesEvent(spaceResponse));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                mBus.post(new APIErrorEvent(e.getMessage()));
+                            }
                         }
-                    }
-                });
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
