@@ -7,4 +7,8 @@
     <string name="title_activity_single_space">SingleSpaceActivity</string>
     <string name="title_activity_proposal">ProposalActivity</string>
 
+    <!-- Strings related to runtime permission -->
+    <string name="rationale_message_for_camera_permission_in_scanner">Permission to access camera is required by the scanner to work properly</string>
+    <string name="turn_on">Turn On</string>
+    <string name="cancel">Cancel</string>
 </resources>
