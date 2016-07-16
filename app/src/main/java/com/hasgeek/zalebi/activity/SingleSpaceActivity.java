@@ -1,6 +1,5 @@
 package com.hasgeek.zalebi.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,36 +7,25 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.hasgeek.zalebi.R;
 import com.hasgeek.zalebi.api.AuthService;
 import com.hasgeek.zalebi.api.ContactExchangeService;
-import com.hasgeek.zalebi.api.model.Attendee;
-import com.hasgeek.zalebi.api.model.ExchangeContact;
 import com.hasgeek.zalebi.api.model.Space;
 import com.hasgeek.zalebi.eventbus.BusProvider;
 import com.hasgeek.zalebi.eventbus.event.api.APIRequestSyncAttendeesEvent;
 import com.hasgeek.zalebi.eventbus.event.api.APIRequestSyncContactsEvent;
-import com.hasgeek.zalebi.eventbus.event.api.APIResponseSyncContactsEvent;
 import com.hasgeek.zalebi.eventbus.event.loader.LoadSingleSpaceEvent;
 import com.hasgeek.zalebi.eventbus.event.loader.SingleSpaceLoadedEvent;
 import com.hasgeek.zalebi.fragments.space.ScheduleFragment;
 import com.hasgeek.zalebi.fragments.space.ScrollbackFragment;
-import com.hasgeek.zalebi.fragments.space.contactexchange.AttendeeFragment;
 import com.hasgeek.zalebi.fragments.space.contactexchange.ContactFragment;
 import com.hasgeek.zalebi.fragments.space.contactexchange.ScannerFragment;
 import com.hasgeek.zalebi.providers.VCFProvider;
@@ -47,8 +35,6 @@ import com.squareup.otto.Subscribe;
 import org.parceler.Parcels;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -56,7 +42,7 @@ import java.util.List;
 import ezvcard.Ezvcard;
 import ezvcard.VCard;
 
-public class SingleSpaceActivity extends ActionBarActivity {
+public class SingleSpaceActivity extends AppCompatActivity {
 
     private final String LOG_TAG = "SingleSpaceActivity";
     SpacePagerAdapter pageAdapter;
@@ -100,7 +86,7 @@ public class SingleSpaceActivity extends ActionBarActivity {
         pager.setAdapter(pageAdapter);
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.activity_single_space_viewpager_tabstrip);
         tabs.setViewPager(pager);
-        mBus=getBus();
+        mBus = getBus();
         mBus.register(this);
         mBus.post(new APIRequestSyncAttendeesEvent(space.getId(), space.getUrl()));
     }
@@ -108,10 +94,9 @@ public class SingleSpaceActivity extends ActionBarActivity {
     @Subscribe
     public void onSingleSpaceLoaded(SingleSpaceLoadedEvent event) {
         Log.i(LOG_TAG, "onSingleSpaceLoaded() SUBSCRIPTION SpacesLoadedEvent");
-        spaceData=event;
+        spaceData = event;
         pageAdapter.notifyDataSetChanged();
     }
-
 
 
     @Override
@@ -168,8 +153,6 @@ public class SingleSpaceActivity extends ActionBarActivity {
         //ScrollbackFragment chat = new ScrollbackFragment();
 
 
-
-
         return fList;
     }
 
@@ -190,12 +173,11 @@ public class SingleSpaceActivity extends ActionBarActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-        if(!AuthService.isLoggedIn()) {
+        if (!AuthService.isLoggedIn()) {
             menu.findItem(R.id.action_scan).setVisible(false);
             menu.findItem(R.id.action_export).setVisible(false);
             menu.findItem(R.id.action_logout).setVisible(false);
-        }
-        else {
+        } else {
             menu.findItem(R.id.action_login).setVisible(false);
         }
         return super.onPrepareOptionsMenu(menu);
@@ -220,18 +202,15 @@ public class SingleSpaceActivity extends ActionBarActivity {
             FragmentManager fm = getSupportFragmentManager();
             ScannerFragment scannerFragment = new ScannerFragment();
             scannerFragment.setArguments(spaceBundle);
+            scannerFragment.setCancelable(true);
             scannerFragment.show(fm, "scanner_fragment");
 
             return true;
-        }
-
-        else if(id == R.id.action_refresh) {
+        } else if (id == R.id.action_refresh) {
             updatePages();
-        }
-
-        else if (id == R.id.action_export) {
+        } else if (id == R.id.action_export) {
             Collection<VCard> exportContactList = ContactExchangeService.getVCardsFromExchangeContacts(space.getId());
-            if(!exportContactList.isEmpty()) {
+            if (!exportContactList.isEmpty()) {
                 try {
                     File cacheDir = getCacheDir();
                     File file = new File(cacheDir, "contacts.vcf");
@@ -252,24 +231,18 @@ public class SingleSpaceActivity extends ActionBarActivity {
                     shareIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     startActivity(Intent.createChooser(shareIntent, "Export contacts"));
 
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-            else {
+            } else {
                 Toast.makeText(SingleSpaceActivity.this, "No contacts to export", Toast.LENGTH_SHORT).show();
             }
-        }
-
-        else if(id == R.id.action_login) {
+        } else if (id == R.id.action_login) {
             String url = "http://auth.hasgeek.com/auth?client_id=eDnmYKApSSOCXonBXtyoDQ&scope=id+email+phone+organizations+teams+com.talkfunnel:*&response_type=token";
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
             startActivity(i);
-        }
-
-        else if(id == R.id.action_logout) {
+        } else if (id == R.id.action_logout) {
             AuthService.deleteUserToken();
             this.invalidateOptionsMenu();
         }
