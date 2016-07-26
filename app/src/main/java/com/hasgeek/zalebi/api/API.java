@@ -212,17 +212,23 @@ public class API {
 
             @Override
             public void onResponse(final Response response) {
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            mBus.post(new APIResponseSingleSpaceEvent(mURL, response.body().string()));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            mBus.post(new APIErrorEvent(e.getMessage()));
+                try {
+                    final String spaceResponse = response.body().string();
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                mBus.post(new APIResponseSingleSpaceEvent(mURL, spaceResponse));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                mBus.post(new APIErrorEvent(e.getMessage()));
+                            }
                         }
-                    }
-                });
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
 
             }
         });
